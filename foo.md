@@ -1,3 +1,6 @@
 # foo
 
 test
+
+* TOC
+{:toc}
