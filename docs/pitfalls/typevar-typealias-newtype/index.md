@@ -102,14 +102,14 @@ _EMAIL_REGEX = re.compile(r"[^@]+@[^@.]+\.[^@]+")
 Email = NewType("Email", str)
 
 
-def parse_email(string: str) -> Optional[Email]:
+def parse_email(string: str) -> Email:
     if _EMAIL_REGEX.fullmatch(string) is None:
-        return None
+        return ValueError("Invalid email")
     return Email(string)
 
 
 def send_message(email: Email, message: str) -> None:
-    bot.
+    ...
 ```
 
 Now if you call just `send_message("a@a.com", "Hi there, A!")`, you will get an error because a string is not
