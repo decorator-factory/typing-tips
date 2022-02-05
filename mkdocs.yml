@@ -14,4 +14,15 @@ nav:
   - Frequently asked questions:
     - What if my function can raise an exception?: faq/sometimes-raises/index.md
 
-theme: readthedocs
+theme:
+  name: material
+  icon:
+    logo: material/language-python
+
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
