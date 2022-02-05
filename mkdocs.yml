@@ -11,5 +11,7 @@ nav:
     - "`Optional` doesn't mean an optional argument": pitfalls/optional-is-not-optional/index.md
     - "Type variables vs type aliases vs `NewType`": pitfalls/typevar-typealias-newtype/index.md
     - "`NoReturn` doesn't just mean no `return` statement": pitfalls/no-return-confusion/index.md
+  - Frequently asked questions:
+    - What if my function can raise an exception?: faq/sometimes-raises/index.md
 
 theme: readthedocs
