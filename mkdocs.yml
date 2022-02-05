@@ -9,4 +9,4 @@ nav:
       - Bar: foo/bar.md
       - Baz: foo/baz.md
 
-theme: ivory
+theme: readthedocs
