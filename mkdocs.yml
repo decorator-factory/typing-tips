@@ -1,0 +1,12 @@
+site_name: Typing Tips
+site_url: https://decorator-factory.github.io/typing-tips/
+repo_url: https://github.com/decorator-factory/typing-tips
+
+nav:
+  - Home: index.md
+  - About: about.md
+  - Foo:
+      - Bar: foo/bar.md
+      - Baz: foo/baz.md
+
+theme: ivory
