@@ -147,11 +147,12 @@ def identity_list_str(arg: list[str]) -&gt; list[str]:
 <p>This doesn't scale well. Are you going to replicate the same function 10 times? Will you remember to keep them in sync?</p>
 </li>
 <li>
-<p>What if this is a library function? You won't be able to predict all the ways people will use this function.</p>
+<p>There are infinitely many types! Not just combinations of standard types, but also user classes and classes from other libraries.</p>
 </li>
 </ol>
 <h2 id="the-solution-type-variables">The solution: type variables</h2>
-<p><em>Type variables</em> allow you to link several types together. This is how you can use a type variable to annotate the <code>identity</code> function:</p>
+<p><em>Type variables</em> allow you to link several types together.
+This is how you can use a type variable to annotate the <code>identity</code> function:</p>
 <pre><code class="language-py">from typing import TypeVar
 
 T = TypeVar(&quot;T&quot;)
@@ -175,7 +176,9 @@ get <code>Union[str, bytes]</code> back.</p>
 <p>"If you pass in <code>str</code>, you get <code>str</code>. If you pass in <code>bytes</code>, you get <code>bytes</code>"
 &mdash; sounds like a job for a type variable. Right?</p>
 <p><img alt="Error demonstration" src="unbound-typevar-multiplication.png" /></p>
-<p>The error is fair enough. <code>AnyString</code> doesn't have to be a string or a bytestring, it could be a list or a <code>pathlib.Path</code> or even a function. Therefore we're not allowed to multiply <code>string</code>.</p>
+<p>The error is fair enough. <code>AnyString</code> doesn't have to be a string or a bytestring,
+it could be a list or a <code>pathlib.Path</code> or even a function.
+Therefore we're not allowed to multiply <code>string</code>.</p>
 <p>We can put a restriction on our type variable: it should only accept <code>str</code> or <code>bytes</code>.</p>
 <pre><code class="language-py">AnyString = TypeVar(&quot;AnyString&quot;, str, bytes)
 
@@ -195,11 +198,11 @@ bytes_scream = triple(b&quot;A&quot;) + b&quot;!&quot;
 <pre><code class="language-py">from collections.abc import Iterable, Iterator
 
 
-def remove_falsey_from_list(items: list[T]) -&gt; list[T]:
+def remove_falsy_from_list(items: list[T]) -&gt; list[T]:
     return [item for item in items if item]
 
 
-def remove_falsey(items: Iterable[T]) -&gt; Iterator[T]:
+def remove_falsy(items: Iterable[T]) -&gt; Iterator[T]:
     for item in items:
         if item:
             yield item
