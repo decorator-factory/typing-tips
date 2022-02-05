@@ -176,7 +176,7 @@ get <code>Union[str, bytes]</code> back.</p>
 &mdash; sounds like a job for a type variable. Right?</p>
 <p><img alt="Error demonstration" src="unbound-typevar-multiplication.png" /></p>
 <p>The error is fair enough. <code>AnyString</code> doesn't have to be a string or a bytestring, it could be a list or a <code>pathlib.Path</code> or even a function. Therefore we're not allowed to multiply <code>string</code>.</p>
-<p>We can put a restriction that our type variable should only accept <code>str</code> or <code>bytes</code>.</p>
+<p>We can put a restriction on our type variable: it should only accept <code>str</code> or <code>bytes</code>.</p>
 <pre><code class="language-py">AnyString = TypeVar(&quot;AnyString&quot;, str, bytes)
 
 def triple(string: AnyString) -&gt; AnyString:
@@ -192,15 +192,19 @@ bytes_scream = triple(b&quot;A&quot;) + b&quot;!&quot;
 </ul>
 <h2 id="using-type-variables-as-parameters">Using type variables as parameters</h2>
 <p>You can also use type variables as parameters to generic types, like <code>list</code> or <code>Iterable</code>.</p>
-<pre><code class="language-py">def remove_falsey_from_list(items: list[T]) -&gt; list[T]:
+<pre><code class="language-py">from collections.abc import Iterable, Iterator
+
+
+def remove_falsey_from_list(items: list[T]) -&gt; list[T]:
     return [item for item in items if item]
+
 
 def remove_falsey(items: Iterable[T]) -&gt; Iterator[T]:
     for item in items:
         if item:
             yield item
 </code></pre>
-<p>However, this gets tricky pretty fast. I'll cover it in depth in the next article.</p>
+<p>However, this gets tricky pretty fast. We'll cover it in depth in a different article.</p>
 <h2 id="links">Links</h2>
 <ul>
 <li><code>mypy</code> documentation on generic functions: <a href="https://mypy.readthedocs.io/en/stable/generics.html#generic-functions">mypy documentation</a></li>
