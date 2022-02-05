@@ -1,6 +1,0 @@
-# foo
-
-test
-
-* TOC
-{:toc}
