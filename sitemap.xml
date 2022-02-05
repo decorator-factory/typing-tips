@@ -6,17 +6,7 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://decorator-factory.github.io/typing-tips/about/</loc>
-         <lastmod>2022-02-05</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://decorator-factory.github.io/typing-tips/foo/bar/</loc>
-         <lastmod>2022-02-05</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://decorator-factory.github.io/typing-tips/foo/baz/</loc>
+         <loc>https://decorator-factory.github.io/typing-tips/tutorials/type-vars/</loc>
          <lastmod>2022-02-05</lastmod>
          <changefreq>daily</changefreq>
     </url>
