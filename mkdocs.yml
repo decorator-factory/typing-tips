@@ -15,6 +15,7 @@ nav:
     - What if my function can raise an exception?: faq/sometimes-raises/index.md
   - Anti-patterns and smells:
     - Intro: antipatterns/index.md
+    - Complex annotations: antipatterns/complex-annotations/index.md
     - "`Optional` attribute hell": antipatterns/optional-attributes/index.md
 
 theme:
