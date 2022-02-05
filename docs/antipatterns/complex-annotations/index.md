@@ -86,7 +86,7 @@ class _MovieOptional(TypedDict, total=False):
     genres: list[str]
 
 
-class Movie(_Movie):
+class Movie(_MovieOptional):
     name: str
     director: str
     year: int
