@@ -19,6 +19,7 @@ g()  # unreachable
 ```
 
 It means that either:
+
 - `f` always runs an infinite loop
 - `f` always raises an exception
 - `f` always terminates the current process.
