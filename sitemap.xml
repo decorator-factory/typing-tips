@@ -10,4 +10,14 @@
          <lastmod>2022-02-05</lastmod>
          <changefreq>daily</changefreq>
     </url>
+    <url>
+         <loc>https://decorator-factory.github.io/typing-tips/foo/bar/</loc>
+         <lastmod>2022-02-05</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://decorator-factory.github.io/typing-tips/foo/baz/</loc>
+         <lastmod>2022-02-05</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
 </urlset>
