@@ -5,6 +5,7 @@ repo_url: https://github.com/decorator-factory/typing-tips
 nav:
   - Intro: index.md
   - Tutorials:
-    - Type variables: tutorials/type-vars/index.md
+    - Generics (series):
+      - Type variables: tutorials/generics/type-vars/index.md
 
 theme: readthedocs
