@@ -104,7 +104,7 @@ Email = NewType("Email", str)
 
 def parse_email(string: str) -> Email:
     if _EMAIL_REGEX.fullmatch(string) is None:
-        return ValueError("Invalid email")
+        raise ValueError("Invalid email")
     return Email(string)
 
 
