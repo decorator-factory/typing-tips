@@ -6,6 +6,21 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://decorator-factory.github.io/typing-tips/antipatterns/</loc>
+         <lastmod>2022-02-05</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://decorator-factory.github.io/typing-tips/antipatterns/complex-annotations/</loc>
+         <lastmod>2022-02-05</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://decorator-factory.github.io/typing-tips/antipatterns/optional-attributes/</loc>
+         <lastmod>2022-02-05</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://decorator-factory.github.io/typing-tips/faq/sometimes-raises/</loc>
          <lastmod>2022-02-05</lastmod>
          <changefreq>daily</changefreq>
