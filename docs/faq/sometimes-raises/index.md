@@ -1,6 +1,20 @@
 # What if my function can raise an exception?
 
-Is this correct?
+## Problem
+
+```py
+def fetch_user(user_id: str) -> User:
+    user = database.fetch_user(id=user_id)
+    if user is None:
+        raise LookupError(user_id)
+    return user
+```
+
+This function either returns a user or raises an exception. How to annotate it correctly?
+
+
+## Exception means `NoReturn`, right?
+
 ```py
 from typing import Union, NoReturn
 
@@ -16,7 +30,8 @@ This doesn't break any rules per se, but this means exactly the same as just ret
 def fetch_user(user_id: str) -> User:
 ```
 
-This is not right either:
+
+## What about `Union` with the exception type?
 ```py
 from typing import Union
 
@@ -27,7 +42,12 @@ def fetch_user(user_id: str) -> Union[User, LookupError]:
         raise LookupError(user_id)
     return user
 ```
-The function doesn't _return_ the exception, it _raises_ it.
+The function doesn't _return_ the exception, it _raises_ it. This doesn't force the caller to handle
+`LookupError`, but it does make calling this function awkward:
+```py
+user = fetch_user("u:cba43b8f:42")
+# user: User | LookupError
+```
 
 
 
