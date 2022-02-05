@@ -57,7 +57,8 @@ def fetch_movies() -> dict[str, list[dict[str, Union[str, int, list[str]]]]]:
     return resp.json()
 ```
 
-If I saw this in a piece of code, it would be a major WTF moment for me.
+The return type annotation is really complex. I would probably spend a minute reading it, and a few more
+minutes understanding what the function actually returns.
 
 ## Improvements
 
