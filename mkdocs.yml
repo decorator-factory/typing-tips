@@ -13,6 +13,9 @@ nav:
     - "`NoReturn` doesn't just mean no `return` statement": pitfalls/no-return-confusion/index.md
   - Frequently asked questions:
     - What if my function can raise an exception?: faq/sometimes-raises/index.md
+  - Anti-patterns and smells:
+    - Intro: antipatterns/index.md
+    - "`Optional` attribute hell": antipatterns/optional-attributes/index.md
 
 theme:
   name: material
@@ -21,6 +24,9 @@ theme:
 
 
 markdown_extensions:
+  - admonition
+  - pymdownx.details
+
   - pymdownx.highlight:
       anchor_linenums: true
   - pymdownx.inlinehilite
