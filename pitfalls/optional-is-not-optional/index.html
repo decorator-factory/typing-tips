@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="canonical" href="https://decorator-factory.github.io/typing-tips/pitfalls/optional-is-not-optional/">
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>`Optional` doesn't mean an optional argument - Typing Tips</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../../css/theme.css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "`Optional` doesn't mean an optional argument";
+    var mkdocs_page_input_path = "pitfalls/optional-is-not-optional/index.md";
+    var mkdocs_page_url = "/typing-tips/pitfalls/optional-is-not-optional/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Typing Tips</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../..">Intro</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Tutorials</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="#">Generics (series)</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../tutorials/generics/type-vars/">Type variables</a>
+                </li>
+    </ul>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Common pitfalls</span></p>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">`Optional` doesn't mean an optional argument</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#examples">Examples</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#a-function-argument-that-is-not-mandatory">A function argument that is not mandatory</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#a-function-argument-that-is-not-mandatory-incorrect-version">A function argument that is not mandatory: incorrect version</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#a-function-argument-that-is-not-mandatory-and-can-be-none">A function argument that is not mandatory and can be None</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#a-function-argument-that-is-not-mandatory-and-can-be-none-incorrect-version">A function argument that is not mandatory and can be None: incorrect version</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#a-function-argument-that-is-not-mandatory-and-can-be-none-dont-do-this">A function argument that is not mandatory and can be None: don't do this</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../typevar-typealias-newtype/">Type variables vs type aliases vs `NewType`</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Typing Tips</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Common pitfalls &raquo;</li>
+        
+      
+    
+    <li>`Optional` doesn't mean an optional argument</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/decorator-factory/typing-tips/edit/master/docs/pitfalls/optional-is-not-optional/index.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="optional-doesnt-mean-an-optional-argument"><code>Optional</code> doesn't mean an optional argument</h1>
+<p><code>Optional</code> doesn't represent an optional argument to a function. It means "either <code>&lt;something&gt;</code> or <code>None</code>".
+For example, <code>Optional[int]</code> means <code>Union[int, None]</code>, exactly.</p>
+<p>In fact, if you try to print out <code>Union[int, None]</code>, you will see <code>Optional[int]</code>!</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; from typing import Union, Optional
+&gt;&gt;&gt;
+&gt;&gt;&gt; Optional[int]
+typing.Optional[int]
+&gt;&gt;&gt; Union[int, None]
+typing.Optional[int]
+&gt;&gt;&gt; Union[int, None] == Optional[int]
+True
+&gt;&gt;&gt;
+</code></pre>
+<h2 id="examples">Examples</h2>
+<h3 id="a-function-argument-that-is-not-mandatory">A function argument that is not mandatory</h3>
+<pre><code class="language-py">def set_team_score(team: Team, score: int = 0) -&gt; None:
+    database.execute(&quot;UPDATE teams SET score = ? WHERE team_uid = ?&quot;, (score, team.uid))
+</code></pre>
+<p>This is the right way to annotate this function. The <code>score</code> argument is not mandatory, but if it is
+provided, it must be an <code>int</code> &mdash; it cannot be <code>None</code>.</p>
+<p>So the <code>score</code> <em>argument</em> is optional, but the <em>type of the argument</em> isn't <code>Optional[int]</code>.</p>
+<h3 id="a-function-argument-that-is-not-mandatory-incorrect-version">A function argument that is not mandatory: incorrect version</h3>
+<pre><code class="language-py">def set_team_score(team: Team, score: Optional[int] = 0) -&gt; None:
+    database.execute(&quot;UPDATE teams SET score = ? WHERE team_uid = ?&quot;, (score, team.uid))
+</code></pre>
+<p>This type means that it's legal to call <code>set_team_score(some_team, score=None)</code>, which we probably didn't mean.</p>
+<h3 id="a-function-argument-that-is-not-mandatory-and-can-be-none">A function argument that is not mandatory and can be <code>None</code></h3>
+<pre><code class="language-py">def create_classroom(name: str, mentor: Optional[Mentor] = None) -&gt; None:
+    mentor_uid = None if mentor is None else mentor.uid
+    client.create_classroom({&quot;name&quot;: name, &quot;mentor_uid&quot;: mentor_uid})
+</code></pre>
+<p>The function can be called in three ways:</p>
+<ul>
+<li><code>create_classroom("foo", mentor)</code> where <code>mentor</code> is a <code>Mentor</code> object</li>
+<li><code>create_classroom("foo")</code>, in which case <code>mentor</code> will be <code>None</code></li>
+<li><code>create_classroom("foo", None)</code>, which is the same as the second call</li>
+</ul>
+<h3 id="a-function-argument-that-is-not-mandatory-and-can-be-none-incorrect-version">A function argument that is not mandatory and can be <code>None</code>: incorrect version</h3>
+<pre><code class="language-py">def create_classroom(name: str, mentor: Optional[Mentor]) -&gt; None:
+    ...
+</code></pre>
+<p>In this case, the second argument is <strong>mandatory</strong>, so you can only call it with two arguments:</p>
+<ul>
+<li><code>create_classroom("foo", mentor)</code>, where <code>mentor</code> is a <code>Mentor</code> object</li>
+<li><code>create_classroom("foo", None)</code></li>
+</ul>
+<p>In general, type annotations don't change how the function works. But the terminology is a bit confusing here:
+"optional" already has some meaning for function arguments.</p>
+<h3 id="a-function-argument-that-is-not-mandatory-and-can-be-none-dont-do-this">A function argument that is not mandatory and can be <code>None</code>: don't do this</h3>
+<pre><code class="language-py">def create_classroom(name: str, mentor: Optional[Union[Mentor, None]] = None) -&gt; None:
+    ...
+</code></pre>
+<p><code>Optional[Mentor]</code> already means "a <code>Mentor</code> object or <code>None</code>". There's no need to say it twice.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../typevar-typealias-newtype/" class="btn btn-neutral float-right" title="Type variables vs type aliases vs `NewType`">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../../tutorials/generics/type-vars/" class="btn btn-neutral" title="Type variables"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/decorator-factory/typing-tips/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../../tutorials/generics/type-vars/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../typevar-typealias-newtype/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme_extra.js" defer></script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

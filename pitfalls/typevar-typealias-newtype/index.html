@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="canonical" href="https://decorator-factory.github.io/typing-tips/pitfalls/typevar-typealias-newtype/">
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Type variables vs type aliases vs `NewType` - Typing Tips</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../../css/theme.css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Type variables vs type aliases vs `NewType`";
+    var mkdocs_page_input_path = "pitfalls/typevar-typealias-newtype/index.md";
+    var mkdocs_page_url = "/typing-tips/pitfalls/typevar-typealias-newtype/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Typing Tips</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../..">Intro</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Tutorials</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="#">Generics (series)</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../../tutorials/generics/type-vars/">Type variables</a>
+                </li>
+    </ul>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Common pitfalls</span></p>
+                <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="../optional-is-not-optional/">`Optional` doesn't mean an optional argument</a>
+                    </li>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Type variables vs type aliases vs `NewType`</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#type-aliases">Type aliases</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#example-repeating-callback-type">Example: repeating callback type</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#type-variables">Type variables</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#example-filtering-an-iterable">Example: filtering an iterable</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#newtype">NewType</a>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Typing Tips</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Common pitfalls &raquo;</li>
+        
+      
+    
+    <li>Type variables vs type aliases vs `NewType`</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/decorator-factory/typing-tips/edit/master/docs/pitfalls/typevar-typealias-newtype/index.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="type-variables-vs-type-aliases-vs-newtype">Type variables vs type aliases vs <code>NewType</code></h1>
+<p>This piece very briefly covers the difference between:</p>
+<ul>
+<li>type aliases</li>
+<li>type variables (<code>TypeVar</code>)</li>
+<li><code>NewType</code></li>
+</ul>
+<p>They have similar names, so people new to type annotations often confuse them.</p>
+<h2 id="type-aliases">Type aliases</h2>
+<p>A type alias is just a type saved to a global constant.</p>
+<h3 id="example-repeating-callback-type">Example: repeating callback type</h3>
+<p>Suppose that you're using <code>Callable[[Node, datetime], Awaitable[None]]</code> in a few places.</p>
+<pre><code class="language-py">class NodeWatcher:
+    async def before_update(
+        self,
+        callback: Callable[[Node, datetime], Awaitable[None]]
+    ) -&gt; None:
+        ...
+
+    async def after_update(
+        self,
+        callback: Callable[[Node, datetime], Awaitable[None]]
+    ) -&gt; None:
+        ...
+
+    async def before_removal(
+        self,
+        callback: Callable[[Node, datetime], Awaitable[None]]
+    ) -&gt; None:
+        ...
+</code></pre>
+<p>This can get unwieldy, and if you want to change this you'll have to change it in 10 places.
+Instead of repeating the same type, extract it to a type alias.</p>
+<pre><code class="language-py">NodeCallback = Callable[[Node, datetime], Awaitable[None]]
+
+
+class NodeWatcher:
+    async def before_update(self, callback: NodeCallback) -&gt; None:
+        ...
+
+    async def after_update(self, callback: NodeCallback) -&gt; None:
+        ...
+
+    async def before_removal(self, callback: NodeCallback) -&gt; None:
+        ...
+</code></pre>
+<p>Note that this doesn't create a new type: users of this class will be able to provide plain old functions.</p>
+<h2 id="type-variables">Type variables</h2>
+<p>A <code>TypeVar</code> is very different from a type alias. <code>TypeVar</code>s let you link two types together.</p>
+<p>A type variables is not a type alias: it doesn't just let you name a type, or keep your types DRY.
+It exists specifically to make generic functions and generic classes.</p>
+<p>For a more complete explanation, see the <a href="../../tutorials/generics/type-vars">tutorial on type variables</a>.</p>
+<h3 id="example-filtering-an-iterable">Example: filtering an iterable</h3>
+<pre><code class="language-py">from collections.abc import Iterable, Iterator, Callable
+from typing import TypeVar
+
+
+T = TypeVar(&quot;T&quot;)
+
+
+def filter_it(predicate: Callable[[T], bool], iterable: Iterable[T]) -&gt; Iterator[T]:
+    for item in iterable:
+        if predicate(item):
+            yield item
+</code></pre>
+<h2 id="newtype">NewType</h2>
+<p><code>NewType</code> lets you create a wrapper type around an existing type. For example:</p>
+<pre><code class="language-py">import re
+from typing import NewType
+
+
+_EMAIL_REGEX = re.compile(r&quot;[^@]+@[^@.]+\.[^@]+&quot;)
+
+
+Email = NewType(&quot;Email&quot;, str)
+
+
+def parse_email(string: str) -&gt; Optional[Email]:
+    if _EMAIL_REGEX.fullmatch(string) is None:
+        return None
+    return Email(string)
+
+
+def send_message(email: Email, message: str) -&gt; None:
+    bot.
+</code></pre>
+<p>Now if you call just <code>send_message("a@a.com", "Hi there, A!")</code>, you will get an error because a string is not
+an <code>Email</code>. This will work though:</p>
+<pre><code class="language-py">email = parse_email(&quot;a@a.com&quot;)
+send_message(email, &quot;Hi there, A!&quot;)
+</code></pre>
+<p>At runtime <code>email</code> will be just a <code>str</code> object, but type checkers will know to track it as <code>Email</code>.
+It can prevent some silly mistakes such as:</p>
+<pre><code class="language-py">send_message(&quot;Hi there, A!&quot;, email)
+</code></pre>
+<p>This can be useful when you pass around values with some specific restrictions and <em>semantics</em>:
+IDs, units, currency, emails, IP addresses, URLs, hosts, paths, and so on.</p>
+<p>However, if you're using this <code>Email</code> or <code>Host</code> a lot, consider creating a proper class for it.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="../optional-is-not-optional/" class="btn btn-neutral" title="`Optional` doesn't mean an optional argument"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/decorator-factory/typing-tips/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../optional-is-not-optional/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+  </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme_extra.js" defer></script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

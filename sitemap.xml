@@ -6,7 +6,17 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://decorator-factory.github.io/typing-tips/tutorials/type-vars/</loc>
+         <loc>https://decorator-factory.github.io/typing-tips/pitfalls/optional-is-not-optional/</loc>
+         <lastmod>2022-02-05</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://decorator-factory.github.io/typing-tips/pitfalls/typevar-typealias-newtype/</loc>
+         <lastmod>2022-02-05</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://decorator-factory.github.io/typing-tips/tutorials/generics/type-vars/</loc>
          <lastmod>2022-02-05</lastmod>
          <changefreq>daily</changefreq>
     </url>
