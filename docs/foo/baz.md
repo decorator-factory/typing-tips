@@ -1,3 +1,0 @@
-# Baz
-
-Something

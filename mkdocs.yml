@@ -3,10 +3,8 @@ site_url: https://decorator-factory.github.io/typing-tips/
 repo_url: https://github.com/decorator-factory/typing-tips
 
 nav:
-  - Home: index.md
-  - About: about.md
-  - Foo:
-      - Bar: foo/bar/index.md
-      - Baz: foo/baz.md
+  - Intro: index.md
+  - Tutorials:
+    - Type variables: tutorials/type-vars/index.md
 
 theme: readthedocs

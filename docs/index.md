@@ -1,17 +1,15 @@
-# Welcome to MkDocs
+# Typing Tips
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+This is a collection of short articles about Python's gradual typing system.
 
-## Commands
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
+## Contribute
 
-## Project layout
+I'm happy to get feedback. If you want to:
 
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+- suggest a new article
+- suggest a correction
+- fix grammar/punctuation
+- point out that some explanation is confusing
+
+Feel free to open an issue or pull request on [GitHub](https://github.com/decorator-factory/typing-tips)
