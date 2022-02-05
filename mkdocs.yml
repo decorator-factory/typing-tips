@@ -7,5 +7,7 @@ nav:
   - Tutorials:
     - Generics (series):
       - Type variables: tutorials/generics/type-vars/index.md
+  - Common pitfalls:
+    - "`Optional` doesn't mean an optional argument": pitfalls/optional-is-not-optional/index.md
 
 theme: readthedocs
