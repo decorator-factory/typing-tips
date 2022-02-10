@@ -92,10 +92,12 @@ The error is fair enough. `AnyString` doesn't have to be a string or a bytestrin
 it could be a list or a `pathlib.Path` or even a function.
 Therefore we're not allowed to multiply `string`.
 
-We can put a restriction on our type variable: it should only accept `str` or `bytes`.
+We can put a _bound_ on our type variable: it should only accept `str` or `bytes`.
 
 ```py
-AnyString = TypeVar("AnyString", str, bytes)
+from typing import Union
+
+AnyString = TypeVar("AnyString", bound=Union[str, bytes])
 
 def triple(string: AnyString) -> AnyString:
     return string * 3
