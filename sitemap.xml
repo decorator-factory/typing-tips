@@ -2,47 +2,47 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://decorator-factory.github.io/typing-tips/</loc>
-         <lastmod>2022-02-05</lastmod>
+         <lastmod>2022-02-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://decorator-factory.github.io/typing-tips/antipatterns/</loc>
-         <lastmod>2022-02-05</lastmod>
+         <lastmod>2022-02-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://decorator-factory.github.io/typing-tips/antipatterns/complex-annotations/</loc>
-         <lastmod>2022-02-05</lastmod>
+         <lastmod>2022-02-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://decorator-factory.github.io/typing-tips/antipatterns/optional-attributes/</loc>
-         <lastmod>2022-02-05</lastmod>
+         <lastmod>2022-02-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://decorator-factory.github.io/typing-tips/faq/sometimes-raises/</loc>
-         <lastmod>2022-02-05</lastmod>
+         <lastmod>2022-02-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://decorator-factory.github.io/typing-tips/pitfalls/no-return-confusion/</loc>
-         <lastmod>2022-02-05</lastmod>
+         <lastmod>2022-02-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://decorator-factory.github.io/typing-tips/pitfalls/optional-is-not-optional/</loc>
-         <lastmod>2022-02-05</lastmod>
+         <lastmod>2022-02-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://decorator-factory.github.io/typing-tips/pitfalls/typevar-typealias-newtype/</loc>
-         <lastmod>2022-02-05</lastmod>
+         <lastmod>2022-02-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://decorator-factory.github.io/typing-tips/tutorials/generics/type-vars/</loc>
-         <lastmod>2022-02-05</lastmod>
+         <lastmod>2022-02-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
