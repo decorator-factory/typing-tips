@@ -117,6 +117,10 @@ You can also use type variables as parameters to generic types, like `list` or `
 
 ```py
 from collections.abc import Iterable, Iterator
+from typing import TypeVar
+
+
+T = TypeVar("T")
 
 
 def remove_falsy_from_list(items: list[T]) -> list[T]:
