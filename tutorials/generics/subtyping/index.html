@@ -8,14 +8,14 @@
       
       
       
-        <link rel="canonical" href="https://decorator-factory.github.io/typing-tips/tutorials/generics/type-vars/">
+        <link rel="canonical" href="https://decorator-factory.github.io/typing-tips/tutorials/generics/subtyping/">
       
       <link rel="icon" href="../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.9">
     
     
       
-        <title>Type variables - Typing Tips</title>
+        <title>Subtyping - Typing Tips</title>
       
     
     
@@ -60,7 +60,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#type-variables" class="md-skip">
+        <a href="#subtyping" class="md-skip">
           Skip to content
         </a>
       
@@ -93,7 +93,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Type variables
+              Subtyping
             
           </span>
         </div>
@@ -272,6 +272,20 @@
               
   
   
+  
+    <li class="md-nav__item">
+      <a href="../type-vars/" class="md-nav__link">
+        Type variables
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
     
   
   
@@ -284,12 +298,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Type variables
+          Subtyping
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Type variables
+        Subtyping
       </a>
       
         
@@ -308,56 +322,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#the-problem" class="md-nav__link">
-    The problem
-  </a>
-  
-    <nav class="md-nav" aria-label="The problem">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#why-not-use-any" class="md-nav__link">
-    Why not use Any?
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#why-not-specialize-the-function-for-different-types" class="md-nav__link">
-    Why not specialize the function for different types?
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#the-solution-type-variables" class="md-nav__link">
-    The solution: type variables
+  <a href="#definition" class="md-nav__link">
+    Definition
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#putting-constraints-on-a-type-variable" class="md-nav__link">
-    Putting constraints on a type variable
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#using-type-variables-as-parameters" class="md-nav__link">
-    Using type variables as parameters
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#links" class="md-nav__link">
-    Links
+  <a href="#examples" class="md-nav__link">
+    Examples
   </a>
   
 </li>
@@ -366,20 +339,6 @@
   
 </nav>
       
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../subtyping/" class="md-nav__link">
-        Subtyping
-      </a>
     </li>
   
 
@@ -639,56 +598,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#the-problem" class="md-nav__link">
-    The problem
-  </a>
-  
-    <nav class="md-nav" aria-label="The problem">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#why-not-use-any" class="md-nav__link">
-    Why not use Any?
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#why-not-specialize-the-function-for-different-types" class="md-nav__link">
-    Why not specialize the function for different types?
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#the-solution-type-variables" class="md-nav__link">
-    The solution: type variables
+  <a href="#definition" class="md-nav__link">
+    Definition
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#putting-constraints-on-a-type-variable" class="md-nav__link">
-    Putting constraints on a type variable
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#using-type-variables-as-parameters" class="md-nav__link">
-    Using type variables as parameters
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#links" class="md-nav__link">
-    Links
+  <a href="#examples" class="md-nav__link">
+    Examples
   </a>
   
 </li>
@@ -705,115 +623,85 @@
             <article class="md-content__inner md-typeset">
               
                 
-<a href="https://github.com/decorator-factory/typing-tips/edit/master/docs/tutorials/generics/type-vars/index.md" title="Edit this page" class="md-content__button md-icon">
+<a href="https://github.com/decorator-factory/typing-tips/edit/master/docs/tutorials/generics/subtyping/index.md" title="Edit this page" class="md-content__button md-icon">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
 </a>
 
 
-<h1 id="type-variables">Type variables</h1>
-<p>This is a short introduction to type variables, or <code>TypeVar</code>s.</p>
-<h2 id="the-problem">The problem</h2>
-<p>This function accepts anything as the argument and returns it as is.
-How do you explain to the type checker that the return type is the same as the type of <code>arg</code>?</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">def</span> <span class="nf">identity</span><span class="p">(</span><span class="n">arg</span><span class="p">):</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    <span class="k">return</span> <span class="n">arg</span>
-</code></pre></div>
-<h3 id="why-not-use-any">Why not use <code>Any</code>?</h3>
-<p><div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">def</span> <span class="nf">identity</span><span class="p">(</span><span class="n">arg</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    <span class="k">return</span> <span class="n">arg</span>
-</code></pre></div>
-If you use <code>Any</code>, the type checker will not understand how this function works:
-as far as it's concerned, the function can return anything at all.
-The return type doesn't depend on the type of <code>arg</code>.</p>
-<p>We'd really want <code>number</code> to be an <code>int</code> here, so that the type checker will catch an error on the next line:</p>
-<p><img alt="Type inference with naive annotation" src="why-not-any.png" /></p>
-<h3 id="why-not-specialize-the-function-for-different-types">Why not specialize the function for different types?</h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">def</span> <span class="nf">identity_int</span><span class="p">(</span><span class="n">arg</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    <span class="k">return</span> <span class="n">arg</span>
+<h1 id="subtyping">Subtyping</h1>
+<p>To move forward, we'll need a quick interlude about <em>subtyping</em>.</p>
+<p>Subtyping is a generalization of subclassing. If you're familiar with set theory,
+subtyping is very similar to one set being a subset of another.</p>
+<h2 id="definition">Definition</h2>
+<p>A type <code>Sub</code> is a subtype of type <code>Sup</code> if a value of type <code>Sub</code> can be assigned to
+a variable of type <code>Sub</code></p>
+<h2 id="examples">Examples</h2>
+<ul>
+<li>
+<p><code>Dog</code> is a <em>subclass</em> of <code>Animal</code>, so <code>Dog</code> is also a <em>subtype</em> of <code>Animal</code>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">class</span> <span class="nc">Animal</span><span class="p">:</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    <span class="k">pass</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="k">class</span> <span class="nc">Dog</span><span class="p">(</span><span class="n">Animal</span><span class="p">):</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="k">pass</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="n">pet</span><span class="p">:</span> <span class="n">Animal</span> <span class="o">=</span> <span class="n">Dog</span><span class="p">()</span>
+</code></pre></div></p>
+</li>
+<li>
+<p><code>int</code> and <code>str</code> are subtypes of <code>Union[int, str]</code>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">x</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;hello&quot;</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">y</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="mi">42</span>
+</code></pre></div></p>
+</li>
+<li>
+<p>Any type is a subtype of itself
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">class</span> <span class="nc">Foo</span><span class="p">:</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    <span class="k">pass</span>
 <a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="k">def</span> <span class="nf">identity_int</span><span class="p">(</span><span class="n">arg</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    <span class="k">return</span> <span class="n">arg</span>
-<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
-<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="k">def</span> <span class="nf">identity_list_str</span><span class="p">(</span><span class="n">arg</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>    <span class="k">return</span> <span class="n">arg</span>
-<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>
-<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="o">...</span>
-</code></pre></div>
-<ol>
-<li>
-<p>This doesn't scale well. Are you going to replicate the same function 10 times? Will you remember to keep them in sync?</p>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="n">foo</span><span class="p">:</span> <span class="n">Foo</span> <span class="o">=</span> <span class="n">Foo</span><span class="p">()</span>
+</code></pre></div></p>
 </li>
 <li>
-<p>There are infinitely many types! Not just combinations of standard types, but also user-defined classes and classes from other libraries.</p>
+<p><code>Literal["nice"]</code> is a subtype of <code>str</code>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">nice</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;nice&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;nice&quot;</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">word</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">nice</span>
+</code></pre></div></p>
 </li>
-</ol>
-<h2 id="the-solution-type-variables">The solution: type variables</h2>
-<p><em>Type variables</em> allow you to link several types together.
-This is how you can use a type variable to annotate the <code>identity</code> function:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TypeVar</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="n">T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;T&quot;</span><span class="p">)</span>
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="k">def</span> <span class="nf">identity</span><span class="p">(</span><span class="n">arg</span><span class="p">:</span> <span class="n">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
-<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>    <span class="k">return</span> <span class="n">arg</span>
-</code></pre></div>
-<p>Here the return type is "linked" to the parameter type:
-whatever you put into the function, the same thing comes out.</p>
-<p>This is how it looks in action:</p>
-<p><img alt="Generic function demonstration" src="identity-typevar.png" /></p>
-<h2 id="putting-constraints-on-a-type-variable">Putting constraints on a type variable</h2>
-<p>Is this a well-typed function?</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">def</span> <span class="nf">triple</span><span class="p">(</span><span class="n">string</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">]:</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    <span class="k">return</span> <span class="n">string</span> <span class="o">*</span> <span class="mi">3</span>
-</code></pre></div>
-<p>If you pass in a string, you always get a string, same with bytes.
-But the type doesn't say quite that: whether you pass in a <code>str</code> or a <code>bytes</code> object, you will
-get <code>Union[str, bytes]</code> back.</p>
-<p><img alt="Error demonstration" src="bad-union.png" /></p>
-<p>"If you pass in <code>str</code>, you get <code>str</code>. If you pass in <code>bytes</code>, you get <code>bytes</code>"
-&mdash; sounds like a job for a type variable. Right?</p>
-<p><img alt="Error demonstration" src="unbound-typevar-multiplication.png" /></p>
-<p>The error is fair enough. <code>AnyString</code> doesn't have to be a string or a bytestring,
-it could be a list or a <code>pathlib.Path</code> or even a function.
-Therefore we're not allowed to multiply <code>string</code>.</p>
-<p>We can put a <em>bound</em> on our type variable: it should only accept <code>str</code> or <code>bytes</code>.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="n">AnyString</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;AnyString&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">])</span>
-<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
-<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="k">def</span> <span class="nf">triple</span><span class="p">(</span><span class="n">string</span><span class="p">:</span> <span class="n">AnyString</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AnyString</span><span class="p">:</span>
-<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>    <span class="k">return</span> <span class="n">string</span> <span class="o">*</span> <span class="mi">3</span>
-<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>
-<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="n">unicode_scream</span> <span class="o">=</span> <span class="n">triple</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;!&quot;</span>
-<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="n">bytes_scream</span> <span class="o">=</span> <span class="n">triple</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;A&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="sa">b</span><span class="s2">&quot;!&quot;</span>
-</code></pre></div>
-<p>Here we've achieved two goals:</p>
-<ul>
-<li>ensuring that the input is either a <code>str</code> or a <code>bytes</code> object</li>
-<li>linking the argument type to the return type</li>
-</ul>
-<h2 id="using-type-variables-as-parameters">Using type variables as parameters</h2>
-<p>You can also use type variables as parameters to generic types, like <code>list</code> or <code>Iterable</code>.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Iterator</span>
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TypeVar</span>
-<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
-<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>
-<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="n">T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;T&quot;</span><span class="p">)</span>
-<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>
-<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>
-<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="k">def</span> <span class="nf">remove_falsy_from_list</span><span class="p">(</span><span class="n">items</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">T</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
-<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>    <span class="k">return</span> <span class="p">[</span><span class="n">item</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span> <span class="k">if</span> <span class="n">item</span><span class="p">]</span>
-<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>
-<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>
-<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="k">def</span> <span class="nf">remove_falsy</span><span class="p">(</span><span class="n">items</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">T</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
-<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
-<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>        <span class="k">if</span> <span class="n">item</span><span class="p">:</span>
-<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>            <span class="k">yield</span> <span class="n">item</span>
-</code></pre></div>
-<p>However, this gets tricky pretty fast. We'll cover it in depth in a different article.</p>
-<h2 id="links">Links</h2>
-<ul>
-<li><code>mypy</code> documentation on generic functions: <a href="https://mypy.readthedocs.io/en/stable/generics.html#generic-functions">mypy documentation</a></li>
+<li>
+<p>A type is a subtype of a protocol if it satisfies it
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">class</span> <span class="nc">Reader</span><span class="p">(</span><span class="n">Procool</span><span class="p">):</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    <span class="k">def</span> <span class="nf">read_chunk</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">max_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span> <span class="o">...</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="k">class</span> <span class="nc">StringReader</span><span class="p">:</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">initial</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_buffer</span> <span class="o">=</span> <span class="n">initial</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>    <span class="k">def</span> <span class="nf">read_chunk</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">max_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>        <span class="n">max_size</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">max_size</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>        <span class="n">chunk</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_buffer</span><span class="p">[:</span><span class="n">max_size</span><span class="p">]</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_buffer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_buffer</span><span class="p">[</span><span class="n">max_size</span><span class="p">:]</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>        <span class="k">return</span> <span class="n">chunk</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="n">reader</span><span class="p">:</span> <span class="n">Reader</span> <span class="o">=</span> <span class="n">StringReader</span><span class="p">(</span><span class="s2">&quot;Hello, world!&quot;</span><span class="p">)</span>
+</code></pre></div></p>
+</li>
+<li>
+<p><code>tuple[int, ...]</code> is a subtype of <code>tuple[Union[int, str], ...]</code>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">ints</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">ints_or_strings</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">ints</span>
+</code></pre></div></p>
+</li>
+<li>
+<p><code>Callable[[Animal], int]</code> is a subtype of <code>Callable[[Dog], Union[int, str]]</code></p>
+</li>
+<li>
+<p><code>list[int]</code> is <strong>not</strong> a subtype of <code>list[Union[int, str]]</code></p>
+<blockquote>
+<p>Wait, what?</p>
+</blockquote>
+<p>You'll see why later in the series!</p>
+</li>
 </ul>
 
               
@@ -828,7 +716,7 @@ Therefore we're not allowed to multiply <code>string</code>.</p>
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../../.." class="md-footer__link md-footer__link--prev" aria-label="Previous: Intro" rel="prev">
+        <a href="../type-vars/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Type variables" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -837,20 +725,20 @@ Therefore we're not allowed to multiply <code>string</code>.</p>
               <span class="md-footer__direction">
                 Previous
               </span>
-              Intro
+              Type variables
             </div>
           </div>
         </a>
       
       
         
-        <a href="../subtyping/" class="md-footer__link md-footer__link--next" aria-label="Next: Subtyping" rel="next">
+        <a href="../generic-types/" class="md-footer__link md-footer__link--next" aria-label="Next: Generic types" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Subtyping
+              Generic types
             </div>
           </div>
           <div class="md-footer__button md-icon">
