@@ -7,6 +7,8 @@ nav:
   - Tutorials:
     - Generics (series):
       - Type variables: tutorials/generics/type-vars/index.md
+      - Subtyping: tutorials/generics/subtyping/index.md
+      - "Generic types": tutorials/generics/generic-types/index.md
   - Common pitfalls:
     - "`Optional` doesn't mean an optional argument": pitfalls/optional-is-not-optional/index.md
     - "Type variables vs type aliases vs `NewType`": pitfalls/typevar-typealias-newtype/index.md
