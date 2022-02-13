@@ -10,6 +10,7 @@ nav:
       - Subtyping: tutorials/generics/subtyping/index.md
       - "Generic types": tutorials/generics/generic-types/index.md
       - Variance: tutorials/generics/variance/index.md
+      - "Variance for your own classes": tutorials/generics/custom-variance/index.md
   - Common pitfalls:
     - "`Optional` doesn't mean an optional argument": pitfalls/optional-is-not-optional/index.md
     - "Type variables vs type aliases vs `NewType`": pitfalls/typevar-typealias-newtype/index.md
