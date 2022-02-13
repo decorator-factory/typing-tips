@@ -6,6 +6,7 @@ nav:
   - Intro: index.md
   - Tutorials:
     - Generics (series):
+      - Intro: tutorials/generics/index.md
       - Type variables: tutorials/generics/type-vars/index.md
       - Subtyping: tutorials/generics/subtyping/index.md
       - "Generic types": tutorials/generics/generic-types/index.md
