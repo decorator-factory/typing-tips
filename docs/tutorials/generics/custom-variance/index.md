@@ -55,7 +55,7 @@ parent_box = Box(Parent())
 something_else(parent_box)  # Error
 ```
 
-So our `Box` class should stay covariant.
+So our `Box` class should stay invariant.
 
 
 ## How to make the `Box` covariant?
