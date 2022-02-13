@@ -31,13 +31,13 @@ class Box:
         self._value = new_value
 
 
-pair = Box(1)
+box = Box(1)
 
-number = pair.get()
+number = box.get()
 reveal_type(number)
 # number: object
 
-pair.put("hello")
+box.put("hello")
 ```
 
 Hm... well, it does what we told it to do. But it's a bummer: we would really like
