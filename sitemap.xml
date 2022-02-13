@@ -41,6 +41,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://decorator-factory.github.io/typing-tips/tutorials/generics/custom-variance/</loc>
+         <lastmod>2022-02-13</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://decorator-factory.github.io/typing-tips/tutorials/generics/generic-types/</loc>
          <lastmod>2022-02-13</lastmod>
          <changefreq>daily</changefreq>
