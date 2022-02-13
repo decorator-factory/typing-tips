@@ -7,8 +7,8 @@ subtyping is very similar to one set being a subset of another.
 
 ## Definition
 
-A type `Sub` is a subtype of type `Sup` if a value of type `Sub` can be assigned to
-a variable of type `Sub`
+A type `Child` is a subtype of type `Parent` if a value of type `Child` can be assigned to
+a variable of type `Parent`
 
 ## Examples
 
