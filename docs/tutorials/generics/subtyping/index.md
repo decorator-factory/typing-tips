@@ -45,7 +45,7 @@ word: str = nice
 
 - A type is a subtype of a protocol if it satisfies it
 ```py
-class Reader(Procool):
+class Reader(Protocol):
     def read_chunk(self, max_size: int) -> str: ...
 
 class StringReader:
