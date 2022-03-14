@@ -53,7 +53,7 @@ user = fetch_user("u:cba43b8f:42")
 
 ## How to specify that I'm raising an exception, then?
 
-There isn't a way to do mark that a function raises something in Python's type system.
+There isn't a way to mark that a function raises something in Python's type system.
 In Python, pretty much anything can raise a variety of exceptions.
 
 If raising an exception is part of the function's contract, note it in the docstring:
