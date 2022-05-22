@@ -7,6 +7,12 @@ Link: https://decorator-factory.github.io/typing-tips/
 
 ## Contribute
 
+### How to run this locally?
+
+1. Install Python 3.9 and everything from `requirements.txt`
+2. Run `python -m mkdocs serve --livereload`
+3. Visit `http://127.0.0.1:8000/typing-tips/`
+
 ### Corrections
 
 I'm happy to get feedback. If you want to:
