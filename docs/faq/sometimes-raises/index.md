@@ -1,16 +1,16 @@
 # What if my function can raise an exception?
 
-## Problem
+!!! question
 
-```py
-def fetch_user(user_id: str) -> User:
-    user = database.fetch_user(id=user_id)
-    if user is None:
-        raise LookupError(user_id)
-    return user
-```
+    ```py
+    def fetch_user(user_id: str) -> User:
+        user = database.fetch_user(id=user_id)
+        if user is None:
+            raise LookupError(user_id)
+        return user
+    ```
 
-This function either returns a user or raises an exception. How to annotate it correctly?
+    This function either returns a user or raises an exception. How to annotate it correctly?
 
 
 ## Exception means `NoReturn`, right?
