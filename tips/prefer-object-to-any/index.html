@@ -8,14 +8,14 @@
       
       
       
-        <link rel="canonical" href="https://decorator-factory.github.io/typing-tips/tips/no-return-confusion/">
+        <link rel="canonical" href="https://decorator-factory.github.io/typing-tips/tips/prefer-object-to-any/">
       
       <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.9">
     
     
       
-        <title>`NoReturn` doesn't just mean no `return` statement - Typing Tips</title>
+        <title>Prefer `object` to `Any` - Typing Tips</title>
       
     
     
@@ -60,7 +60,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#noreturn-doesnt-just-mean-no-return-statement" class="md-skip">
+        <a href="#prefer-object-to-any" class="md-skip">
           Skip to content
         </a>
       
@@ -93,7 +93,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              `NoReturn` doesn't just mean no `return` statement
+              Prefer `object` to `Any`
             
           </span>
         </div>
@@ -367,14 +367,12 @@
 
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
       
       
       
@@ -423,59 +421,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          `NoReturn` doesn't just mean no `return` statement
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../no-return-confusion/" class="md-nav__link">
         `NoReturn` doesn't just mean no `return` statement
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#what-even-is-the-point" class="md-nav__link">
-    What even is the point?
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#correct-usage-examples" class="md-nav__link">
-    Correct usage examples
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -652,15 +602,49 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#what-even-is-the-point" class="md-nav__link">
-    What even is the point?
+  <a href="#what-is-object" class="md-nav__link">
+    What is object?
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#correct-usage-examples" class="md-nav__link">
-    Correct usage examples
+  <a href="#what-is-any" class="md-nav__link">
+    What is Any?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-use-object-over-any" class="md-nav__link">
+    Why use object over Any?
+  </a>
+  
+    <nav class="md-nav" aria-label="Why use object over Any?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-1-await" class="md-nav__link">
+    Example 1. await
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-2-settings" class="md-nav__link">
+    Example 2. Settings
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-ever-use-any" class="md-nav__link">
+    Why ever use Any?
   </a>
   
 </li>
@@ -677,48 +661,72 @@
             <article class="md-content__inner md-typeset">
               
                 
-<a href="https://github.com/decorator-factory/typing-tips/edit/master/docs/tips/no-return-confusion/index.md" title="Edit this page" class="md-content__button md-icon">
+<a href="https://github.com/decorator-factory/typing-tips/edit/master/docs/tips/prefer-object-to-any/index.md" title="Edit this page" class="md-content__button md-icon">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
 </a>
 
 
-<h1 id="noreturn-doesnt-just-mean-no-return-statement"><code>NoReturn</code> doesn't just mean no <code>return</code> statement</h1>
-<p>Is this the right annotation for <code>greet</code>?</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">NoReturn</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+<h1 id="prefer-object-to-any">Prefer <code>object</code> to <code>Any</code></h1>
+<p>When you need to specify a value of any type, your go-to type should be <code>object</code>, not <code>Any</code>.</p>
+<h2 id="what-is-object">What is <code>object</code>?</h2>
+<p><code>object</code> isn't special-cased in type checkers, it's simply the class that every other class inherits.
+These assignemnts are all valid:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">x</span><span class="p">:</span> <span class="nb">object</span> <span class="o">=</span> <span class="mi">42</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">xs</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">object</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="s2">&quot;ar&quot;</span><span class="p">}]</span>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="k">def</span> <span class="nf">greet</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NoReturn</span><span class="p">:</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hello, </span><span class="si">{0}</span><span class="s2">!&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Sequence</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">ys</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">object</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;quack&quot;</span><span class="p">)</span>
 </code></pre></div>
-<p>This sounds right: after all, the function doesn't have a <code>return</code> statement. However, <code>NoReturn</code> means a very specific thing.</p>
-<p>A function <code>f</code> returns <code>NoReturn</code> if, in the following configuration, <code>g()</code> never runs:
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">f</span><span class="p">()</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">g</span><span class="p">()</span>  <span class="c1"># unreachable</span>
-</code></pre></div></p>
-<p>It means that either:</p>
+<p>Because <code>object</code> is a normal class, if you have something of type <code>object</code>, you can't do much with it.
+You can only:</p>
 <ul>
-<li><code>f</code> always runs an infinite loop</li>
-<li><code>f</code> always raises an exception</li>
-<li><code>f</code> always terminates the current process.</li>
+<li>Use <code>isinstance</code> to check what type it is</li>
+<li>Use general functions like <code>str</code> or <code>repr</code> or <code>id</code> on it</li>
+<li>Pass it to other functions accepting <code>object</code> or <code>Any</code></li>
 </ul>
-<h2 id="what-even-is-the-point">What even is the point?</h2>
-<p>With <code>NoReturn</code>, static analyzers can adjust their control flow model.
-For example, if you call <code>sys.exit</code>, Pylance knows that the next lines will never execute:</p>
-<p><img alt="Unreachable code in VSCode" src="ide-unreachable-code.png" /></p>
-<p>This also affects type narrowing.</p>
-<p><img alt="Type narrowing with NoReturn in VSCode" src="ide-type-narrowing.png" /></p>
-<h2 id="correct-usage-examples">Correct usage examples</h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># Always raises an exception</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="k">def</span> <span class="nf">report_syntax_error</span><span class="p">(</span><span class="n">node</span><span class="p">:</span> <span class="n">TreeNode</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NoReturn</span><span class="p">:</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>    <span class="n">template</span> <span class="o">=</span> <span class="s2">&quot;Invalid syntax at line </span><span class="si">{0}</span><span class="s2">, column </span><span class="si">{1}</span><span class="s2">: </span><span class="si">{2}</span><span class="s2">&quot;</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    <span class="k">raise</span> <span class="ne">SyntaxError</span><span class="p">(</span><span class="n">template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">line</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">col</span><span class="p">,</span> <span class="n">message</span><span class="p">))</span>
+<p>For example, if this is what your function signature looks like:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">bar</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># Runs forever (or raises an exception)</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="k">async</span> <span class="k">def</span> <span class="nf">process_events</span><span class="p">(</span><span class="n">stream</span><span class="p">:</span> <span class="n">EventStream</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NoReturn</span><span class="p">:</span>
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>        <span class="n">event</span> <span class="o">=</span> <span class="k">await</span> <span class="n">stream</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>        <span class="k">await</span> <span class="n">process_event</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+doing <code>bar.make_coffee()</code> inside the function will be illegal.</p>
+<h2 id="what-is-any">What is <code>Any</code>?</h2>
+<p><code>typing.Any</code> is a special form in Python. Every object can be assigned to <code>Any</code>, and you can do any operation on <code>Any</code>.</p>
+<p>For example, if this is what your function signature looks like:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">bar</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 </code></pre></div>
+All of these are considered valid:</p>
+<ul>
+<li><code>bar.make_coffee()</code></li>
+<li><code>(bar + 42).launch_missiles() &gt;&gt; "tomorrow"</code></li>
+<li><code>bar[bar[bar]]</code></li>
+<li><code>await bar</code></li>
+<li><code>bar(1, 2, 3)</code></li>
+</ul>
+<p>Essentially, <code>Any</code> turns off type checking.</p>
+<p>Additionally, values derived from <code>bar</code> will also be <code>Any</code>s:</p>
+<ul>
+<li><code>bar + 42</code> has type <code>Any</code></li>
+<li><code>await bar</code> has type <code>Any</code></li>
+<li><code>bar(4, 5)</code> has type <code>Any</code></li>
+<li><code>bar["baz"]</code> has type <code>Any</code></li>
+</ul>
+<h2 id="why-use-object-over-any">Why use <code>object</code> over <code>Any</code>?</h2>
+<h3 id="example-1-await">Example 1. <code>await</code></h3>
+<p>Spot the error?
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">import</span> <span class="nn">httpx</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="k">async</span> <span class="k">with</span> <span class="n">httpx</span><span class="o">.</span><span class="n">AsyncClient</span><span class="p">()</span> <span class="k">as</span> <span class="n">client</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>    <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;https://httpbin.org/get&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>    <span class="n">json_response</span> <span class="o">=</span> <span class="k">await</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+</code></pre></div>
+If you're familiar with <code>aiohttp</code>, this code might make sense to you. But in <code>httpx</code>, the default
+mode of operation is to fetch the whole response body at once. Because of that, <code>response.json()</code>
+is a non-async method returning <code>Any</code>. Because it's <code>Any</code> and not <code>object</code> (or a more accurate union type),
+the type checker will happily let you <code>await</code> the result.</p>
+<h3 id="example-2-settings">Example 2. Settings</h3>
+<p>I've seen <code>Mapping[str, Any]</code> or <code>dict[str, Any]</code> used for the settings of an application.</p>
+<h2 id="why-ever-use-any">Why ever use <code>Any</code>?</h2>
 
               
             </article>
@@ -728,41 +736,6 @@ For example, if you call <code>sys.exit</code>, Pylance knows that the next line
       </main>
       
         <footer class="md-footer">
-  
-    <nav class="md-footer__inner md-grid" aria-label="Footer">
-      
-        
-        <a href="../typevar-typealias-newtype/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Type variables vs type aliases vs `NewType`" rel="prev">
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
-          </div>
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Previous
-              </span>
-              Type variables vs type aliases vs `NewType`
-            </div>
-          </div>
-        </a>
-      
-      
-        
-        <a href="../../faq/class-or-subclass/" class="md-footer__link md-footer__link--next" aria-label="Next: I want to specify &#34;X or any subclass of X&#34;" rel="next">
-          <div class="md-footer__title">
-            <div class="md-ellipsis">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              I want to specify "X or any subclass of X"
-            </div>
-          </div>
-          <div class="md-footer__button md-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
-          </div>
-        </a>
-      
-    </nav>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
