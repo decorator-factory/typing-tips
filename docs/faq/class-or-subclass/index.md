@@ -40,11 +40,11 @@ and then you might refactor it like this:
 def contains_foo(things: dict[str, int]) -> bool:
     return "foo" in things
 ```
-This refactoring it relies on some assumptions about how `dict`s work.
+This refactoring relies on some assumptions about how `dict`s work.
 
 The first version will always return `True` for a `defaultdict`, but the second one
 will not. `defaultdict` violates some implicit assumptions about dictionaries, which makes it harder
-to know if a function that accepts a dictionary (or a `Mapping` for that matter) will work correctly
+to know if a function that accepts a dictionary (or a `Mapping`) will work correctly
 with a `defaultdict`.
 
 Nevertheless, in the typing world, a child class is considered appropriate whenever a parent class is.
