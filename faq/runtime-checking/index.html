@@ -8,14 +8,14 @@
       
       
       
-        <link rel="canonical" href="https://decorator-factory.github.io/typing-tips/faq/class-or-subclass/">
+        <link rel="canonical" href="https://decorator-factory.github.io/typing-tips/faq/runtime-checking/">
       
       <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.9">
     
     
       
-        <title>I want to specify "X or any subclass of X" - Typing Tips</title>
+        <title>How to enforce type annotations at runtime? - Typing Tips</title>
       
     
     
@@ -60,7 +60,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#i-want-to-specify-x-or-any-subclass-of-x" class="md-skip">
+        <a href="#how-to-enforce-type-annotations-at-runtime" class="md-skip">
           Skip to content
         </a>
       
@@ -93,7 +93,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              I want to specify "X or any subclass of X"
+              How to enforce type annotations at runtime?
             
           </span>
         </div>
@@ -499,20 +499,6 @@
               
   
   
-  
-    <li class="md-nav__item">
-      <a href="../runtime-checking/" class="md-nav__link">
-        How to enforce type annotations at runtime?
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
     
   
   
@@ -524,10 +510,76 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          How to enforce type annotations at runtime?
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
-        I want to specify "X or any subclass of X"
+        How to enforce type annotations at runtime?
       </a>
       
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-would-you-need-it" class="md-nav__link">
+    Why would you need it?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#is-it-even-possible" class="md-nav__link">
+    Is it even possible?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#so-we-dont-really-have-static-typing" class="md-nav__link">
+    So we don't really have static typing?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#are-there-tools-that-can-help" class="md-nav__link">
+    Are there tools that can help?
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../class-or-subclass/" class="md-nav__link">
+        I want to specify "X or any subclass of X"
+      </a>
     </li>
   
 
@@ -691,6 +743,42 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-would-you-need-it" class="md-nav__link">
+    Why would you need it?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#is-it-even-possible" class="md-nav__link">
+    Is it even possible?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#so-we-dont-really-have-static-typing" class="md-nav__link">
+    So we don't really have static typing?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#are-there-tools-that-can-help" class="md-nav__link">
+    Are there tools that can help?
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -701,55 +789,109 @@
             <article class="md-content__inner md-typeset">
               
                 
-<a href="https://github.com/decorator-factory/typing-tips/edit/master/docs/faq/class-or-subclass/index.md" title="Edit this page" class="md-content__button md-icon">
+<a href="https://github.com/decorator-factory/typing-tips/edit/master/docs/faq/runtime-checking/index.md" title="Edit this page" class="md-content__button md-icon">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
 </a>
 
 
-<h1 id="i-want-to-specify-x-or-any-subclass-of-x">I want to specify "X or any subclass of X"</h1>
+<h1 id="how-to-enforce-type-annotations-at-runtime">How to enforce type annotations at runtime?</h1>
 <div class="admonition question">
 <p class="admonition-title">Question</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">class</span> <span class="nc">Animal</span><span class="p">:</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    <span class="k">def</span> <span class="nf">speak</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;*generic animal noises*&quot;</span><span class="p">)</span>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="k">def</span> <span class="nf">choose_speaker</span><span class="p">(</span><span class="n">speaker1</span><span class="p">:</span> <span class="n">Animal</span><span class="p">,</span> <span class="n">speaker2</span><span class="p">:</span> <span class="n">Animal</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="mf">0.5</span><span class="p">:</span>
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>        <span class="n">speaker1</span><span class="o">.</span><span class="n">speak</span><span class="p">()</span>
-<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    <span class="k">else</span><span class="p">:</span>
-<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>        <span class="n">speaker2</span><span class="o">.</span><span class="n">speak</span><span class="p">()</span>
+<p>I have this function:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">bar</span><span class="p">:</span> <span class="n">Bar</span><span class="p">,</span> <span class="n">baz</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[],</span> <span class="n">Baz</span><span class="p">],</span> <span class="n">answers</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Fizz</span> <span class="o">|</span> <span class="n">Buzz</span><span class="p">:</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    <span class="o">...</span>
 </code></pre></div>
-<p>How do I specify that <code>choose_speaker</code> accepts <code>Animal</code> or any subclass of <code>Animal</code>?</p>
+How can I automatically raise an exception if the function receives an incorrect argument?</p>
 </div>
-<p>It already does!</p>
-<p>If a function works with objects of class <code>A</code>, it also works with subclasses of <code>A</code>. (At least it should!) This is called "substitutatbility".</p>
-<hr />
-<p>Now, in Python land, this is not the only view on inheritance. Inheritance is also a mechanism for code reuse, see
-<a href="https://www.youtube.com/watch?v=EiOglTERPEo">this talk from Raymond Hettinger</a> for an explanation.</p>
-<p>What does it look like? Consider a function like this:
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">def</span> <span class="nf">contains_foo</span><span class="p">(</span><span class="n">things</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    <span class="k">try</span><span class="p">:</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>        <span class="n">things</span><span class="p">[</span><span class="s2">&quot;foo&quot;</span><span class="p">]</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>        <span class="k">return</span> <span class="kc">False</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>    <span class="k">else</span><span class="p">:</span>
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>        <span class="k">return</span> <span class="kc">True</span>
+<p>You can do this for simple types, but not in the general case. There are some tools that help, but
+it depends on what you want to check.</p>
+<h2 id="why-would-you-need-it">Why would you need it?</h2>
+<p>Static typing in Python isn't perfect, and you might end up with the wrong type somewhere. Not everyone uses
+static type checking. Some things are just not expressable in the type system. You still want your contracts
+to be upheld and provide reasonable error messages, preferably at the first opportunity of catching a mistake.</p>
+<p>Nobody likes to read "<code>AttributeError: 'NoneType' object has no attribute 'quack</code>" and then go through a nasty
+traceback, or spend 15 minutes debugging your library.</p>
+<h2 id="is-it-even-possible">Is it even possible?</h2>
+<p>Suppose that we have a special <code>check_types</code> decorator that checks all input and output contracts.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nd">@check_types</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">bar</span><span class="p">:</span> <span class="n">Bar</span><span class="p">,</span> <span class="n">baz</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[],</span> <span class="n">Baz</span><span class="p">],</span> <span class="n">answers</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Fizz</span> <span class="o">|</span> <span class="n">Buzz</span><span class="p">:</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    <span class="o">...</span>
 </code></pre></div>
-and then you might refactor it like this:
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">def</span> <span class="nf">contains_foo</span><span class="p">(</span><span class="n">things</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    <span class="k">return</span> <span class="s2">&quot;foo&quot;</span> <span class="ow">in</span> <span class="n">things</span>
-</code></pre></div>
-This refactoring relies on some assumptions about how <code>dict</code>s work.</p>
-<p>The first version will always return <code>True</code> for a <code>defaultdict</code>, but the second one
-will not. <code>defaultdict</code> violates some implicit assumptions about dictionaries, which makes it harder
-to know if a function that accepts a dictionary (or a <code>Mapping</code>) will work correctly
-with a <code>defaultdict</code>.</p>
-<p>Nevertheless, in the typing world, a child class is considered appropriate whenever a parent class is.</p>
-<hr />
-<p>More on this topic:</p>
+<p>How would you implement it?</p>
 <ul>
-<li><a href="https://stackoverflow.com/questions/56860/what-is-an-example-of-the-liskov-substitution-principle">StackOverflow: "What is an example of the Liskov Substitution Principle?"</a></li>
+<li>For simple types, like <code>Bar</code>, you can just use <code>isinstance</code>.</li>
+<li>For union types, you'll have to traverse the variants of the union and check each one of them.
+    This is definitely possible.</li>
+<li>For <code>tuple[X, ...]</code>, you can go over each element of a tuple. This might be costly at runtime if
+    the tuple is large.</li>
+<li>
+<p>For <code>list[X]</code>, it's tricky. You might think that you can just check the list as with <code>tuple</code>, but
+    not quite. Consider this:</p>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">things</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">foo</span><span class="p">(</span><span class="n">some_bar</span><span class="p">,</span> <span class="n">some_baz</span><span class="p">,</span> <span class="n">answers</span><span class="o">=</span><span class="n">things</span><span class="p">)</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="n">things</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;hey!&quot;</span><span class="p">)</span>
+</code></pre></div>
+The decorator checked that all the elements are strings. Maybe it saved the list somewhere, and now
+there's a string in there. Worse, now there might be integers in the alleged list of strings.</p>
+<p>Or this:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">things</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">]</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="n">foo</span><span class="p">(</span><span class="n">some_bar</span><span class="p">,</span> <span class="n">some_baz</span><span class="p">,</span> <span class="n">answers</span><span class="o">=</span><span class="n">things</span><span class="p">)</span>
+</code></pre></div>
+Here the decorator ensures that all the elements are indeed <code>int</code>s. But it doesn't mean that the list
+is assignable to <code>list[int]</code>! Now there might be <code>42</code> in the alleged list of booleans.</p>
+<p>But apart from that, you can make a reasonable tradeoff and just repeat the tuple algorithm.
+You probably want to accept a <code>Sequence[X]</code> that you turn into a <code>list</code> anyway.
+- For very dynamic types like <code>Callable[[str], int]</code> or <code>Iterator[int]</code>, there really isn't anything
+you can check. The best you can do is to embed the types in some wrapper that will check every call
+(for a callable) or every <code>__next__</code> invocation (for an iterator). This still buries the type checking
+deep within the call stack.
+- For custom generic classes, it is generally impossible to do the check. Example:
+<a href="https://docs.aiohttp.org/en/latest/web_reference.html#appkey"><code>aiohttp.web.AppKey</code></a>.</p>
+</li>
 </ul>
+<h2 id="so-we-dont-really-have-static-typing">So we don't really have static typing?</h2>
+<p>The point of static typing is to find errors <em>before</em> running the code, not at runtime. Statically typed
+languages specifically don't do runtime checks on all the values, they know that the code won't
+compile if the types don't match.</p>
+<p>With <em>dynamic typing</em>, you don't know all the types in advance, so you might want to check them at
+interface boundaries so that errors don't propagate too deep.</p>
+<h2 id="are-there-tools-that-can-help">Are there tools that can help?</h2>
+<details class="info">
+<summary><code>typeguard</code></summary>
+<p><a href="https://github.com/agronholm/typeguard"><code>typeguard</code></a>
+implements the aforementioned magic decorator! Of course, all the previous caveats apply.</p>
+<p>As for callables, it seems to inspect some metadata on <code>Callable</code> objects, which should work
+well in most cases.</p>
+</details>
+<details class="info">
+<summary><code>pydantic</code></summary>
+<p><a href="https://pydantic-docs.helpmanual.io/"><code>pydantic</code></a> provides a class-building framework similar to
+<code>attrs</code>, but with automagic validation using type annotations. It's used in FastAPI and some other
+web frameworks for validation, which sounds like a good use case.</p>
+</details>
+<details class="info">
+<summary><code>beartype</code></summary>
+<p><a href="https://github.com/beartype/beartype"><code>beartype</code></a></p>
+<p>Beartype is like <code>typeguard</code>, but with non-deterministic checking. That is, to check a nested list of
+lists, it will check one random element from the list.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="o">&gt;&gt;&gt;</span> <span class="nd">@beartype</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="o">...</span> <span class="k">def</span> <span class="nf">do_stuff</span><span class="p">(</span><span class="n">things</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="o">...</span>     <span class="k">return</span> <span class="s2">&quot;ok&quot;</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="o">...</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="o">&gt;&gt;&gt;</span> <span class="n">do_stuff</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;boom!&quot;</span><span class="p">]])</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="s2">&quot;ok&quot;</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="o">&gt;&gt;&gt;</span> <span class="n">do_stuff</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;boom!&quot;</span><span class="p">]])</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="s2">&quot;ok&quot;</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="o">&gt;&gt;&gt;</span> <span class="n">do_stuff</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;boom!&quot;</span><span class="p">]])</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="c1"># Exception!</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="o">&gt;&gt;&gt;</span> <span class="n">do_stuff</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;boom!&quot;</span><span class="p">]])</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="s2">&quot;ok&quot;</span>
+</code></pre></div>
+<p>Sorry, but I don't get the point.</p>
+</details>
 
               
             </article>
@@ -763,7 +905,7 @@ with a <code>defaultdict</code>.</p>
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../runtime-checking/" class="md-footer__link md-footer__link--prev" aria-label="Previous: How to enforce type annotations at runtime?" rel="prev">
+        <a href="../../tips/pep585/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Use new-style annotations" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -772,20 +914,20 @@ with a <code>defaultdict</code>.</p>
               <span class="md-footer__direction">
                 Previous
               </span>
-              How to enforce type annotations at runtime?
+              Use new-style annotations
             </div>
           </div>
         </a>
       
       
         
-        <a href="../sometimes-raises/" class="md-footer__link md-footer__link--next" aria-label="Next: What if my function can raise an exception?" rel="next">
+        <a href="../class-or-subclass/" class="md-footer__link md-footer__link--next" aria-label="Next: I want to specify &#34;X or any subclass of X&#34;" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              What if my function can raise an exception?
+              I want to specify "X or any subclass of X"
             </div>
           </div>
           <div class="md-footer__button md-icon">
