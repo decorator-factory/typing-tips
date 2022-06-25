@@ -42,13 +42,12 @@ def fetch_user(user_id: str) -> Union[User, LookupError]:
         raise LookupError(user_id)
     return user
 ```
-The function doesn't _return_ the exception, it _raises_ it. This doesn't force the caller to handle
-`LookupError`, but it does make calling this function awkward:
+This annotation means that the function can _return_ a `LookupError` object, not raise it. This is not
+right, and it doesn't force the caller to handle the exception with a `try-except` block.
 ```py
 user = fetch_user("u:cba43b8f:42")
 # user: User | LookupError
 ```
-
 
 
 ## How to specify that I'm raising an exception, then?
