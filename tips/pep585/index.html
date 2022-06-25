@@ -8,14 +8,14 @@
       
       
       
-        <link rel="canonical" href="https://decorator-factory.github.io/typing-tips/faq/class-or-subclass/">
+        <link rel="canonical" href="https://decorator-factory.github.io/typing-tips/tips/pep585/">
       
       <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.9">
     
     
       
-        <title>I want to specify "X or any subclass of X" - Typing Tips</title>
+        <title>Use new-style annotations - Typing Tips</title>
       
     
     
@@ -60,7 +60,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#i-want-to-specify-x-or-any-subclass-of-x" class="md-skip">
+        <a href="#use-new-style-annotations" class="md-skip">
           Skip to content
         </a>
       
@@ -93,7 +93,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              I want to specify "X or any subclass of X"
+              Use new-style annotations
             
           </span>
         </div>
@@ -367,12 +367,14 @@
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
       
       
       
@@ -395,7 +397,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../tips/avoid-any/" class="md-nav__link">
+      <a href="../avoid-any/" class="md-nav__link">
         Avoid `Any`
       </a>
     </li>
@@ -409,7 +411,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../tips/optional-is-not-optional/" class="md-nav__link">
+      <a href="../optional-is-not-optional/" class="md-nav__link">
         `Optional` doesn't mean an optional argument
       </a>
     </li>
@@ -423,7 +425,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../tips/typevar-typealias-newtype/" class="md-nav__link">
+      <a href="../typevar-typealias-newtype/" class="md-nav__link">
         Type variables vs type aliases vs `NewType`
       </a>
     </li>
@@ -437,7 +439,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../tips/no-return-confusion/" class="md-nav__link">
+      <a href="../no-return-confusion/" class="md-nav__link">
         `NoReturn` doesn't just mean no `return` statement
       </a>
     </li>
@@ -449,11 +451,21 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../../tips/pep585/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Use new-style annotations
       </a>
+      
     </li>
   
 
@@ -471,14 +483,12 @@
 
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
       
       
       
@@ -499,21 +509,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../faq/class-or-subclass/" class="md-nav__link">
         I want to specify "X or any subclass of X"
       </a>
-      
     </li>
   
 
@@ -525,7 +525,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../sometimes-raises/" class="md-nav__link">
+      <a href="../../faq/sometimes-raises/" class="md-nav__link">
         What if my function can raise an exception?
       </a>
     </li>
@@ -539,7 +539,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../object-vs-any/" class="md-nav__link">
+      <a href="../../faq/object-vs-any/" class="md-nav__link">
         Is `object` the same as `Any`?
       </a>
     </li>
@@ -659,55 +659,35 @@
             <article class="md-content__inner md-typeset">
               
                 
-<a href="https://github.com/decorator-factory/typing-tips/edit/master/docs/faq/class-or-subclass/index.md" title="Edit this page" class="md-content__button md-icon">
+<a href="https://github.com/decorator-factory/typing-tips/edit/master/docs/tips/pep585/index.md" title="Edit this page" class="md-content__button md-icon">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
 </a>
 
 
-<h1 id="i-want-to-specify-x-or-any-subclass-of-x">I want to specify "X or any subclass of X"</h1>
-<div class="admonition question">
-<p class="admonition-title">Question</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">class</span> <span class="nc">Animal</span><span class="p">:</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    <span class="k">def</span> <span class="nf">speak</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;*generic animal noises*&quot;</span><span class="p">)</span>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="k">def</span> <span class="nf">choose_speaker</span><span class="p">(</span><span class="n">speaker1</span><span class="p">:</span> <span class="n">Animal</span><span class="p">,</span> <span class="n">speaker2</span><span class="p">:</span> <span class="n">Animal</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="mf">0.5</span><span class="p">:</span>
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>        <span class="n">speaker1</span><span class="o">.</span><span class="n">speak</span><span class="p">()</span>
-<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    <span class="k">else</span><span class="p">:</span>
-<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>        <span class="n">speaker2</span><span class="o">.</span><span class="n">speak</span><span class="p">()</span>
+<h1 id="use-new-style-annotations">Use new-style annotations</h1>
+<p>Before Python 3.9, you had to import stuff from <code>typing</code> for some annotations:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">ContextManager</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">things</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">ContextManager</span><span class="p">[</span><span class="n">Iterator</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">object</span><span class="p">]]]:</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    <span class="o">...</span>
 </code></pre></div>
-<p>How do I specify that <code>choose_speaker</code> accepts <code>Animal</code> or any subclass of <code>Animal</code>?</p>
-</div>
-<p>It already does!</p>
-<p>If a function works with objects of class <code>A</code>, it also works with subclasses of <code>A</code>. (At least it should!) This is called "substitutatbility".</p>
-<hr />
-<p>Now, in Python land, this is not the only view on inheritance. Inheritance is also a mechanism for code reuse, see
-<a href="https://www.youtube.com/watch?v=EiOglTERPEo">this talk from Raymond Hettinger</a> for an explanation.</p>
-<p>What does it look like? Consider a function like this:
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">def</span> <span class="nf">contains_foo</span><span class="p">(</span><span class="n">things</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    <span class="k">try</span><span class="p">:</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>        <span class="n">things</span><span class="p">[</span><span class="s2">&quot;foo&quot;</span><span class="p">]</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>        <span class="k">return</span> <span class="kc">False</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>    <span class="k">else</span><span class="p">:</span>
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>        <span class="k">return</span> <span class="kc">True</span>
+<p>After <a href="https://peps.python.org/pep-0585/">PEP 585</a> was implemented, already existing classes
+from the standard library are now generic:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Iterator</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kn">from</span> <span class="nn">contextlib</span> <span class="kn">import</span> <span class="n">AbstractContextManager</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">things</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">AbstractContextManager</span><span class="p">[</span><span class="n">Iterator</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">object</span><span class="p">]]]:</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>    <span class="o">...</span>
 </code></pre></div>
-and then you might refactor it like this:
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">def</span> <span class="nf">contains_foo</span><span class="p">(</span><span class="n">things</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    <span class="k">return</span> <span class="s2">&quot;foo&quot;</span> <span class="ow">in</span> <span class="n">things</span>
-</code></pre></div>
-This refactoring relies on some assumptions about how <code>dict</code>s work.</p>
-<p>The first version will always return <code>True</code> for a <code>defaultdict</code>, but the second one
-will not. <code>defaultdict</code> violates some implicit assumptions about dictionaries, which makes it harder
-to know if a function that accepts a dictionary (or a <code>Mapping</code>) will work correctly
-with a <code>defaultdict</code>.</p>
-<p>Nevertheless, in the typing world, a child class is considered appropriate whenever a parent class is.</p>
-<hr />
-<p>More on this topic:</p>
-<ul>
-<li><a href="https://stackoverflow.com/questions/56860/what-is-an-example-of-the-liskov-substitution-principle">StackOverflow: "What is an example of the Liskov Substitution Principle?"</a></li>
-</ul>
+<p>You should be using the new imports instead of the <code>typing</code> ones. It's more convenient to use
+already available types, but more importantly, these exports from <code>typing</code> are deprecated,
+and will be removed some day.</p>
+<p>If you want to enforce this in your build pipeline, there's a flake8 plugin:
+<a href="https://github.com/decorator-factory/flake8-pep585">flake8-pep585</a>.</p>
+<p>The complete list of deprecated symbols can be found
+<a href="https://peps.python.org/pep-0585/#implementation">as text in PEP 585</a>
+or
+<a href="https://github.com/decorator-factory/flake8-pep585/blob/0c359adc8c56647c2fa336e4217422a977f20fdc/flake8_pep585/rules.py#L7-L46">as a Python dictionary on GitHub</a>.</p>
 
               
             </article>
@@ -721,7 +701,7 @@ with a <code>defaultdict</code>.</p>
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../../tips/pep585/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Use new-style annotations" rel="prev">
+        <a href="../no-return-confusion/" class="md-footer__link md-footer__link--prev" aria-label="Previous: `NoReturn` doesn&#39;t just mean no `return` statement" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -730,20 +710,20 @@ with a <code>defaultdict</code>.</p>
               <span class="md-footer__direction">
                 Previous
               </span>
-              Use new-style annotations
+              `NoReturn` doesn't just mean no `return` statement
             </div>
           </div>
         </a>
       
       
         
-        <a href="../sometimes-raises/" class="md-footer__link md-footer__link--next" aria-label="Next: What if my function can raise an exception?" rel="next">
+        <a href="../../faq/class-or-subclass/" class="md-footer__link md-footer__link--next" aria-label="Next: I want to specify &#34;X or any subclass of X&#34;" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              What if my function can raise an exception?
+              I want to specify "X or any subclass of X"
             </div>
           </div>
           <div class="md-footer__button md-icon">

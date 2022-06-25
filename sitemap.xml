@@ -51,6 +51,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://decorator-factory.github.io/typing-tips/tips/pep585/</loc>
+         <lastmod>2022-06-25</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://decorator-factory.github.io/typing-tips/tips/typevar-typealias-newtype/</loc>
          <lastmod>2022-06-25</lastmod>
          <changefreq>daily</changefreq>
