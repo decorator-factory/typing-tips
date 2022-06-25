@@ -89,4 +89,10 @@ Here are some steps you can take to reduce the number of `Any`s in your code:
 5. If you really want "any value", see if using `object` makes sense. See ["Is `object` the same as `Any`?"](../../faq/object-vs-any) for more details.
 
 
+## More on this topic
+
+- ["No, dynamic type systems are not inherently more open"](https://lexi-lambda.github.io/blog/2020/01/19/no-dynamic-type-systems-are-not-inherently-more-open/) by Alexis King
+- ["typing.Any vs object?"](https://stackoverflow.com/q/39817081/10295729) on StackOverflow
+
+
 [^1]: Numpy arrays are an exception with `bool()`, but let's just pretend they don't exist.
