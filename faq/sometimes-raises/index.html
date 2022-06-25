@@ -800,8 +800,8 @@ This doesn't break any rules per se, but this means exactly the same as just ret
 <a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>        <span class="k">raise</span> <span class="ne">LookupError</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>
 <a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>    <span class="k">return</span> <span class="n">user</span>
 </code></pre></div>
-The function doesn't <em>return</em> the exception, it <em>raises</em> it. This doesn't force the caller to handle
-<code>LookupError</code>, but it does make calling this function awkward:
+This annotation means that the function can <em>return</em> a <code>LookupError</code> object, not raise it. This is not
+right, and it doesn't force the caller to handle the exception with a <code>try-except</code> block.
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">user</span> <span class="o">=</span> <span class="n">fetch_user</span><span class="p">(</span><span class="s2">&quot;u:cba43b8f:42&quot;</span><span class="p">)</span>
 <a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="c1"># user: User | LookupError</span>
 </code></pre></div></p>
