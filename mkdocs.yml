@@ -19,6 +19,7 @@ nav:
     - "`NoReturn` doesn't just mean no `return` statement": tips/no-return-confusion/index.md
     - "Use new-style annotations": tips/pep585/index.md
   - Frequently asked questions:
+    - "How to enforce type annotations at runtime?": faq/runtime-checking/index.md
     - 'I want to specify "X or any subclass of X"': faq/class-or-subclass/index.md
     - What if my function can raise an exception?: faq/sometimes-raises/index.md
     - "Is `object` the same as `Any`?": faq/object-vs-any/index.md
