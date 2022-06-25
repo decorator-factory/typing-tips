@@ -1,12 +1,12 @@
 # Type variables vs type aliases vs `NewType`
 
-This piece very briefly covers the difference between:
+This article covers the difference between:
 
 - type aliases
 - type variables (`TypeVar`)
 - `NewType`
 
-They have similar names, so people new to type annotations often confuse them.
+They have similar names, but they are all quite different.
 
 
 ## Type aliases
