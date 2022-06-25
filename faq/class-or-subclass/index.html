@@ -395,6 +395,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../../tips/avoid-any/" class="md-nav__link">
+        Avoid `Any`
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../tips/optional-is-not-optional/" class="md-nav__link">
         `Optional` doesn't mean an optional argument
       </a>
@@ -499,6 +513,20 @@
     <li class="md-nav__item">
       <a href="../sometimes-raises/" class="md-nav__link">
         What if my function can raise an exception?
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../object-vs-any/" class="md-nav__link">
+        Is `object` the same as `Any`?
       </a>
     </li>
   
@@ -655,10 +683,10 @@ and then you might refactor it like this:
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">def</span> <span class="nf">contains_foo</span><span class="p">(</span><span class="n">things</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    <span class="k">return</span> <span class="s2">&quot;foo&quot;</span> <span class="ow">in</span> <span class="n">things</span>
 </code></pre></div>
-This refactoring it relies on some assumptions about how <code>dict</code>s work.</p>
+This refactoring relies on some assumptions about how <code>dict</code>s work.</p>
 <p>The first version will always return <code>True</code> for a <code>defaultdict</code>, but the second one
 will not. <code>defaultdict</code> violates some implicit assumptions about dictionaries, which makes it harder
-to know if a function that accepts a dictionary (or a <code>Mapping</code> for that matter) will work correctly
+to know if a function that accepts a dictionary (or a <code>Mapping</code>) will work correctly
 with a <code>defaultdict</code>.</p>
 <p>Nevertheless, in the typing world, a child class is considered appropriate whenever a parent class is.</p>
 <hr />

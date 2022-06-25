@@ -8,14 +8,14 @@
       
       
       
-        <link rel="canonical" href="https://decorator-factory.github.io/typing-tips/tips/prefer-object-to-any/">
+        <link rel="canonical" href="https://decorator-factory.github.io/typing-tips/tips/avoid-any/">
       
       <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.9">
     
     
       
-        <title>Prefer `object` to `Any` - Typing Tips</title>
+        <title>Avoid `Any` - Typing Tips</title>
       
     
     
@@ -60,7 +60,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#prefer-object-to-any" class="md-skip">
+        <a href="#avoid-any" class="md-skip">
           Skip to content
         </a>
       
@@ -93,7 +93,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Prefer `object` to `Any`
+              Avoid `Any`
             
           </span>
         </div>
@@ -367,12 +367,14 @@
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
       
       
       
@@ -388,6 +390,89 @@
           General tips
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Avoid `Any`
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Avoid `Any`
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tldr" class="md-nav__link">
+    TL;DR
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-any" class="md-nav__link">
+    What is Any?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#whats-bad-about-any" class="md-nav__link">
+    What's bad about Any?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-would-you-use-any" class="md-nav__link">
+    Why would you use Any?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tips" class="md-nav__link">
+    Tips
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
           
             
               
@@ -487,6 +572,20 @@
     <li class="md-nav__item">
       <a href="../../faq/sometimes-raises/" class="md-nav__link">
         What if my function can raise an exception?
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../faq/object-vs-any/" class="md-nav__link">
+        Is `object` the same as `Any`?
       </a>
     </li>
   
@@ -602,8 +701,8 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#what-is-object" class="md-nav__link">
-    What is object?
+  <a href="#tldr" class="md-nav__link">
+    TL;DR
   </a>
   
 </li>
@@ -616,35 +715,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#why-use-object-over-any" class="md-nav__link">
-    Why use object over Any?
+  <a href="#whats-bad-about-any" class="md-nav__link">
+    What's bad about Any?
   </a>
-  
-    <nav class="md-nav" aria-label="Why use object over Any?">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#example-1-await" class="md-nav__link">
-    Example 1. await
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#example-2-settings" class="md-nav__link">
-    Example 2. Settings
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#why-ever-use-any" class="md-nav__link">
-    Why ever use Any?
+  <a href="#why-would-you-use-any" class="md-nav__link">
+    Why would you use Any?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tips" class="md-nav__link">
+    Tips
   </a>
   
 </li>
@@ -661,72 +747,101 @@
             <article class="md-content__inner md-typeset">
               
                 
-<a href="https://github.com/decorator-factory/typing-tips/edit/master/docs/tips/prefer-object-to-any/index.md" title="Edit this page" class="md-content__button md-icon">
+<a href="https://github.com/decorator-factory/typing-tips/edit/master/docs/tips/avoid-any/index.md" title="Edit this page" class="md-content__button md-icon">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
 </a>
 
 
-<h1 id="prefer-object-to-any">Prefer <code>object</code> to <code>Any</code></h1>
-<p>When you need to specify a value of any type, your go-to type should be <code>object</code>, not <code>Any</code>.</p>
-<h2 id="what-is-object">What is <code>object</code>?</h2>
-<p><code>object</code> isn't special-cased in type checkers, it's simply the class that every other class inherits.
-These assignemnts are all valid:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">x</span><span class="p">:</span> <span class="nb">object</span> <span class="o">=</span> <span class="mi">42</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">xs</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">object</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="s2">&quot;ar&quot;</span><span class="p">}]</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Sequence</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">ys</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">object</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;quack&quot;</span><span class="p">)</span>
-</code></pre></div>
-<p>Because <code>object</code> is a normal class, if you have something of type <code>object</code>, you can't do much with it.
-You can only:</p>
-<ul>
-<li>Use <code>isinstance</code> to check what type it is</li>
-<li>Use general functions like <code>str</code> or <code>repr</code> or <code>id</code> on it</li>
-<li>Pass it to other functions accepting <code>object</code> or <code>Any</code></li>
-</ul>
-<p>For example, if this is what your function signature looks like:
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">bar</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</code></pre></div>
-doing <code>bar.make_coffee()</code> inside the function will be illegal.</p>
+<h1 id="avoid-any">Avoid <code>Any</code></h1>
+<h2 id="tldr">TL;DR</h2>
+<p>Avoid using <code>Any</code>, because it turns off all type-checking and somewhat defeats the purpose of static typing.
+Often you can use union types, <code>object</code> or generics instead. But don't be too fanatical: Python at its core is a dynamically
+typed language, and sometimes <code>Any</code> is just what you need.</p>
 <h2 id="what-is-any">What is <code>Any</code>?</h2>
-<p><code>typing.Any</code> is a special form in Python. Every object can be assigned to <code>Any</code>, and you can do any operation on <code>Any</code>.</p>
-<p>For example, if this is what your function signature looks like:
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">bar</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<p><code>Any</code> is a special form that essentially marks a value as dynamically typed. You can do whatever you want with it, and
+<code>mypy</code> won't bat an eye. For example:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">def</span> <span class="nf">do_something</span><span class="p">(</span><span class="n">mystery_object</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    <span class="n">mystery_object</span><span class="o">.</span><span class="n">quack</span><span class="p">()</span>  <span class="c1"># ok</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    <span class="n">mystery_object</span> <span class="o">+=</span> <span class="mi">1</span>  <span class="c1"># ok</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    <span class="n">carefully_typed_value</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">mystery_object</span>  <span class="c1"># ok</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="n">mystery_object</span><span class="p">(</span><span class="n">mystery_object</span><span class="p">)</span>  <span class="c1"># ok!</span>
 </code></pre></div>
-All of these are considered valid:</p>
-<ul>
-<li><code>bar.make_coffee()</code></li>
-<li><code>(bar + 42).launch_missiles() &gt;&gt; "tomorrow"</code></li>
-<li><code>bar[bar[bar]]</code></li>
-<li><code>await bar</code></li>
-<li><code>bar(1, 2, 3)</code></li>
-</ul>
-<p>Essentially, <code>Any</code> turns off type checking.</p>
-<p>Additionally, values derived from <code>bar</code> will also be <code>Any</code>s:</p>
-<ul>
-<li><code>bar + 42</code> has type <code>Any</code></li>
-<li><code>await bar</code> has type <code>Any</code></li>
-<li><code>bar(4, 5)</code> has type <code>Any</code></li>
-<li><code>bar["baz"]</code> has type <code>Any</code></li>
-</ul>
-<h2 id="why-use-object-over-any">Why use <code>object</code> over <code>Any</code>?</h2>
-<h3 id="example-1-await">Example 1. <code>await</code></h3>
-<p>Spot the error?
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">import</span> <span class="nn">httpx</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="k">async</span> <span class="k">with</span> <span class="n">httpx</span><span class="o">.</span><span class="n">AsyncClient</span><span class="p">()</span> <span class="k">as</span> <span class="n">client</span>
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>    <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;https://httpbin.org/get&quot;</span><span class="p">)</span>
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>    <span class="n">json_response</span> <span class="o">=</span> <span class="k">await</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+<p>Values produced from an <code>Any</code> are also <code>Any</code>, in a "viral" way:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">def</span> <span class="nf">do_something</span><span class="p">(</span><span class="n">mystery_object</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    <span class="n">x</span> <span class="o">=</span> <span class="n">mystery_object</span><span class="o">.</span><span class="n">foo</span><span class="p">(</span><span class="n">answer</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    <span class="n">reveal_type</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># Any</span>
 </code></pre></div>
-If you're familiar with <code>aiohttp</code>, this code might make sense to you. But in <code>httpx</code>, the default
-mode of operation is to fetch the whole response body at once. Because of that, <code>response.json()</code>
-is a non-async method returning <code>Any</code>. Because it's <code>Any</code> and not <code>object</code> (or a more accurate union type),
-the type checker will happily let you <code>await</code> the result.</p>
-<h3 id="example-2-settings">Example 2. Settings</h3>
-<p>I've seen <code>Mapping[str, Any]</code> or <code>dict[str, Any]</code> used for the settings of an application.</p>
-<h2 id="why-ever-use-any">Why ever use <code>Any</code>?</h2>
+<h2 id="whats-bad-about-any">What's bad about <code>Any</code>?</h2>
+<p><code>Any</code> turns off all type checks. That's basically why it's "bad".</p>
+<ol>
+<li>
+<p>If you make a typo, the type checker won't help you</p>
+</li>
+<li>
+<p>You lose editor integration. This is not just a typing aid: features like "Go To Definition"
+    or "Go To Reference" will no longer work. This will make refactoring harder.</p>
+</li>
+<li>
+<p>If you "leak" an <code>Any</code> that you didn't check propely, you might end up with a typed value that's not the right type at runtime.
+    For example, you might accidentally pass a <code>None</code> where a string is expected.</p>
+</li>
+<li>
+<p>(perhaps a subtle and controversial point) It encourages devlopers to "trust" dynamic values, skipping validation where
+    it would be beneficial.</p>
+<p>For example, it's common in Python programs to make a request to some remote API, deserialize its
+response as JSON and do some things to it. If the remote service has a bug, or the programmer misunderstood the
+documentation, this could cause a bug that's hard to catch. Or worse, a security issue: see
+<a href="https://cwe.mitre.org/data/definitions/20.html">CWE-20: Improper Input Validation</a>.</p>
+<p>This doesn't mean that you need to make an abomination of <code>if</code>s and <code>for</code>s every time you make an HTTP request.
+There are tools such as <a href="https://pypi.org/project/pydantic/">Pydantic</a> and
+<a href="https://pypi.org/project/dataclass-factory/">dataclass-factory</a> that help with (de)serialization.</p>
+</li>
+<li>
+<p>Finally, <code>Any</code> is viral: if you do something to it, you get a new <code>Any</code>. If you're getting some things from a
+    <code>settings: dict[str, Any]</code>, soon you'll be juggling a dozen of <code>Any</code>s.</p>
+</li>
+</ol>
+<h2 id="why-would-you-use-any">Why would you use <code>Any</code>?</h2>
+<p>Generally, people use <code>Any</code> if it's not possible to express something in the type system. Or, perhaps, expressing
+something would require a big refactoring, which you don't have time to do, or which would make the code less readable.</p>
+<p>Python's type system is not designed to find all bugs or to write mathematically correct programs.
+Sometimes practicality beats purity, and a bit of slack is accepted in a trade-off between
+safety and complexity.</p>
+<p>For example, when talking to a statically typed database such as PostgreSQL, you might get back a <code>Record</code>. The interface
+a <code>Record</code> presents is similar to a <code>dict[str, Any]</code>. Even though your query is <code>SELECT 42 AS foo</code>, it's unreasonable to expect
+the type checker to know that the record has the shape of <code>{"foo": int}</code>. There are tools like
+<a href="https://prisma-client-py.readthedocs.io/en/stable/">Prisma</a> that help somewhat, but there's no universal solution.</p>
+<h2 id="tips">Tips</h2>
+<p>Here are some steps you can take to reduce the number of <code>Any</code>s in your code:</p>
+<ol>
+<li>
+<p>If you're using <code>mypy</code>, you can <a href="https://mypy.readthedocs.io/en/stable/command_line.html#report-generation">generate a report</a>
+    that measures how much of your code is untyped.</p>
+</li>
+<li>
+<p>Learn about <a href="../../tutorials/generics">type variables and generics</a>. Whenever you see a function or a class where two values
+    are linked together and are marked as <code>Any</code>, see if you can use a <code>TypeVar</code>.</p>
+<p>There are some recent additions to generics, namely <code>ParamSpec</code> and <code>TypeVarTuple</code>. We don't have a tutorial on them yet,
+but they're very cool.</p>
+</li>
+<li>
+<p>Search for external inputs, such as configuration or network requests, and decide if they need stricter validation.</p>
+</li>
+<li>
+<p>Consider if you can use a <a href="https://docs.python.org/3.10/library/typing.html#typing.Union">union type</a>.</p>
+</li>
+<li>
+<p>If you really want "any value", see if using <code>object</code> makes sense. See <a href="../../faq/object-vs-any">"Is <code>object</code> the same as <code>Any</code>?"</a> for more details.</p>
+</li>
+</ol>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>Numpy arrays are an exception with <code>bool()</code>, but let's just pretend they don't exist.&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
 
               
             </article>
@@ -736,6 +851,41 @@ the type checker will happily let you <code>await</code> the result.</p>
       </main>
       
         <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../../tutorials/generics/custom-variance/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Variance for your own classes" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Variance for your own classes
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../optional-is-not-optional/" class="md-footer__link md-footer__link--next" aria-label="Next: `Optional` doesn&#39;t mean an optional argument" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              `Optional` doesn't mean an optional argument
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
