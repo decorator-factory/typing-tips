@@ -22,6 +22,7 @@ nav:
     - 'I want to specify "X or any subclass of X"': faq/class-or-subclass/index.md
     - What if my function can raise an exception?: faq/sometimes-raises/index.md
     - "Is `object` the same as `Any`?": faq/object-vs-any/index.md
+    - "Why can I put a cat in a list of animals?": faq/cat-in-animals/index.md
   - Anti-patterns and smells:
     - Intro: antipatterns/index.md
     - Complex annotations: antipatterns/complex-annotations/index.md
