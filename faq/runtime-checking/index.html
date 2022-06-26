@@ -833,7 +833,7 @@ traceback, or spend 15 minutes debugging your library.</p>
 <a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
 <a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="n">things</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;hey!&quot;</span><span class="p">)</span>
 </code></pre></div>
-The decorator checked that all the elements are strings. Maybe it saved the list somewhere, and now
+The decorator checked that all the elements are integers. Maybe it saved the list somewhere, and now
 there's a string in there. Worse, now there might be integers in the alleged list of strings.</p>
 <p>Or this:
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">things</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">]</span>
