@@ -95,27 +95,3 @@ interface boundaries so that errors don't propagate too deep.
     [`pydantic`](https://pydantic-docs.helpmanual.io/) provides a class-building framework similar to
     `attrs`, but with automagic validation using type annotations. It's used in FastAPI and some other
     web frameworks for validation, which sounds like a good use case.
-
-??? info "`beartype`"
-    [`beartype`](https://github.com/beartype/beartype)
-
-    Beartype is like `typeguard`, but with non-deterministic checking. That is, to check a nested list of
-    lists, it will check one random element from the list.
-
-
-    ```py
-    >>> @beartype
-    ... def do_stuff(things: list[list[int]]) -> str:
-    ...     return "ok"
-    ...
-    >>> do_stuff([[1, 2], [3, "boom!"]])
-    "ok"
-    >>> do_stuff([[1, 2], [3, "boom!"]])
-    "ok"
-    >>> do_stuff([[1, 2], [3, "boom!"]])
-    # Exception!
-    >>> do_stuff([[1, 2], [3, "boom!"]])
-    "ok"
-    ```
-
-    Sorry, but I don't get the point.
