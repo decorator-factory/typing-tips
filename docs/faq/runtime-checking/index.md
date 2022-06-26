@@ -48,7 +48,7 @@ How would you implement it?
 
     things.append("hey!")
     ```
-    The decorator checked that all the elements are strings. Maybe it saved the list somewhere, and now
+    The decorator checked that all the elements are integers. Maybe it saved the list somewhere, and now
     there's a string in there. Worse, now there might be integers in the alleged list of strings.
 
     Or this:
