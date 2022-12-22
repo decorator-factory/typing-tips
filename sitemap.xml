@@ -2,107 +2,107 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://decorator-factory.github.io/typing-tips/</loc>
-         <lastmod>2022-06-26</lastmod>
+         <lastmod>2022-12-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://decorator-factory.github.io/typing-tips/antipatterns/</loc>
-         <lastmod>2022-06-26</lastmod>
+         <lastmod>2022-12-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://decorator-factory.github.io/typing-tips/antipatterns/complex-annotations/</loc>
-         <lastmod>2022-06-26</lastmod>
+         <lastmod>2022-12-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://decorator-factory.github.io/typing-tips/antipatterns/optional-attributes/</loc>
-         <lastmod>2022-06-26</lastmod>
+         <lastmod>2022-12-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://decorator-factory.github.io/typing-tips/faq/cat-in-animals/</loc>
-         <lastmod>2022-06-26</lastmod>
+         <lastmod>2022-12-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://decorator-factory.github.io/typing-tips/faq/class-or-subclass/</loc>
-         <lastmod>2022-06-26</lastmod>
+         <lastmod>2022-12-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://decorator-factory.github.io/typing-tips/faq/object-vs-any/</loc>
-         <lastmod>2022-06-26</lastmod>
+         <lastmod>2022-12-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://decorator-factory.github.io/typing-tips/faq/peek-at-generic-param/</loc>
-         <lastmod>2022-06-26</lastmod>
+         <lastmod>2022-12-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://decorator-factory.github.io/typing-tips/faq/runtime-checking/</loc>
-         <lastmod>2022-06-26</lastmod>
+         <lastmod>2022-12-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://decorator-factory.github.io/typing-tips/faq/sometimes-raises/</loc>
-         <lastmod>2022-06-26</lastmod>
+         <lastmod>2022-12-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://decorator-factory.github.io/typing-tips/tips/avoid-any/</loc>
-         <lastmod>2022-06-26</lastmod>
+         <lastmod>2022-12-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://decorator-factory.github.io/typing-tips/tips/no-return-confusion/</loc>
-         <lastmod>2022-06-26</lastmod>
+         <lastmod>2022-12-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://decorator-factory.github.io/typing-tips/tips/optional-is-not-optional/</loc>
-         <lastmod>2022-06-26</lastmod>
+         <lastmod>2022-12-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://decorator-factory.github.io/typing-tips/tips/pep585/</loc>
-         <lastmod>2022-06-26</lastmod>
+         <lastmod>2022-12-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://decorator-factory.github.io/typing-tips/tips/typevar-typealias-newtype/</loc>
-         <lastmod>2022-06-26</lastmod>
+         <lastmod>2022-12-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://decorator-factory.github.io/typing-tips/tutorials/generics/</loc>
-         <lastmod>2022-06-26</lastmod>
+         <lastmod>2022-12-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://decorator-factory.github.io/typing-tips/tutorials/generics/custom-variance/</loc>
-         <lastmod>2022-06-26</lastmod>
+         <lastmod>2022-12-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://decorator-factory.github.io/typing-tips/tutorials/generics/generic-types/</loc>
-         <lastmod>2022-06-26</lastmod>
+         <lastmod>2022-12-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://decorator-factory.github.io/typing-tips/tutorials/generics/subtyping/</loc>
-         <lastmod>2022-06-26</lastmod>
+         <lastmod>2022-12-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://decorator-factory.github.io/typing-tips/tutorials/generics/type-vars/</loc>
-         <lastmod>2022-06-26</lastmod>
+         <lastmod>2022-12-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://decorator-factory.github.io/typing-tips/tutorials/generics/variance/</loc>
-         <lastmod>2022-06-26</lastmod>
+         <lastmod>2022-12-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
