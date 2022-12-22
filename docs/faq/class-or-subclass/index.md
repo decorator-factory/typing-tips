@@ -18,7 +18,7 @@
 
 It already does!
 
-If a function works with objects of class `A`, it also works with subclasses of `A`. (At least it should!) This is called "substitutatbility".
+If a function works with objects of class `A`, it also works with subclasses of `A`. (At least it should!) This is called "substitutability".
 
 ---
 
