@@ -2,10 +2,13 @@
 
 ## Problem
 
-`collections.abc.Callable` (and `typing.Callable`) lets you specify the type of a callable object:
+`collections.abc.Callable` (formerly `typing.Callable`) lets you specify the type of a callable object:
 
 ```py
-def stringify_points(points: Iterable[Point], fn: Callable[[int, int], str]) -> str:
+def stringify_points(
+    points: Iterable[Point],
+    fn: Callable[[int, int], str],
+) -> str:
     return "\n".join(fn(p.x, p.y) for p in points)
 ```
 
@@ -22,6 +25,12 @@ However, `Callable` doesn't cover all cases when you need a callable.
 The solution to all these problems is to define a _Callable Protocol_.
 It's a [protocol](https://mypy.readthedocs.io/en/stable/protocols.html) class that defines a
 [`__call__` method](https://docs.python.org/3/reference/datamodel.html#object.__call__) and nothing else.
+
+
+<!--
+    TODO: add caveat that named parameters' names actually matter unless you `/` them
+    mypy also doesn't enforce this, which of course makes life so much more fun and adventurous
+-->
 
 ```py
 from typing import Protocol
@@ -44,49 +53,10 @@ class WeirdCallback(Protocol):
         ...
 ```
 
-### Caveats with type variables
-
-How would you make an inline annotation for this function?
-```py
-from typing import TypeVar
-
-T = TypeVar("T)
-
-def identity(thing: T, /) -> T:
-    return thing
-```
-If you try to do:
-```py
-Endomorphism = Callable[[T], T]
-
-identity2: Endomorphism = identity
-```
-it may not produce errors with your type checker, but it doesn't mean what you want it to mean.
-`Endomorphism` is a _generic type alias_, a template where you can substitute a parameter:
-```py
-pay_taxes: Endomorphism[float] = identity  # we do a little fraud!
-# same as:
-pay_taxes: Callable[[float], float] = identity
-pay_taxes = math.floor # ok
-```
-
-However, you _can_ describe this with a protocol:
-```py
-class Identity(Protocol):
-    def __call__(self, thing: T, /) -> T:
-        ...
-
-identity2: Identity = identity  # ok
-identity2 = math.floor  # not ok! this function won't work with strings or lists
-```
-
-Which is in turn different from a _generic protocol_:
-```py
-class Endo(Protocol[T]):
-    def __call__(self, thing: T, /) -> T:
-        ...
-```
-which is the same as `Endomorphism` for all intents and purposes.
+<!--
+    TODO: give examples of generic functions and generic callable protocol
+    (hint: see previous commit)
+-->
 
 
 ## Comparison with `Callable`
