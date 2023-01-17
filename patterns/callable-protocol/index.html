@@ -707,6 +707,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#applicability" class="md-nav__link">
+    Applicability
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -865,6 +872,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#applicability" class="md-nav__link">
+    Applicability
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -975,6 +989,10 @@ which is the same as <code>Endomorphism</code> for all intents and purposes.</p>
 <li>When hovering over an element using a protocol as annotation, you might have to jump through some hoops
   to get to its definition</li>
 </ul>
+<h2 id="applicability">Applicability</h2>
+<p>If you need some features a <code>Callable[...]</code> doesn't support, such as keyword arguments, this is probably the way to go.</p>
+<p>If you need to clarify the purpose of each parameter of a callback with names, consider using this pattern.</p>
+<p>If you need a very simple callback with one or two parameters, you likely don't need this pattern.</p>
 
               
             </article>
