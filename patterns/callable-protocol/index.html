@@ -928,21 +928,13 @@
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">def</span> <span class="nf">stringify_points</span><span class="p">(</span><span class="n">points</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Point</span><span class="p">],</span> <span class="n">fn</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">fn</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">y</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">points</span><span class="p">)</span>
 </code></pre></div>
-<p>However, <code>Callable</code> has several limitations:</p>
+<p>However, <code>Callable</code> doesn't cover all cases when you need a callable.</p>
 <ul>
-<li>
-<p>With more than one parameter, it's often unclear what the two parameters stand
-  for. What do you do with <code>Callable[[int, str], None]</code>?</p>
-</li>
-<li>
-<p><code>Callable</code> only lets you specify positional-only parameters</p>
-</li>
-<li>
-<p><code>Callable</code> can't describe generic functions (functions that use <code>TypeVar</code>s)</p>
-</li>
-<li>
-<p><code>Callable</code> doesn't support overloaded functions</p>
-</li>
+<li>With more than one parameter, it's often unclear what the two parameters stand
+  for. What do you do with <code>Callable[[int, str], None]</code>?</li>
+<li><code>Callable</code> only lets you specify positional-only parameters</li>
+<li><code>Callable</code> can't describe generic functions (functions that use <code>TypeVar</code>s)</li>
+<li><code>Callable</code> doesn't support overloaded functions</li>
 </ul>
 <h2 id="solution">Solution</h2>
 <p>The solution to all these problems is to define a <em>Callable Protocol</em>.
