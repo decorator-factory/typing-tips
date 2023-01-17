@@ -25,6 +25,9 @@ nav:
     - "Is `object` the same as `Any`?": faq/object-vs-any/index.md
     - "Why can I put a cat in a list of animals?": faq/cat-in-animals/index.md
     - 'How do I "peek" at my generic parameter?': faq/peek-at-generic-param/index.md
+  - Patterns:
+    - Intro: patterns/index.md
+    - 'Callable Protocol': patterns/callable-protocol/index.md
   - Anti-patterns and smells:
     - Intro: antipatterns/index.md
     - Complex annotations: antipatterns/complex-annotations/index.md
