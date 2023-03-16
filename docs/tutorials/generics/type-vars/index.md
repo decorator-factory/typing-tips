@@ -32,7 +32,7 @@ We'd really want `number` to be an `int` here, so that the type checker will cat
 def identity_int(arg: int) -> int:
     return arg
 
-def identity_int(arg: str) -> str:
+def identity_str(arg: str) -> str:
     return arg
 
 def identity_list_str(arg: list[str]) -> list[str]:
