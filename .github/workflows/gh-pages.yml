@@ -31,8 +31,6 @@ jobs:
         uses: actions/configure-pages@v3
       - name: MkDocs Action
         uses: Tiryoh/actions-mkdocs@v0.20.0
-        with:
-          configfile: docs/mkdocs.yml
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
 
