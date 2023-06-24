@@ -131,7 +131,7 @@ from typing import Union
 class BetterString(str):
     ...
 
-    def to_awesome_case(self) -> BetterString:
+    def to_awesome_case(self) -> str:
         import random
         return "".join(random.choice([char.lower(), char.upper()]) for char in self)
 
