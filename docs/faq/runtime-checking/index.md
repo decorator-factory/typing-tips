@@ -34,10 +34,13 @@ def foo(bar: Bar, baz: Callable[[], Baz], answers: list[int]) -> Fizz | Buzz:
 How would you implement it?
 
 - For simple types, like `Bar`, you can just use `isinstance`.
+
 - For union types, you'll have to traverse the variants of the union and check each one of them.
     This is definitely possible.
+
 - For `tuple[X, ...]`, you can go over each element of a tuple. This might be costly at runtime if
     the tuple is large.
+
 - For `list[X]`, it's tricky. You might think that you can just check the list as with `tuple`, but
     not quite. Consider this:
 
@@ -62,10 +65,12 @@ How would you implement it?
 
     But apart from that, you can make a reasonable tradeoff and just repeat the tuple algorithm.
     You probably want to accept a `Sequence[X]` that you turn into a `list` anyway.
+
 - For very dynamic types like `Callable[[str], int]` or `Iterator[int]`, there really isn't anything
     you can check. The best you can do is to embed the types in some wrapper that will check every call
     (for a callable) or every `__next__` invocation (for an iterator). This still buries the type checking
     deep within the call stack.
+
 - For custom generic classes, it is generally impossible to do the check. Example:
     [`aiohttp.web.AppKey`](https://docs.aiohttp.org/en/latest/web_reference.html#appkey).
 
