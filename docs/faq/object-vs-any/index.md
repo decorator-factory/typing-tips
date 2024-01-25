@@ -17,7 +17,7 @@
 
 ## What is `object`?
 
-`object` is a base class for all classes in Python. Whatever you have &mdash; a strnig, a number, a function, a
+`object` is a base class for all classes in Python. Whatever you have &mdash; a string, a number, a function, a
 chess piece &mdash; it's an `object`. If a function accepts an `object`, you can call it with any object.
 
 ```py
