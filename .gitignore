@@ -1,1 +1,6 @@
 site/
+.venv/
+venv/
+.python-version
+.idea/
+.vscode/
