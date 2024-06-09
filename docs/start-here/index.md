@@ -12,21 +12,21 @@ to suggest what kinds of values they're intended to deal with. For example:
 # without type hints
 def find_match(pattern, strings):
     for i, string in enumerate(strings):
-        if pattern.match(string) is not None:
+        if re.match(pattern, string) is not None:
             return i, string
     return None
 
 # with type hints
-def find_match(pattern: re.Pattern[str], strings: list[str]) -> tuple[int, str] | None:
+def find_match(pattern: str, strings: list[str]) -> tuple[int, str] | None:
     for i, string in enumerate(strings):
-        if pattern.match(string) is not None:
+        if re.match(pattern, string) is not None:
             return i, string
     return None
 ```
 
 This reads as:
 
-- the `pattern` argument should be a `re.Pattern` for strings (as opposed to bytes)
+- the `pattern` argument should be a string
 - the `strings` argument should be a list, where each element is a string
 - the function returns either an `(integer, string)` tuple or `None`
 
@@ -50,8 +50,8 @@ _without running the code_:
     <figcaption>Running `Pylance` in VSCode</figcaption>
 </figure>
 
-This can seem trivial: this function clearly works with patterns, why would you call it
-with a string? Or a socket?! And this should be caught with the most basic unit test.
+This can seem trivial: this function clearly works with strings, why would you call it
+with `bytes`? Or a socket?! And this should be caught with the most basic unit test.
 
 - Without the type hints, you'd have to examine the implementation of this function to
   know what argument types it expects. In a real codebase, you might have to dig through
@@ -61,10 +61,8 @@ with a string? Or a socket?! And this should be caught with the most basic unit 
     might forget that `find_match` returns `None` when a match isn't found and write code like this:
 
     ```py
-    _PHONE_PATTERN = re.compile("^[-+0-9()]{1,15}$")
-
     def find_phone(fields: list[str]) -> str:
-        _i, phone = find_match(_PHONE_PATTERN,  fields)
+        _i, phone = find_match("^[-+0-9()]{1,15}$",  fields)
         return phone
     ```
     A type checker will remind you that `find_match` can return `None`, which you won't be able to
@@ -124,7 +122,8 @@ Type hints allow you to write and read code more effectively in your editor.
 def add_squares(x: int, y: int) -> int:
     return x**2 + y**2
 
-add_squares("42", "hmm")
+print(add_squares(10, 20))
+print(add_squares("42", "hmm"))
 ```
 
 You should see a warning to the effect of "`x` is supposed to be an `int`, but you provided a string"
