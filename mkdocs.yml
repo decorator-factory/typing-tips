@@ -4,7 +4,7 @@ repo_url: https://github.com/decorator-factory/typing-tips
 
 nav:
   - About: index.md
-  # - Start Here: start-here/index.md  -- WIP
+  - Start Here: start-here/index.md
   - Tutorials:
     - Generics (series):
       - Intro: tutorials/generics/index.md
