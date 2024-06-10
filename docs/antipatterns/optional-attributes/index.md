@@ -48,7 +48,6 @@ Suppose then that you come up with this solution:
 from enum import Enum
 from collections.abc import Mapping
 from dataclasses import dataclass
-from typing import Optional
 
 class Operation(Enum):
     add = "add"
@@ -60,11 +59,11 @@ class Operation(Enum):
 class Node:
     line: int
     column: int
-    variable_name: Optional[str]
-    constant: Optional[int]
-    operation: Optional[Operation]
-    left_operand: Optional["Node"]
-    right_operand: Optional["Node"]
+    variable_name: str | None
+    constant: int | None
+    operation: Operation | None
+    left_operand: "Node | None"
+    right_operand: "Node | None"
 
 
 def evaluate(node: Node, variables: Mapping[str, int]) -> int:

@@ -123,7 +123,6 @@ Validate the response you're getting. You can use an existing validation library
 ```py
 from collections.abc import Collection
 from dataclasses import dataclass
-from typing import Optional
 
 import dataclass_factory
 
@@ -150,8 +149,8 @@ class _RawMovie:
     name: str
     director: str
     year: int
-    genres: Optional[list[str]] = None
-    genre: Optional[str] = None
+    genres: list[str] | None = None
+    genre: str | None = None
 
 
 @dataclass
