@@ -125,9 +125,6 @@ def create_animals(factory: Callable[[str], Animal]) -> tuple[Animal, Animal]:
 
 Which of these functions would work as the `factory`?
 ```py
-from typing import Union
-
-
 class BetterString(str):
     ...
 
@@ -138,11 +135,11 @@ class BetterString(str):
 
 def make_animal(name: str) -> Animal: ...
 def make_cat(name: str) -> Cat: ...
-def make_cat_or_dog(name: str) -> Union[Cat, Dog]: ...
-def make_cat2(name_or_id: Union[str, int]) -> Cat: ...
+def make_cat_or_dog(name: str) -> Cat | Dog: ...
+def make_cat2(name_or_id: str | int) -> Cat: ...
 def make_cat3(whatever: object) -> Cat: ...
 def make_animal2(name: BetterString) -> Animal: ...
-def make_animal_of_plant(name: str) -> Union[Animal, Plant]: ...
+def make_animal_of_plant(name: str) -> Animal | Plant: ...
 ```
 
 - `def make_animal(name: str) -> Animal: ...`
@@ -164,17 +161,17 @@ def make_animal_of_plant(name: str) -> Union[Animal, Plant]: ...
         return animal
     ```
 
-- `def make_cat_or_dog(name: str) -> Union[Cat, Dog]: ...`
+- `def make_cat_or_dog(name: str) -> Cat | Dog: ...`
 
     Same for this function: whatever it returns, it is an `Animal`.
 
-- `def make_cat2(name_or_id: Union[str, int]) -> Cat: ...`
+- `def make_cat2(name_or_id: str | int) -> Cat: ...`
 
     This one is more tricky, but it will still fit: we need a function that
     _accepts_ a string as an argument, and this function satisfies this requirement.
 
-    In other words, `make_cat2` accepts any _subtype_ of `Union[str, int]` as an
-    argument, and `str` is a subtype of `Union[str, int]`.
+    In other words, `make_cat2` accepts any _subtype_ of `str | int` as an
+    argument, and `str` is a subtype of `str | int`.
 
 - `def make_cat3(whatever: object) -> Cat: ...`
 
@@ -187,7 +184,7 @@ def make_animal_of_plant(name: str) -> Union[Animal, Plant]: ...
     but `make_animal2` only accepts `BetterString` objects and can, for example,
     call the `to_awesome_case()` method on the name.
 
-- `def make_animal_of_plant(name: str) -> Union[Animal, Plant]: ...`
+- `def make_animal_of_plant(name: str) -> Animal | Plant: ...`
 
     This will not work either. The function should always return an `Animal`.
 

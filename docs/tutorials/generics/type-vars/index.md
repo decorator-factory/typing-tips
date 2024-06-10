@@ -72,13 +72,13 @@ This is how it looks in action:
 Is this a well-typed function?
 
 ```py
-def triple(string: Union[str, bytes]) -> Union[str, bytes]:
+def triple(string: str | bytes) -> str | bytes:
     return string * 3
 ```
 
 If you pass in a string, you always get a string, same with bytes.
 But the type doesn't say quite that: whether you pass in a `str` or a `bytes` object, you will
-get `Union[str, bytes]` back.
+get `str | bytes` back.
 
 ![Error demonstration](bad-union.png)
 
@@ -95,9 +95,9 @@ Therefore we're not allowed to multiply `string`.
 We can put a _bound_ on our type variable: it should only accept `str` or `bytes`.
 
 ```py
-from typing import Union
+from typing import TypeVar
 
-AnyString = TypeVar("AnyString", bound=Union[str, bytes])
+AnyString = TypeVar("AnyString", str, bytes)
 
 def triple(string: AnyString) -> AnyString:
     return string * 3

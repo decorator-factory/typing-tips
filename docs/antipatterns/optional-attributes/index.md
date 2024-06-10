@@ -16,7 +16,7 @@
 !!! success "Solution"
 
     Represent each of the possible states of the class as its own thing.
-    Sometimes inheritance works better, sometimes you're better off with a `Union`.
+    Sometimes inheritance works better, sometimes you're better off with a (`A | B`) (`Union`).
 
 ## Example
 
@@ -48,7 +48,7 @@ Suppose then that you come up with this solution:
 from enum import Enum
 from collections.abc import Mapping
 from dataclasses import dataclass
-
+from typing import Optional
 
 class Operation(Enum):
     add = "add"
