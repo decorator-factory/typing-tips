@@ -15,6 +15,7 @@ nav:
       - "Variance for your own classes": tutorials/generics/custom-variance/index.md
   - General tips:
     - "Avoid `Any`": tips/avoid-any/index.md
+    - "`Optional` doesn't mean an optional argument": tips/optional-is-not-optional/index.md
     - "Type variables vs type aliases vs `NewType`": tips/typevar-typealias-newtype/index.md
     - "`NoReturn` doesn't just mean no `return` statement": tips/no-return-confusion/index.md
     - "Use new-style annotations": tips/pep585/index.md
