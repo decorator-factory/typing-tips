@@ -254,6 +254,32 @@ If you want to use `Any`, read these first:
 - [Is `object` the same as `Any`](../faq/object-vs-any)
 
 
+## Type inference
+
+Great, now you know how to annotate function parameters. But what about all the stuff that happens
+inside a function?
+
+If a value is not explicitly annotated, a type checker will _infer_ its type. It will look around
+that value and try to deduce what its type is. For example:
+
+```py
+def count_f(string: str) -> int:
+    small = string.count("f")
+    big = string.count("F")
+    return small + big
+```
+
+Type checkers know that `str` has a `count` method expecting a string
+and returning an integer. Given that, it deduces that `small` and `big` are
+`int`s.
+
+You can see what type your type checker infers for a variable by hovering over it:
+
+![Hovering in Pylance](pylance-hover.png)
+
+This is why you shouldn't annotate most of your variables: the type checker will
+already know what type it is.
+
 ## But wait, there's more
 
 What you've learned so far is more than enough to get started. Try using type hints in your next project.
