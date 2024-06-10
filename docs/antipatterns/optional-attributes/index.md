@@ -16,7 +16,7 @@
 !!! success "Solution"
 
     Represent each of the possible states of the class as its own thing.
-    Sometimes inheritance works better, sometimes you're better off with a (`A | B`) (`Union`).
+    Sometimes inheritance works better, sometimes you're better off with a `Union`.
 
 ## Example
 
