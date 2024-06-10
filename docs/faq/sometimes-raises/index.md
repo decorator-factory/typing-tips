@@ -16,10 +16,10 @@
 ## Exception means `NoReturn`, right?
 
 ```py
-from typing import Union, NoReturn
+from typing import NoReturn
 
 
-def fetch_user(user_id: str) -> Union[User, NoReturn]:
+def fetch_user(user_id: str) -> User | NoReturn:
     user = database.fetch_user(id=user_id)
     if user is None:
         raise LookupError(user_id)
@@ -33,10 +33,7 @@ def fetch_user(user_id: str) -> User:
 
 ## What about `Union` with the exception type?
 ```py
-from typing import Union
-
-
-def fetch_user(user_id: str) -> Union[User, LookupError]:
+def fetch_user(user_id: str) -> User | LookupError:
     user = database.users.where(id=user_id, deleted=False)
     if user is None:
         raise LookupError(user_id)
@@ -57,9 +54,6 @@ In Python, pretty much anything can raise a variety of exceptions.
 
 If raising an exception is part of the function's contract, note it in the docstring:
 ```py
-from typing import Union
-
-
 def fetch_user(user_id: str) -> User:
     """
     Raises:

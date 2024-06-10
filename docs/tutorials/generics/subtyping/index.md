@@ -23,10 +23,10 @@ class Dog(Animal):
 pet: Animal = Dog()
 ```
 
-- `int` and `str` are subtypes of `Union[int, str]`
+- `int` and `str` are subtypes of `int | str`
 ```py
-x: Union[int, str] = "hello"
-y: Union[int, str] = 42
+x: int | str = "hello"
+y: int | str = 42
 ```
 
 - Any type is a subtype of itself
@@ -61,15 +61,15 @@ class StringReader:
 reader: Reader = StringReader("Hello, world!")
 ```
 
-- `tuple[int, ...]` is a subtype of `tuple[Union[int, str], ...]`
+- `tuple[int, ...]` is a subtype of `tuple[int | str, ...]`
 ```py
 ints: tuple[int, ...] = (1, 2, 3, 4)
-ints_or_strings: tuple[Union[int, str], ...] = ints
+ints_or_strings: tuple[int | str, ...] = ints
 ```
 
-- `Callable[[Animal], int]` is a subtype of `Callable[[Dog], Union[int, str]]`
+- `Callable[[Animal], int]` is a subtype of `Callable[[Dog], int | str]`
 
-- `list[int]` is **not** a subtype of `list[Union[int, str]]`
+- `list[int]` is **not** a subtype of `list[int | str]`
 
     > Wait, what?
 

@@ -52,7 +52,7 @@ Suppose that you're working with an external service that returns you a list of 
 You wrote a function that calls the external service and returns the data from it.
 
 ```py
-def fetch_movies() -> dict[str, list[dict[str, Union[str, int, list[str]]]]]:
+def fetch_movies() -> dict[str, list[dict[str, str | int | list[str]]]]:
     resp = requests.get("https://movies.example.com/v2/movies")
     return resp.json()
 ```
@@ -65,7 +65,7 @@ minutes understanding what the function actually returns.
 Let's extract a type alias - the type of a single movie.
 
 ```py
-Movie = dict[str, Union[str, int, list[str]]]
+Movie = dict[str, str | int | list[str]]
 
 def fetch_movies() -> dict[str, list[Movie]]:
     resp = requests.get("https://movies.example.com/v2/movies")
@@ -123,7 +123,6 @@ Validate the response you're getting. You can use an existing validation library
 ```py
 from collections.abc import Collection
 from dataclasses import dataclass
-from typing import Optional
 
 import dataclass_factory
 
@@ -150,13 +149,13 @@ class _RawMovie:
     name: str
     director: str
     year: int
-    genres: Optional[list[str]] = None
-    genre: Optional[str] = None
+    genres: list[str] | None = None
+    genre: str | None = None
 
 
 @dataclass
 class _RawMovies:
-    movies: list[_RawMovies]
+    movies: list[_RawMovie]
 
 
 def _parse_raw_movie(raw: _RawMovie) -> Movie:

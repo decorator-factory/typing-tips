@@ -1,21 +1,22 @@
 # `Optional` doesn't mean an optional argument
 
 `Optional` doesn't represent an optional argument to a function. It means "either `<something>` or `None`".
-For example, `Optional[int]` means `Union[int, None]`, exactly.
+For example, `Optional[int]` means `int | None`, exactly.
 
-In fact, if you try to print out `Union[int, None]`, you will see `Optional[int]`!
+!!! note
+    with ``typing.Union``, if you try to print out `Union[int, None]`, you will see `Optional[int]`!
 
-```python-repl
->>> from typing import Union, Optional
->>>
->>> Optional[int]
-typing.Optional[int]
->>> Union[int, None]
-typing.Optional[int]
->>> Union[int, None] == Optional[int]
-True
->>>
-```
+    ```python-repl
+    >>> from typing import Union, Optional
+    >>>
+    >>> Optional[int]
+    typing.Optional[int]
+    >>> Union[int, None]
+    typing.Optional[int]
+    >>> Union[int, None] == Optional[int]
+    True
+    >>>
+    ```
 
 ## Examples
 
@@ -72,7 +73,7 @@ In general, type annotations don't change how the function works. But the termin
 ### A function argument that is not mandatory and can be `None`: don't do this
 
 ```py
-def create_classroom(name: str, mentor: Optional[Union[Mentor, None]] = None) -> None:
+def create_classroom(name: str, mentor: Optional[Mentor | None] = None) -> None:
     ...
 ```
 
