@@ -8,7 +8,7 @@ For that, there are 2 choices: [``typing.Literal``](https://docs.python.org/3/li
 
 There are some differences between them, though. 
 
-### `Literal`
+## `Literal`
 
 ``Literal`` is the simpler one, that can be used for:
 
@@ -23,7 +23,7 @@ There are some differences between them, though.
 
 Literals can have multiple "variants" - separated with ``,``, e.g. ``Literal[1, 2]`` would mean "either the 1 literal, or the 2 literal" - no need for ``Literal[1] | Literal[2]``.
 
-### `Enum`s
+## `Enum`s
 
 ``Enum``s are a bit more complex and require the user to access the members rather than just passing a value, but they can be used for non-literals and other types too, as they are
 a set of names bound to (unique) values, rather than just the values themselves.
@@ -113,7 +113,7 @@ Though, you might want to say something like: dont we want to "make invalid stat
 And, well, you'd be right here. But, at the moment of writing, the type system is not expressive enough for us to easily implement something like this. The only thing we could do is generate a big ``Literal`` with all 256 ints in the range of 0 to 255,
 thats somewhat of a limitation of types that represent specific values, even though something might easily be formulated with words - it might not necessary be easy to express with types in a programming language.
 
-#### ``auto``
+### ``auto``
 
 ``auto`` is sort of a magical class that can be called to define a value of an ``Enum`` member, its behaviour differs based on the type of the enum.
 
@@ -121,7 +121,7 @@ thats somewhat of a limitation of types that represent specific values, even tho
 - For ``Flag`` and ``IntFlag`` it will produce the first power of two greater than the previous highest value (1 if its the first one)
 - For ``StrEnum`` it will produce the lower-cased version of the member's name
 
-#### ``Flag``
+### ``Flag``
 
 ``Flag`` is a special kind of ``Enum``, for which the members support bitwise operators (``&`` (AND), ``|`` (OR), ``^`` (XOR), and ``~`` (INVERT)), and the result of those operations will be a member of that enum too, rather than just dropping to the value type. Usually the members of such enums are ``int``s, for which, like with ``Enum`` there is a ``IntEnum`` - there is ``IntFlag``.
 
