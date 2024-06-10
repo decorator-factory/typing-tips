@@ -92,7 +92,7 @@ The error is fair enough. `AnyString` doesn't have to be a string or a bytestrin
 it could be a list or a `pathlib.Path` or even a function.
 Therefore we're not allowed to multiply `string`.
 
-We can put a _bound_ on our type variable: it should only accept `str` or `bytes`.
+We can put a _constraint_ on our type variable: it should only accept `str` or `bytes`.
 
 ```py
 from typing import TypeVar
@@ -110,6 +110,8 @@ Here we've achieved two goals:
 
 - ensuring that the input is either a `str` or a `bytes` object
 - linking the argument type to the return type
+
+<!-- TODO: explain constraints vs bounds, insert a `bound` example here -->
 
 ## Using type variables as parameters
 
