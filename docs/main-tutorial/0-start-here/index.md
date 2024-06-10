@@ -250,8 +250,8 @@ detecting all the "wrong stuff" you will do with the value.
 
 If you want to use `Any`, read these first:
 
-- [Avoid `Any`](../tips/avoid-any)
-- [Is `object` the same as `Any`](../faq/object-vs-any)
+- [Avoid `Any`](../../tips/avoid-any)
+- [Is `object` the same as `Any`](../../faq/object-vs-any)
 
 
 ## Type inference
