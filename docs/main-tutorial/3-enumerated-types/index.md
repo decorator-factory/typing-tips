@@ -2,7 +2,7 @@
 
 ## Motivation
 
-Sometimes you want to represent that a value should only be one of a set of specific, predefined values, like the `mode` parameter in the builtin [``open()``](https://docs.python.org/3/library/functions.html#open) function.
+Sometimes you want to represent that a value should only be one of a set of specific, predefined values, like the `mode` parameter in the builtin [``open()``](https://docs.python.org/3/library/functions.html#open) function: although it is a string, it shouldnt be any ``str`` - only some specific ones.
 
 For that, there are 2 choices: [``typing.Literal``](https://docs.python.org/3/library/typing.html#typing.Literal) and [``enum.Enum``](https://docs.python.org/3/library/enum.html#enum.Enum).
 
@@ -23,12 +23,12 @@ There are some differences between them, though.
 
 Literals can have multiple "variants" - separated with ``,``, e.g. ``Literal[1, 2]`` would mean "either the 1 literal, or the 2 literal" - no need for ``Literal[1] | Literal[2]``.
 
-## `Enum`s
+## `Enum`
 
 ``Enum``s are a bit more complex and require the user to access the members rather than just passing a value, but they can be used for non-literals and other types too, as they are
 a set of names bound to (unique) values, rather than just the values themselves.
 
-The usual way to define an enum by defining a class and inheriting from the [``enum.Enum``](https://docs.python.org/3/library/enum.html#enum.Enum) base class, like so:
+The usual way to define an enum is by defining a class and inheriting from the [``enum.Enum``](https://docs.python.org/3/library/enum.html#enum.Enum) base class, like so:
 
 ```python
 from enum import Enum
@@ -105,7 +105,7 @@ Something like:
 ...
 >>> Colors.RED
 <Colors.RED: r=255, g=0, b=0>
->>> Colors.RED.r
+>>> Colors.RED.r # yep, its still usable as a `Color`, even though looks different from it
 255
 ```
 
@@ -125,8 +125,8 @@ thats somewhat of a limitation of types that represent specific values, even tho
 
 ``Flag`` is a special kind of ``Enum``, for which the members support bitwise operators (``&`` (AND), ``|`` (OR), ``^`` (XOR), and ``~`` (INVERT)), and the result of those operations will be a member of that enum too, rather than just dropping to the value type. Usually the members of such enums are ``int``s, for which, like with ``Enum`` there is a ``IntEnum`` - there is ``IntFlag``.
 
-They can be useful for something like unix filesystem permissions - the members would then be: READ, WRITE, EXECUTION.
-Combinations of them would then be produced using said bitwise operators, so, something like "read and write" would be ``READ | WRITE``.
+They can be useful for something like unix filesystem permissions - the members would then be: READ, WRITE, EXECUTE.
+Combinations of them would then be produced using said bitwise operators, so, something like a "read and write" permission would be ``READ | WRITE`` - so, both the ``READ`` and ``WRITE`` flag are "on", which could be checked with ``&`` (AND), e.g. ``(READ | WRITE) & READ`` is ``READ`` (which is, as a non-zero ``int``, truthy, so could be used in an ``if`` or something like that).
 
 ```python-repl
 >>> from enum import IntFlag, auto
@@ -139,4 +139,6 @@ Combinations of them would then be produced using said bitwise operators, so, so
 (<Permission.READ: 1>, <Permission.WRITE: 2>, <Permission.EXECUTE: 4>)
 >>> Permission.READ | Permission.WRITE
 <Permission.READ|WRITE: 3>
+>>> (Permission.READ | Permission.WRITE) & Permission.READ
+<Permission.READ: 1>
 ```
