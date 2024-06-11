@@ -12,10 +12,10 @@ There are some differences between them, though.
 
 ``Literal`` is the simpler one, that can be used for:
 
-- ``int``eger literals (not floats, though)
+- ``int``eger literals (**not ``float``s**, though)
 - ``str``ing literals
 - ``bytes`` literals
-- ``bool``ean literals
+- ``bool``ean literals (``False, True``)
 - the ``None`` singleton
 - enum members, which will be explained later
 
@@ -125,7 +125,8 @@ thats somewhat of a limitation of types that represent specific values, even tho
 
 ``Flag`` is a special kind of ``Enum``, for which the members support bitwise operators (``&`` (AND), ``|`` (OR), ``^`` (XOR), and ``~`` (INVERT)), and the result of those operations will be a member of that enum too, rather than just dropping to the value type. Usually the members of such enums are ``int``s, for which, like with ``Enum`` there is a ``IntEnum`` - there is ``IntFlag``.
 
-They can be useful for something like unix filesystem permissions - the members would then be: READ, WRITE, EXECUTE.
+They can be useful for something like unix filesystem permissions - the members would then be: ``READ, WRITE, EXECUTE``.
+
 Combinations of them would then be produced using said bitwise operators, so, something like a "read and write" permission would be ``READ | WRITE`` - so, both the ``READ`` and ``WRITE`` flag are "on", which could be checked with ``&`` (AND), e.g. ``(READ | WRITE) & READ`` is ``READ`` (which is, as a non-zero ``int``, truthy, so could be used in an ``if`` or something like that).
 
 ```python-repl
