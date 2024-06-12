@@ -50,7 +50,7 @@ def draw_circle(x: int, y: int, color: Color) -> None:
 
 It means that you can only pass it a member of the ``Color`` enum, that is: ``Color.RED``, ``Color.GREEN``, ``Color.BLUE``. You cant pass just a ``1`` or a ``2`` or a ``3``, though.
 
-The members of such an enum are somewhat special. They are not just literally the values you defined for them, if you, lets say, if you try to add ``Color.RED`` and ``Color.GREEN`` you wont get ``3`` - you will get a type error.
+The members of such an enum are somewhat special. They are not just literally the values you defined for them, for example, if you try to add ``Color.RED`` and ``Color.GREEN`` you wont get ``3`` - you will get a type error.
 
 ```python-repl
 >>> from enum import Enum
