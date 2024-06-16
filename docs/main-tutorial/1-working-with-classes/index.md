@@ -17,7 +17,7 @@ The basics of annotating classes are not that hard. Let's start off with an exam
             self._kittens = []
 
         @property
-        def lives(self:
+        def lives(self):
             return self._lives
 
         def set_owner(self, name):
@@ -54,9 +54,9 @@ As you can see:
 - `self` is not annotated in any way
 - Special methods like `__init__`, `__repr__`, `__len__` and so on
   should be fully annotated as well
-- Attribute types are usually inferred from the `__init__` method, but sometimes it's not possible.
+- Attribute types are usually inferred from the `__init__` method, but sometimes it's not possible
   If you have an attribute that starts off as `None` or an empty collection, you should annotate
-  it explicitly.
+  it explicitly
 
 ## Editor integration example
 
@@ -162,16 +162,17 @@ Type checkers will still understand the type hints, but they will be stored as a
 
 ## Think of the kittens
 
-The three methods we just added may look fine, but they have a few problems that can manifest when we
-try using our class.
+The three methods we just added may look fine, but they have a few problems that can manifest when
+our class will be used in practice.
 
 - Adopting several kittens
 
     The `adopt_kittens()` method says that you need a _list_ of kittens. That's a bit too restrictive.
     If I have a tuple of kittens or an iterator of kittens, should they be left cold and hungry?
-    Or should the caller do `list(tuple)` which takes extra time and memory?
+    Or should the caller do `list(kittens)` which takes extra time and memory?
 
-    Moreover, it's legal for the function to modify the list provided in the argument.
+    Moreover, it's legal for the method to modify the list provided in the argument. But that doesn't
+    fit the intention of `adopt_kittens()`.
 
 - Getting all the kittens
 
@@ -236,7 +237,7 @@ Here are some other items from `collections.abc` you'll find useful:
 | :--------- | ----------- |
 | `Iterator[T]` | Something you can call `next()` on. See [_iterator_](https://docs.python.org/3/glossary.html#term-iterator) |
 | `Mapping[K, V]`  | An object supporting `mapping[key]` syntax and other read-only dict-like operations (like `mapping.items()`). See [_mapping_](https://docs.python.org/3/glossary.html#term-mapping) |
-| `Sequence[T]` | An object supporting iteration, indexing, `len()` and `in`. `list`, `tuple` and `range` are sequence |
+| `Sequence[T]` | An object supporting iteration, indexing, `len()` and `in`. `list`, `tuple` and `range` are all sequences |
 | `MutableSequence[T]` | Like `Sequence`, but also supports mutation with `obj[index] = value`, `clear()`, `append()` etc. |
 | `Collection[T]` | An object supporting iteration, `len()` and `in`. `set` is a collection but not a sequence |
 | `Callable` | Something you can `call()`. We will discuss it in a later chapter |
