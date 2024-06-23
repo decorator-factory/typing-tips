@@ -54,7 +54,7 @@ As you can see:
 - `self` is not annotated in any way
 - Special methods like `__init__`, `__repr__`, `__len__` and so on
   should be fully annotated as well
-- Attribute types are usually inferred from the `__init__` method, but sometimes it's not possible
+- Attribute types are usually inferred from the `__init__` method, but sometimes it's not possible.
   If you have an attribute that starts off as `None` or an empty collection, you should annotate
   it explicitly
 
