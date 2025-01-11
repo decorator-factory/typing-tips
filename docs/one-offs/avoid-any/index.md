@@ -3,8 +3,8 @@
 ## TL;DR
 
 Avoid using `Any`, because it turns off all type-checking and somewhat defeats the purpose of static typing.
-Often you can use union types, `object` or generics instead. But don't be too fanatical: Python at its core is a dynamically
-typed language, and sometimes `Any` is just what you need.
+Often you can use union types, `object` or generics instead. But don't get too hung up on this: Python is a dynamically
+typed language, and its "type system" has limited expressive power, so sometimes `Any` is just what you need.
 
 ## What is `Any`?
 
@@ -36,8 +36,8 @@ def do_something(mystery_object: Any) -> None
 2. You lose editor integration. This is not just a typing aid: features like "Go To Definition"
     or "Go To Reference" will no longer work. This will make refactoring harder.
 
-3. If you "leak" an `Any` that you didn't check propely, you might end up with a typed value that's not the right type at runtime.
-    For example, you might accidentally pass a `None` where a string is expected.
+3. If you "leak" an `Any` that you didn't check propely, you might end up with a "typed value that's not the right type at runtime.
+    For example, you might accidentally pass a `None` where it's never expected.
 
 4. (perhaps a subtle and controversial point) It encourages devlopers to "trust" dynamic values, skipping validation where
     it would be beneficial.
@@ -46,10 +46,6 @@ def do_something(mystery_object: Any) -> None
     response as JSON and do some things to it. If the remote service has a bug, or the programmer misunderstood the
     documentation, this could cause a bug that's hard to catch. Or worse, a security issue: see
     [CWE-20: Improper Input Validation](https://cwe.mitre.org/data/definitions/20.html).
-
-    This doesn't mean that you need to make an abomination of `if`s and `for`s every time you make an HTTP request.
-    There are tools such as [Pydantic](https://pypi.org/project/pydantic/) and
-    [dataclass-factory](https://pypi.org/project/dataclass-factory/) that help with (de)serialization.
 
 5. Finally, `Any` is viral: if you do something to it, you get a new `Any`. If you're getting some things from a
     `settings: dict[str, Any]`, soon you'll be juggling a dozen of `Any`s.
@@ -76,17 +72,14 @@ Here are some steps you can take to reduce the number of `Any`s in your code:
 1. If you're using `mypy`, you can [generate a report](https://mypy.readthedocs.io/en/stable/command_line.html#report-generation)
     that measures how much of your code is untyped.
 
-2. Learn about [type variables and generics](../../tutorials/generics). Whenever you see a function or a class where two values
+2. Learn about type variables and generics (TODO: link generics tutorial). Whenever you see a function or a class where two values
     are linked together and are marked as `Any`, see if you can use a `TypeVar`.
-
-    There are some recent additions to generics, namely `ParamSpec` and `TypeVarTuple`. We don't have a tutorial on them yet,
-    but they're very cool.
 
 3. Search for external inputs, such as configuration or network requests, and decide if they need stricter validation.
 
-4. Consider if you can use a [union type](https://docs.python.org/3.10/library/typing.html#typing.Union).
+4. Consider if you can use a [union type](https://docs.python.org/3/library/typing.html#typing.Union).
 
-5. If you really want "any value", see if using `object` makes sense. See ["Is `object` the same as `Any`?"](../../faq/object-vs-any) for more details.
+5. If you really want "any value", see if using `object` makes sense. See ["Is `object` the same as `Any`?"](../object-vs-any/index.md) for more details.
 
 
 ## More on this topic
@@ -94,5 +87,3 @@ Here are some steps you can take to reduce the number of `Any`s in your code:
 - ["No, dynamic type systems are not inherently more open"](https://lexi-lambda.github.io/blog/2020/01/19/no-dynamic-type-systems-are-not-inherently-more-open/) by Alexis King
 - ["typing.Any vs object?"](https://stackoverflow.com/q/39817081/10295729) on StackOverflow
 
-
-[^1]: Numpy arrays are an exception with `bool()`, but let's just pretend they don't exist.

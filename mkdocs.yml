@@ -3,38 +3,22 @@ site_url: https://decorator-factory.github.io/typing-tips/
 repo_url: https://github.com/decorator-factory/typing-tips
 
 nav:
-  - About: index.md
-  - Start here:
-    - "From zero to types": main-tutorial/0-start-here/index.md
-    - "Working with classes": main-tutorial/1-working-with-classes/index.md
-  - Tutorials:
-    - Generics (series):
-      - Intro: tutorials/generics/index.md
-      - Type variables: tutorials/generics/type-vars/index.md
-      - Subtyping: tutorials/generics/subtyping/index.md
-      - "Generic types": tutorials/generics/generic-types/index.md
-      - Variance: tutorials/generics/variance/index.md
-      - "Variance for your own classes": tutorials/generics/custom-variance/index.md
-  - General tips:
-    - "Avoid `Any`": tips/avoid-any/index.md
-    - "`Optional` doesn't mean an optional argument": tips/optional-is-not-optional/index.md
-    - "Type variables vs type aliases vs `NewType`": tips/typevar-typealias-newtype/index.md
-    - "`NoReturn` doesn't just mean no `return` statement": tips/no-return-confusion/index.md
-    - "Use new-style annotations": tips/pep585/index.md
-  - Frequently asked questions:
-    - "How to enforce type annotations at runtime?": faq/runtime-checking/index.md
-    - 'I want to specify "X or any subclass of X"': faq/class-or-subclass/index.md
-    - What if my function can raise an exception?: faq/sometimes-raises/index.md
-    - "Is `object` the same as `Any`?": faq/object-vs-any/index.md
-    - "Why can I put a cat in a list of animals?": faq/cat-in-animals/index.md
-    - 'How do I "peek" at my generic parameter?': faq/peek-at-generic-param/index.md
-  # - Patterns:
-  #   - Intro: patterns/index.md
-  #   - 'Callable Protocol': patterns/callable-protocol/index.md
-  # - Anti-patterns and smells:
-  #   - Intro: antipatterns/index.md
-  #   - Complex annotations: antipatterns/complex-annotations/index.md
-  #   - "`Optional` attribute hell": antipatterns/optional-attributes/index.md
+  - "About": index.md
+  - "Tutorials":
+    - "Type hints for dummies (start here)":
+      - "From zero to types": tutorials/main/0-start-here/index.md
+      - "Working with classes": tutorials/main/1-working-with-classes/index.md
+    # The old generics tutorial is pretty bad so I'm replacing it
+    # - Generics (series):
+    #   - Intro: tutorials/generics/index.md
+    #   - Type variables: tutorials/generics/type-vars/index.md
+    #   - Subtyping: tutorials/generics/subtyping/index.md
+    #   - "Generic types": tutorials/generics/generic-types/index.md
+    #   - Variance: tutorials/generics/variance/index.md
+    #   - "Variance for your own classes": tutorials/generics/custom-variance/index.md
+  - "Miscellaneous articles":
+    - "`object` is not the same as `Any`": one-offs/object-vs-any/index.md
+    - "avoid `Any`": one-offs/avoid-any/index.md
 
 theme:
   name: material

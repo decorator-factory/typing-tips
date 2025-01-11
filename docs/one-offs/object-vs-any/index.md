@@ -18,7 +18,8 @@
 ## What is `object`?
 
 `object` is a base class for all classes in Python. Whatever you have &mdash; a string, a number, a function, a
-chess piece &mdash; it's an `object`. If a function accepts an `object`, you can call it with any object.
+chess piece &mdash; it's an `object`. If a function accepts `object` for a parameter, you can supply anything
+as the argument.
 
 ```py
 def greet(target: object) -> None:
@@ -28,7 +29,7 @@ greet("World")
 greet(42)
 ```
 
-`object` is not special for type checkers, it behaves like any other class. Specifically:
+For type checking purposes, `object` is not treated specially. It behaves like an ordinary class:
 
 1. If you have a value of type `object`, you can only do things with it that are appropriate
     for any object. Operations that only some objects might support are not allowed.
@@ -42,7 +43,7 @@ greet(42)
         number: int = target  # ERROR
     ```
 
-2. [Variance](../../tutorials/generics/variance) works as expected.
+ 2. Variance works as expected. <!-- TODO link tutorial about variance -->
 
     ```py
     foo: tuple[int, ...] = (1, 2, 3)
@@ -84,12 +85,13 @@ def greet(thing: Any) -> str:
     return f"{mysterious} {name}"
 ```
 
-I cover `Any` in more detail on ["Avoid `Any`"](../../tips/avoid-any)
+I cover `Any` in more detail on ["Avoid `Any`"](../avoid-any/index.md)
 
 ## What's the difference?
 
-If you have an `Any`, you can perform any operation on an object.
-If you have an `object`, you can only do things to it that are appropriate to that object.
+If you have a value of type `Any`, you are allowed to perform any operation on that value.
+
+If you have a value of type `object`, you are only allowed to perform operations on it that are valid for _every_ `object`.
 
 Let's look at the original example:
 ```py
@@ -105,7 +107,7 @@ we don't care what `thing` is, but we need to turn it into a string. All objects
 correct choice here.
 
 `object` is generally what you should use if you don't care what the type is, or if the type is unknown.
-However, there are some use cases for `Any` which we described in ["Avoid `Any`"](../../tips/avoid-any).
+However, there are some use cases for `Any` which we described in ["Avoid `Any`"](../avoid-any/index.md).
 
 !!! note "For TypeScript users"
 

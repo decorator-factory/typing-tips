@@ -2,6 +2,7 @@
 
 This is a collection of short articles about Python's gradual typing system.
 
+If you're new to type hints, start with [Type hints for dummies](tutorials/main/0-start-here/index.md).
 
 ## Contribute
 

@@ -248,10 +248,10 @@ This is handy, but don't overuse `Any`. By design, `Any` will prevent type check
 detecting all the "wrong stuff" you will do with the value.
 <!-- ^perhaps this should be better worded -->
 
-If you want to use `Any`, read these first:
+<!-- If you want to use `Any`, read these first:
 
 - [Avoid `Any`](../../tips/avoid-any)
-- [Is `object` the same as `Any`](../../faq/object-vs-any)
+- [Is `object` the same as `Any`](../../faq/object-vs-any) -->
 
 
 ## Type inference
