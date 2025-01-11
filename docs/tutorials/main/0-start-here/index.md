@@ -88,33 +88,41 @@ Type hints allow you to write and read code more effectively in your editor.
 
 === "VSCode"
 
-    1. Install the "Pylance" extension (or the "Python" extension which includes Pylance)
-    2. Go to Settings (:gear: in the bottom-left corner)
-    3. Search for "type checking mode"
-    4. Switch the setting from "off" to "standard"
+    Install the ["basedpyright" extension](https://marketplace.visualstudio.com/items?itemName=detachhead.basedpyright). If you previously installed the "Python" extension or the "Pylance" extension, you'll need to disable or uninstall Pylance.
 
-    ![alt text](vscode-pylance-settings.png)
+    You can also use Pylance. It does the same thing, but:
+
+    - it's closed-source
+    - because it's closed-source, it's not available in VSCodium (which I recommend as well!)
+    - if you are serious about type hints, you'll need to go to "settings", find "pylance > type checking mode" and
+        switch it from "off" to "standard". Otherwise, it won't complain about errors, even basic ones like `foo: str = 42`
 
 === "PyCharm"
+
     No need to install anything, you should be good to go.
 
 === "vim, emacs, sublime text"
 
-    If your editor supports the Language Server Protocol, you can use Pyright with it.
-    Search for "[your editor] pyright" in your favorite search engine and you'll find the right instructions
+    If your editor supports the Language Server Protocol, you can use `basedpyright` with it.
+    Search for "[your editor] basedpyright" in your favorite search engine and you'll find the right instructions
 
 === "command line"
 
-    You can run `mypy` or `pyright` in the command line:
+    You can run `mypy` or `pyright` on the command line:
 
     - [mypy instructions](https://mypy.readthedocs.io/en/stable/getting_started.html)
     - [pyright instructions](https://microsoft.github.io/pyright/#/installation?id=command-line)
 
-    I like `pyright` better, but `mypy` is older and more popular.
+    If you are feeling adventurous, you can use one of the "based" forks of the above:
+
+    - [basedmypy instructions](https://kotlinisland.github.io/basedmypy/getting_started.html#installing-and-running-basedmypy)
+    - [basedpyright instructions](https://docs.basedpyright.com/latest/installation/command-line-and-language-server/)
+
+    I like `pyright`/`basedpyright` better, but `mypy` is older and more popular.
 
 !!! note "I don't want to install anything"
 
-    You can play around with types at the [Pyright playground](https://pyright-play.net/)
+    You can play around with types at the [Basedpyright playground](https://basedpyright.com/)
 
 ### Run a basic example
 
