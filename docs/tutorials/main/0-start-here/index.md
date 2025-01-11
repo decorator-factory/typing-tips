@@ -206,7 +206,7 @@ It's often used in combination with `|`, because accepting "something or `None`"
     Remember, if a function doesn't execute a `return` statement, it returns `None`. In that case
     you should annotate it with `-> None`.
     ```py
-    def my_print()
+    def my_print() -> None:
     ```
     omitting `-> None` doesn't mean the same thing, it means that you forgot to specify the return type.
 
@@ -238,7 +238,7 @@ def count(strings: list[str]) -> dict[str, int]:
 
 ### If you just don't care
 
-If your static analysis tool of choice refuses to cooperate, you can use `typing.Any`.
+If your type checker refuses to cooperate, you can use `typing.Any`.
 `Any` lets you do absolutely anything with an object.
 
 ```py
@@ -256,10 +256,10 @@ This is handy, but don't overuse `Any`. By design, `Any` will prevent type check
 detecting all the "wrong stuff" you will do with the value.
 <!-- ^perhaps this should be better worded -->
 
-<!-- If you want to use `Any`, read these first:
+If you want to use `Any`, read these first:
 
-- [Avoid `Any`](../../tips/avoid-any)
-- [Is `object` the same as `Any`](../../faq/object-vs-any) -->
+- [Avoid `Any`](../../../one-offs/avoid-any/index.md)
+- [Is `object` the same as `Any`](../../../one-offs/object-vs-any/index.md)
 
 
 ## Type inference
