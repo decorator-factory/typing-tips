@@ -8,6 +8,7 @@ nav:
     - "Type hints for dummies (start here)":
       - "From zero to types": tutorials/main/0-start-here/index.md
       - "Working with classes": tutorials/main/1-working-with-classes/index.md
+      # TODO: - "Using Protocols": tutorials/main/2-using-protocols/index.md
     # The old generics tutorial is pretty bad so I'm replacing it
     # - Generics (series):
     #   - Intro: tutorials/generics/index.md
