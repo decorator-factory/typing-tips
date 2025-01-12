@@ -1,10 +1,9 @@
 # Using Protocols
 
-If you're only using classes to group values together, with the occasional helper method, you're programming in a
-_procedural style_ (or possibly _functional_, if you're limiting the use of side effects and I/O to the edge of your program). The real power of classes comes from _polymorphism_ &mdash; the ability to handle objects of different types because they have the same shape.
+Protocols allow you to accept objects of different types that match a particular shape.
 
-You may have used a protocol before without realizing it. `Sized, `Iterable` and `Mapping` from `collections.abc` are protocols.
-They define what methods an object needs to have, but don't restrict what specific class it needs to be.
+You may have used a protocol before without realizing it. `Sized`, `Iterable` and `Mapping` from `collections.abc` are protocols.
+They define what methods an object needs to have, but don't restrict what specific class it is.
 
 ## The prelude
 
@@ -589,19 +588,22 @@ class Widget(Protocol):
     ```py
     class Foo(ABC):
         @abstractmethod
-        def greet(self):
-            print("oh no")
+        def greet(self) -> str:
+            pass
 
     class Bar(Foo):
-        def greet(self):
-            super().greet()
+        def greet(self) -> str:
+            return super().greet()
 
-    Bar().greet()  # oh no
+    print(Bar().greet())  # prints: None
     ```
 
-    Having an abstract method with a default implementation is pretty dubious, but that's a thing `abc.ABC` allows you to do.
     So if you leave the method body to be `...`, a `super().render()` call in a widget could give you a `None`, which is wrong.
-    For that reason, you should use `raise NotImplementedError` for the body of abstract methods to catch those mistaken calls &mdash; both in ABCs and (inheritable) protocols.
+    For that reason, you should normally use `raise NotImplementedError` for the body of abstract methods to
+    catch those mistaken calls &mdash; both in ABCs and (inheritable) protocols.
+
+    (Unless, of course, you do want to allow subclasses to execute some default behaviour if they end up `super`ing into an abstract method.
+    Just make sure that the abstractm method makes sense for the type annotation )
 
 And yes, that's the secret: `Protocol` is mostly the same as `abc.ABC`[^1], except type checkers understand that it's structural, not nominal.
 
