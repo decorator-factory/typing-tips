@@ -1,6 +1,6 @@
-# From Zero to Types
+# Introduction
 
-This article explains all you need to know about type hints (for now).
+This article explains the basics of type hints.
 If you know how to write Python functions, you should be well equipped to read this.
 
 ## What are type hints?
@@ -30,19 +30,18 @@ This reads as:
 - the `strings` argument should be a list, where each element is a string
 - the function returns either an `(integer, string)` tuple or `None`
 
-Why would anyone do that?
+What's the purpose of adding type hints to functions?
 
-### Documentation
-
-Type hints serve as _formal documentation_: it's a standardized way to explain to other developers
-how to call this function. "Other developers" includes _you_ two weeks later :slight_smile:
 
 ### Error checking
 
-Type hints don't _do_ anything at runtime: you're free to call `find_match(42, socket.socket())`
-and get a nasty error like `TypeError: 'socket' object is not iterable`.
+**Type hints don't do anything at runtime.** They do not insert `isinstance` checks to ensure
+that the arguments are of the expected types. As you'll see later, it's not possible in the general case.
 
-However, you can run an external tool (called a "type checker") that can find such mistakes
+If you call `find_match` with two integers, you will get the same runtime behavior with or without
+type hints.
+
+However, you can run an external tool, called a "type checker", that can find such mistakes
 _without running the code_:
 
 <figure markdown="span">
@@ -50,23 +49,26 @@ _without running the code_:
     <figcaption>Running `Pylance` in VSCode</figcaption>
 </figure>
 
-This can seem trivial: this function clearly works with strings, why would you call it
-with `bytes`? Or a socket?! And this should be caught with the most basic unit test.
+Here's an example of running `basedpyright` on the following function:
+```py
+def find_phone(fields: list[str]) -> str:
+    _i, phone = find_match("^[-+0-9()]{1,15}$",  fields)
+    return phone
+```
 
-- Without the type hints, you'd have to examine the implementation of this function to
-  know what argument types it expects. In a real codebase, you might have to dig through
-  several layers of calls to figure out the interface of a function.
+```
+$ basedpyright /tmp/main.py
+/tmp/main.py
+  /tmp/main.py:10:5 - warning: Type of "_i" is partially unknown
+    Type of "_i" is "int | Unknown" (reportUnknownVariableType)
+  /tmp/main.py:10:9 - warning: Type of "phone" is partially unknown
+    Type of "phone" is "str | Unknown" (reportUnknownVariableType)
+  /tmp/main.py:10:17 - error: "None" is not iterable
+    "__iter__" method not defined (reportGeneralTypeIssues)
+  /tmp/main.py:11:12 - warning: Return type, "str | Unknown", is partially unknown (reportUnknownVariableType)
+1 error, 3 warnings, 0 notes
+```
 
-- It's not always easy to see that you're not using a function correctly. For example, you
-    might forget that `find_match` returns `None` when a match isn't found and write code like this:
-
-    ```py
-    def find_phone(fields: list[str]) -> str:
-        _i, phone = find_match("^[-+0-9()]{1,15}$",  fields)
-        return phone
-    ```
-    A type checker will remind you that `find_match` can return `None`, which you won't be able to
-    unpack like this.
 
 ### Editor support
 
@@ -82,49 +84,128 @@ Type hints allow you to write and read code more effectively in your editor.
     <figcaption>Navigating your codebase in VSCode</figcaption>
 </figure>
 
+If you have this untyped function:
+
+```py
+def frobnicate(thing):
+    thing.foo()
+
+    if thing.is_active:
+        thing.bar()
+```
+
+You might have a guess as to what `thing` is, but your editor doesn't. If you annotate `thing`
+with the class that you're expecting, you can now go to the source code of `Thing.foo` and `Thing.bar`,
+or rename `bar` to `baz` in the entire codebase.
+
+
+### Deriving behavior from annotations
+
+You can inspect the type annotations of a function or class:
+
+```python-repl
+>>> import annotationlib
+>>> def foo(bar: int, baz: str = "hello", mystery=None) -> list[bool]:
+...     return [2 + 2 == 5]
+...
+>>> annotationlib.get_annotations(foo)
+{'bar': <class 'int'>, 'baz': <class 'str'>, 'return': list[bool]}
+>>>
+```
+
+Libraries can use this metadata to derive some interesting behavior. For example,
+[`cattrs`](https://catt.rs/en/stable/) uses class annotations to convert "untyped"
+data that you get from e.g. parsing JSON or YAML into a tree of typed objects, validating
+that the types are as you expect.
+
+
+### Documentation
+
+Type hints serve as _formal documentation_: it's a standardized way to explain to other developers
+how to call this function. As always, "other developers" includes you two weeks later.
+
+Developers can be reluctant to add useful inline documentation, especially when everything seems self-evident
+when they're writing the code. If you can convince your team to use type annotations everywhere, you get useful
+machine-checked documentation even from hardened comment haters.
+
+
+
 ## How to get started
 
 ### Configure your editor
 
 === "VSCode"
 
-    Install the ["basedpyright" extension](https://marketplace.visualstudio.com/items?itemName=detachhead.basedpyright). If you previously installed the "Python" extension or the "Pylance" extension, you'll need to disable or uninstall Pylance.
+    Install the ["basedpyright" extension](https://marketplace.visualstudio.com/items?itemName=detachhead.basedpyright).
+    If you previously installed the "Python" extension or the "Pylance" extension, you'll need to disable or uninstall
+    Pylance (but keep the Python extension!).
 
-    You can also use Pylance. It does the same thing, but:
-
-    - it's closed-source
-    - because it's closed-source, it's not available in VSCodium (which I recommend as well!)
-    - if you are serious about type hints, you'll need to go to "settings", find "pylance > type checking mode" and
-        switch it from "off" to "standard". Otherwise, it won't complain about errors, even basic ones like `foo: str = 42`
+    basedpyright starts off with a pretty strict configuration. If you are overwhelmed by the red squiggles,
+    you can go to Setting (`Ctrl+,`) -> `basedpyright` -> change "Type checking mode" to "standard".
+    We will revisit configuration and error messages later (TODO).
 
 === "PyCharm"
 
-    No need to install anything, you should be good to go.
+    No need to configure anything, you should be good to go.
 
-=== "vim, emacs, sublime text"
+    If you don't like PyCharm's built in type annotation analysis (which is known for being quirky at times),
+    you can use [basedpyright in PyCharm](https://docs.basedpyright.com/v1.21.0/installation/ides/#pycharm).
+
+=== "vim, emacs, helix, sublime text"
 
     If your editor supports the Language Server Protocol, you can use `basedpyright` with it.
-    Search for "[your editor] basedpyright" in your favorite search engine and you'll find the right instructions
+
+    1. Look for instructions for your editor at:
+       [https://docs.basedpyright.com/latest/installation/ides/](https://docs.basedpyright.com/latest/installation/ides/)
+    2. ...or search for "[your editor] basedpyright" in your favorite search engine
 
 === "command line"
 
-    You can run `mypy` or `pyright` on the command line:
+    You can run `mypy`, `pyright` or `basedpyright` on the command line:
 
     - [mypy instructions](https://mypy.readthedocs.io/en/stable/getting_started.html)
     - [pyright instructions](https://microsoft.github.io/pyright/#/installation?id=command-line)
-
-    If you are feeling adventurous, you can use one of the "based" forks of the above:
-
-    - [basedmypy instructions](https://kotlinisland.github.io/basedmypy/getting_started.html#installing-and-running-basedmypy)
     - [basedpyright instructions](https://docs.basedpyright.com/latest/installation/command-line-and-language-server/)
 
-    I like `pyright`/`basedpyright` better, but `mypy` is older and more popular.
+
+??? note "Why so many tools?"
+
+    > There should be one-- and preferably only one --obvious way to do it
+
+    Well, that didn't work out. There are now several tools for type checking Python code: `mypy`, `pyanalyze`,
+    `pytype`, `pyre`, `pyright`, `pylance`, `basedmypy`, `basedpyright`, `zuban`, Pycharm's analyzer thing,
+    and the "alpha" `ty` and `pyrefly` programs. They all roughly follow the
+    [typing specification](<https://typing.python.org/en/latest/>) and the typing-related PEPs, similarly to
+    how C and C++ compilers relate to the C and C++ specifications, or how browsers relate to universal web standards.
+
+    mypy is the original type checker that existed even before "type hints" were adopted into the language.
+    I personally prefer `pyright` over `mypy` because it's faster, has better (IMO) inference rules and provides
+    editor integration. However, your mileage may vary. If your company is using `mypy` on all their projects, stick with
+    `mypy`.
+
+    More on the differences between pyright and mypy:
+    [https://microsoft.github.io/pyright/#/mypy-comparison](https://microsoft.github.io/pyright/#/mypy-comparison)
+
+    `basedpyright` is a fork of `pyright`. It ports some features from Pylance (a closed-source Microsoft product),
+    adds a few extra diagnostics and various quality of life improvements. It also provides an official PyPI package
+    ([based]pyright is written in _TypeScript_, not Python, which presents a little bit of friction if you want to
+    use it as a Python developer).
+
+    There are two up and coming type checkers/language servers, [Ty](https://docs.astral.sh/ty/) and
+    [Pyrefly](https://pyrefly.org/). With luck, one of them is going to take over the zoo of existing tooling just like
+    `ruff` took over linting and formatting.
+
+    For the purposes of this tutorial, I recommend `basedpyright` because it is stable and provides a good editor
+    experience.
+
 
 !!! note "I don't want to install anything"
 
     You can play around with types at the [Basedpyright playground](https://basedpyright.com/)
 
 ### Run a basic example
+
+In your editor, create a new Python file with the following contents;
 
 ```py
 def add_squares(x: int, y: int) -> int:
@@ -135,6 +216,13 @@ print(add_squares("42", "hmm"))
 ```
 
 You should see a warning to the effect of "`x` is supposed to be an `int`, but you provided a string"
+
+When you run this program, you should see that the first `print` executed and printed `500`, but the
+second call to `add_squares` failed with an exception:
+
+```
+TypeError: unsupported operand type(s) for ** or pow(): 'str' and 'int
+```
 
 ### Remember, no effect at runtime
 
@@ -152,14 +240,17 @@ Python doesn't complain and simply prints `4242`.
 
 ## Different kinds of types
 
-Let's go over different things that you can annotate your functions with. In Python, a "type" is often
-synonymous with a "class" (see `type([1, 2, 3])` for example). However, type hints can be more detailed.
-For example, `list` on its own is not very useful: what's in the list? But you can use `list[int]` to
-denote that every element of the list is an `int`.
+The term "type" in Python usually means the same as "class". But when talking about type hints,
+"type" is a more general term for describing a set of allowed values. In the initial example at
+the top of the page you've seen `list[X]` which specifies what elements the list holds,
+and `X | None` to denote when a value can be `None`.
+
+So in this tutorial, "type" always means something you can stick in an annotation, and "class"
+always means "class", the result of calling `type()` on something at runtime.
 
 ### Classes
 
-A class is the simplest annotation you can have. You've already seen it in action in this tutorial.
+A class is the simplest type hint you can have. You've already seen it in action in this tutorial.
 
 ```py
 class Dog:
@@ -173,8 +264,8 @@ def create_dog(height: int) -> Dog:
 
 ### Union
 
-Sometimes you want to accept or return either one class or a different class. This can be done with
-the pipe `|` operator.
+Sometimes you want to accept or return either one type or a different type. This is expressed with
+the pipe operator (`|`):
 
 ```py
 def indent(string: str, by: int | str) -> str:
@@ -185,6 +276,29 @@ def indent(string: str, by: int | str) -> str:
 ```
 
 The first argument is a string, and the second argument is either an integer or a string.
+
+If you have a value of a union type, you are only allowed to do operations on it that would be valid
+for all of the options. You have to handle all the possibilities.
+
+![Warning in VSCode, complaining that you cannot call len() on a value of type "str | int"](vscode-union-nuh-uh.png)
+
+This is fine though, because `print` works with both `int` and `str`:
+```py
+def display(thing: str | int) -> None:
+    print(thing)
+```
+
+As you can guess from the `indent` function, type checkers understand some forms of flow control.
+Inside the "then" block of the `if`, a type checker considers the `by` variable to be of type `int`.
+
+![Hovering over "by" in the positive branch of the "if" shows "by: int"](vscode-union-narrowing1.png)
+
+This is called _type narrowing_. Narrowing isn't standardized and differs between type checkers.
+You can find details for narrowing in Pyright on this page:
+[https://microsoft.github.io/pyright/#/type-concepts-advanced?id=type-narrowing](
+https://microsoft.github.io/pyright/#/type-concepts-advanced?id=type-narrowing
+)
+
 
 ### None
 
@@ -260,6 +374,16 @@ If you want to use `Any`, read these first:
 
 - [Avoid `Any`](../../one-offs/avoid-any/index.md)
 - [Is `object` the same as `Any`](../../one-offs/object-vs-any/index.md)
+
+In particular, see if you can use `object` (the base class of all other classes) instead of `Any`.
+It allows the same set of objects as `Any` but doesn't remove static analysis:
+
+```py
+def print_both(x: object, y: object) -> None:
+    print(x)  # ok
+    print(y)  # ok
+    print(x + "!")  # type checking error
+```
 
 
 ## Type inference
