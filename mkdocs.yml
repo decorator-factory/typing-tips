@@ -5,7 +5,7 @@ repo_url: https://github.com/decorator-factory/typing-tips
 nav:
   - "About": index.md
   - "The tutorial":
-    - "From zero to types": tutorial/0-start-here/index.md
+    - "Introduction": tutorial/0-start-here/index.md
     - "Working with classes": tutorial/1-working-with-classes/index.md
     - "Using Protocols": tutorial/2-using-protocols/index.md
   - "Miscellaneous articles":
@@ -16,6 +16,7 @@ theme:
   name: material
   icon:
     logo: material/language-python
+  font: false
 
 
 markdown_extensions:
@@ -37,3 +38,7 @@ markdown_extensions:
       alternate_style: true
 
   - footnotes
+
+plugins:
+  - privacy:
+      enabled: true

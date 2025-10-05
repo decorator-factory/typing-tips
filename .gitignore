@@ -4,3 +4,4 @@ venv/
 .python-version
 .idea/
 .vscode/
+.cache/
