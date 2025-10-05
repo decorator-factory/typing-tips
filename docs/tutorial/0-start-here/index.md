@@ -258,8 +258,8 @@ detecting all the "wrong stuff" you will do with the value.
 
 If you want to use `Any`, read these first:
 
-- [Avoid `Any`](../../../one-offs/avoid-any/index.md)
-- [Is `object` the same as `Any`](../../../one-offs/object-vs-any/index.md)
+- [Avoid `Any`](../../one-offs/avoid-any/index.md)
+- [Is `object` the same as `Any`](../../one-offs/object-vs-any/index.md)
 
 
 ## Type inference

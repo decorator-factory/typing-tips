@@ -4,19 +4,10 @@ repo_url: https://github.com/decorator-factory/typing-tips
 
 nav:
   - "About": index.md
-  - "Tutorials":
-    - "Type hints for dummies (start here)":
-      - "From zero to types": tutorials/main/0-start-here/index.md
-      - "Working with classes": tutorials/main/1-working-with-classes/index.md
-      - "Using Protocols": tutorials/main/2-using-protocols/index.md
-    # The old generics tutorial is pretty bad so I'm replacing it
-    # - Generics (series):
-    #   - Intro: tutorials/generics/index.md
-    #   - Type variables: tutorials/generics/type-vars/index.md
-    #   - Subtyping: tutorials/generics/subtyping/index.md
-    #   - "Generic types": tutorials/generics/generic-types/index.md
-    #   - Variance: tutorials/generics/variance/index.md
-    #   - "Variance for your own classes": tutorials/generics/custom-variance/index.md
+  - "The tutorial":
+    - "From zero to types": tutorial/0-start-here/index.md
+    - "Working with classes": tutorial/1-working-with-classes/index.md
+    - "Using Protocols": tutorial/2-using-protocols/index.md
   - "Miscellaneous articles":
     - "`object` is not the same as `Any`": one-offs/object-vs-any/index.md
     - "avoid `Any`": one-offs/avoid-any/index.md
