@@ -409,6 +409,25 @@ You can see what type your type checker infers for a variable by hovering over i
 
 ![Hovering in Pylance](pylance-hover.png)
 
+If you're running a type checker over the command line, you can use `typing.reveal_type`:
+
+```
+$ cat test.py
+from typing import reveal_type
+
+def count_f(string: str) -> int:
+    small = string.count("f")
+    big = string.count("F")
+    reveal_type(big)
+    return small + big
+
+$ basedpyright test.py
+/tmp/test.py
+  /tmp/test.py:6:17 - information: Type of "big" is "int"
+0 errors, 0 warnings, 1 note
+
+```
+
 This is why you shouldn't annotate most of your variables: the type checker will
 already know what type it is.
 
