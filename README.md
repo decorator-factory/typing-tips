@@ -9,11 +9,13 @@ Link: https://decorator-factory.github.io/typing-tips/
 
 ### How to run this locally?
 
-1. Install Python 3.13 and everything from `requirements.txt` (`python -m pip install -r requirements.txt`)
-2. Run `python -m mkdocs serve --livereload`
-3. Visit `http://127.0.0.1:8000/typing-tips/`
+1. Install Python 3.13
+2. Create a new virtual environment and activate it
+3. In the virtual environment, run `python -m pip install -r requirements-lock.txt`
+4. Run `python -m mkdocs serve --livereload`
+5. Visit `http://127.0.0.1:8000/typing-tips/`
 
-### Corrections
+### Feedback
 
 I'm happy to get feedback. If you want to:
 
