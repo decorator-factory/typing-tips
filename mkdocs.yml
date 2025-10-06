@@ -17,7 +17,10 @@ theme:
   icon:
     logo: material/language-python
   font: false
-
+  palette:
+    primary: blue grey
+    accent: cyan
+  favicon: images/favicon.png
 
 markdown_extensions:
   - attr_list
@@ -42,3 +45,4 @@ markdown_extensions:
 plugins:
   - privacy:
       enabled: true
+  - search
