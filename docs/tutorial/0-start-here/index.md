@@ -10,25 +10,28 @@ to suggest what kinds of values they're intended to deal with. For example:
 
 ```py
 # without type hints
+
+def add_squares(x, y):
+    return x**2 + y**2
+
 def find_match(pattern, strings):
     for i, string in enumerate(strings):
         if re.match(pattern, string) is not None:
             return i, string
     return None
 
+
 # with type hints
+
+def add_squares(x: int, y: int) -> int:
+    return x**2 + y**2
+
 def find_match(pattern: str, strings: list[str]) -> tuple[int, str] | None:
     for i, string in enumerate(strings):
         if re.match(pattern, string) is not None:
             return i, string
     return None
 ```
-
-This reads as:
-
-- the `pattern` argument should be a string
-- the `strings` argument should be a list, where each element is a string
-- the function returns either an `(integer, string)` tuple or `None`
 
 What's the purpose of adding type hints to functions?
 
@@ -248,6 +251,8 @@ and `X | None` to denote when a value can be `None`.
 So in this tutorial, "type" always means something you can stick in an annotation, and "class"
 always means "class", the result of calling `type()` on something at runtime.
 
+Let's discuss the most common types you'll use in type hints.
+
 ### Classes
 
 A class is the simplest type hint you can have. You've already seen it in action in this tutorial.
@@ -260,6 +265,15 @@ def create_dog(height: int) -> Dog:
     dog = Dog()
     dog.grow(height)
     return dog
+```
+
+Every Python object is an instance of the `object` class, so if you want to accept any value
+in your function, you can use `object` as the type hint:
+
+```py
+def print_twice(thing: object) -> None:
+    print(thing)
+    print(thing)
 ```
 
 ### Union
@@ -324,6 +338,7 @@ It's often used in combination with `|`, because accepting "something or `None`"
     ```
     omitting `-> None` doesn't mean the same thing, it means that you forgot to specify the return type.
 
+
 ### Types with parameters
 
 Collections such as `list`, `dict`, `set` require parameters when you use them in type hints.
@@ -350,6 +365,7 @@ def count(strings: list[str]) -> dict[str, int]:
 
     This is a "variable annotation" as opposed to a parameter annotation or return type annotation.
 
+
 ### If you just don't care
 
 If your type checker refuses to cooperate, you can use `typing.Any`.
@@ -366,9 +382,7 @@ def resurrect(being: Any) -> None:
 ```
 For example, `json.loads()` and `pickle.loads()` both return `Any`.
 
-This is handy, but don't overuse `Any`. By design, `Any` will prevent type checkers from
-detecting all the "wrong stuff" you will do with the value.
-<!-- ^perhaps this should be better worded -->
+This is handy, but don't overuse `Any`. By design, `Any` will prevent type checkers from finding issues.
 
 If you want to use `Any`, read these first:
 
