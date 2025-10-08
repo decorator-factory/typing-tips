@@ -8,6 +8,7 @@ nav:
     - "Introduction": tutorial/0-start-here/index.md
     - "Working with classes": tutorial/1-working-with-classes/index.md
     - "Using Protocols": tutorial/2-using-protocols/index.md
+    #[draft]- "Generic functions": tutorial/3-generic-functions/index.md
   - "Miscellaneous articles":
     - "`object` is not the same as `Any`": one-offs/object-vs-any/index.md
     - "avoid `Any`": one-offs/avoid-any/index.md
