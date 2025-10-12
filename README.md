@@ -12,7 +12,7 @@ Link: https://decorator-factory.github.io/typing-tips/
 1. Install Python 3.13
 2. Create a new virtual environment and activate it
 3. In the virtual environment, run `python -m pip install -r requirements-lock.txt`
-4. Run `python -m mkdocs serve --livereload`
+4. Run `python -X dev -m mkdocs serve`
 5. Visit `http://127.0.0.1:8000/typing-tips/`
 
 ### Feedback
