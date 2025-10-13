@@ -49,10 +49,11 @@ reveal_type(number)  # object
 numbers = pick_option([1, 2, 3], [4, 5])
 reveal_type(numbers)  # object
 ```
-Unfortunately, `fruit`, `number`, and `numbers` are all inferred to be `object`. This
-is annoying, because doing `fruit + "!"` or `numbers[0]` will produce an error, even though
-you know it's fine at runtime. That's because type checkers don't understand that the types
-of `option1`, `option2` and the returned value are linked in some way.
+Unfortunately, `fruit`, `number`, and `numbers` are all inferred to be `object`.
+This is annoying, because doing `fruit + "!"` or `numbers[0]` will produce a
+type checking error, even though you know it's fine at runtime.
+That's because type checkers don't understand that the types of `option1`, `option2`
+and the returned value are linked in some way.
 
 You can solve this by introducing a _type variable_ to the function signature:
 ```py
@@ -71,9 +72,9 @@ reveal_type(number)  # int
 numbers = pick_option([1, 2, 3], [4, 5])
 reveal_type(numbers)  # list[int]
 ```
-In this snippet, `Opt` is a type variable scoped to the `pick_option` function. The purpose
-of a type variable is to link the type of different values together. Inside the function,
-the type variable can be used whenever a normal type can be used:
+In this snippet, `Opt` is a type variable scoped to the `pick_option` function.
+The purpose of a type variable is to link the type of different values together.
+Inside the function, the type variable can be used whenever a normal type can be used:
 ```py
 def pick_option[Opt](option1: Opt, option2: Opt) -> Opt | None:
     selected_option: Opt | None = None
@@ -119,8 +120,8 @@ def every_second_element[T](items: list[T]) -> list[T]:
 ## Callables and collections
 
 As you may know, Python has first-class functions: you can pass functions as arguments
-to other functions, or use a function as a return value. That's supported by most modern programming
-languages.
+to other functions, or use a function as a return value.
+That's supported by most modern programming languages.
 
 `Callable` a special form in the `collections.abc` module that allows expressing the
 type of a _callable object_.
@@ -152,9 +153,12 @@ calculate(add)
 two arguments of type `int` and returning a `float`.
 
 One common application of generic functions is processing collections of
-unknown types. When doing so, you should almost always accept a general type
+unknown types.
+When doing so, you should almost always accept a general type
 like `Iterable` or `Iterator` or `Mapping` instead of concrete classes like
 `list` or `dict`.
+It makes the function more flexible and clarifies the intent: you
+are only intending to read the collection/iterable, not modify it.
 
 Here are some examples of classic functions for processing collections, fully
 annotated:
@@ -232,9 +236,9 @@ def map[A, B](items: Iterable[A], fn: Callable[[A], B]) -> Iterator[B]:
 ```
 You will see something to the effect of "the type of a is A@map" and "the type of b is B@map".
 
-A particularly interesting example is the `filter_none` function. Instead of the "inner type"
-of the iterable being extracted and simply copied to the output iterable, the argument type
-is matched against the expected `Iterable[T | None]` to figure out what `T` needs to be.
+A particularly interesting example is the `filter_none` function.
+Instead of the "inner type" of the iterable being extracted and simply copied to the output iterable,
+the argument type is matched against the expected `Iterable[T | None]` to figure out what `T` needs to be.
 
 When you call a generic function, you don't explicitly state what value you want to provide for
 the type variables.
@@ -320,7 +324,8 @@ def pick_option[Opt](option1: Opt, option2: Opt) -> Opt:
 ```
 
 Type variables support setting a _bound_, requiring that the solution to the type variable
-must fit the bound. The bound is provided by adding a colon (`:`) and the bounded type
+must fit the bound.
+The bound is provided by adding a colon (`:`) and the bounded type
 after the type variable:
 ```py
 from collections.abc import Iterable, Iterator
