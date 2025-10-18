@@ -52,7 +52,7 @@ _without running the code_:
     <figcaption>Running `Pylance` in VSCode</figcaption>
 </figure>
 
-Here's an example of running `basedpyright` on the following function:
+Here's an example of running `mypy` on the following function:
 ```py
 def find_phone(fields: list[str]) -> str:
     _i, phone = find_match("^[-+0-9()]{1,15}$",  fields)
@@ -60,16 +60,9 @@ def find_phone(fields: list[str]) -> str:
 ```
 
 ```
-$ basedpyright /tmp/main.py
-/tmp/main.py
-  /tmp/main.py:10:5 - warning: Type of "_i" is partially unknown
-    Type of "_i" is "int | Unknown" (reportUnknownVariableType)
-  /tmp/main.py:10:9 - warning: Type of "phone" is partially unknown
-    Type of "phone" is "str | Unknown" (reportUnknownVariableType)
-  /tmp/main.py:10:17 - error: "None" is not iterable
-    "__iter__" method not defined (reportGeneralTypeIssues)
-  /tmp/main.py:11:12 - warning: Return type, "str | Unknown", is partially unknown (reportUnknownVariableType)
-1 error, 3 warnings, 0 notes
+$ python -m mypy main.py
+main.py:13: error: "None" object is not iterable  [misc]
+Found 1 error in 1 file (checked 1 source file)
 ```
 
 
@@ -200,6 +193,8 @@ machine-checked documentation even from hardened comment haters.
 
     For the purposes of this tutorial, I recommend `basedpyright` because it is stable and provides a good editor
     experience.
+    But if you prefer Python tooling that's made in Python or have other objections, feel free to use
+    `mypy` &mdash; it shouldn't interfere with this tutorial.
 
 
 !!! note "I don't want to install anything"
