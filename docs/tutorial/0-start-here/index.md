@@ -182,7 +182,7 @@ machine-checked documentation even from hardened comment haters.
     how C and C++ compilers relate to the C and C++ specifications, or how browsers relate to universal web standards.
 
     mypy is the original type checker that existed even before "type hints" were adopted into the language.
-    I personally prefer `pyright` over `mypy` because it's faster, has better (IMO) inference rules and provides
+    I personally prefer `pyright` over `mypy` because it has better (IMO) inference rules and provides
     editor integration. However, your mileage may vary. If your company is using `mypy` on all their projects, stick with
     `mypy`.
 
