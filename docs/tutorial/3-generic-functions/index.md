@@ -398,6 +398,54 @@ reveal_type(files_at_the_start([s1, s2]))
 For more information on protocols, check out [the previous chapter](../2-using-protocols/index.md)
 
 
+## Generic methods
+
+A function doesn't need to be "free-standing" to be generic. Generic methods work very much the same
+as generic functions.
+
+```py
+from collections.abc import Callable, Iterator
+
+class Times:
+    def __init__(self, value: int) -> None:
+        self._value = value
+
+    def repeat[T](self, item: T, /) -> list[T]:
+        return [item] * self._value
+
+    def do[T](self, fn: Callable[[int], T], /) -> Iterator[T]:
+        for i in range(self._value):
+            yield fn(i)
+
+    def make_pair[K, V](self, make_key: Callable[[int], K], make_value: Callable[[int], V]) -> tuple[K, V]:
+        return make_key(self._value), make_value(self._value)
+
+
+times = Times(10)
+bananas = times.repeat("banana")  # bananas: list[str]
+screams = times.do(lambda n: "a" * (n + 1))  # screams: Iterator[str]
+k, v = times.make_pair(str, lambda n: n + 100)  # k: str, v: int
+```
+
+!!! note "This is not the same as a _class_ being generic"
+
+    Notice that `[T]` and `[K, V]` are scoped to each method and not on the class.
+    Generic methods are very different from generic classes (which we'll cover
+    in a different chapter), make sure that you don't confuse the two.
+
+    A generic method allows specifying a different `T` every time you call it on the
+    same object, whereas an instance of a generic class (like `list[Fruit]`) is itself
+    parameterized.
+    (A generic class can have a generic method too: for example, `dict[K, V]` has a
+    `get` method that depends on K, V, and the type of the default provided)
+
+<!--
+I am doing a bit of time travel here, but it's possible that the reader has already
+seen generic classes and/or methods.
+It's also possible that people read just up to this article and interact with generic
+classes anyway -- it's pretty difficult to write Python code without lists or dicts.
+-->
+
 ## Type variables with constraints
 
 TODO: should we even cover this? it's a bit of a janky feature and you probably don't need it
