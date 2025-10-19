@@ -459,14 +459,146 @@ TODO: maybe it should be discussed in a later chapter? It could be overwhelming 
 
 ## Examples of generic functions in the standard library
 
-TODO: add examples of typing some functions from `itertools`
+Most of the Python standard library code in the reference implementation (CPython)
+does not have any type annotations at all.
+There are multiple reasons for this:
 
-TODO: add examples of bound type variables from `ast`
+1. A lot of it is written in C
+1. A lot of it was written without consideration for type checkers, so it
+    cannot be annotated well without breaking changes or extreme amounts
+    of "jank" on top of the actual code.
+1. Not everyone working on Python agrees that type annotations are a good idea at all
+1. The type system (including the `typing` module) gets new features every year, and
+    putting the types in the standard library source code would mean that e.g.
+    Python 3.10 users get worse annotations for the standard library than Python 3.14
+    users.
+1. Type information adds some amount of overhead when importing (and sometimes running)
+    the code.
 
-TODO: any other examples from the stdlib?
+!!! note "For more information, see [this Discourse thread](https://discuss.python.org/t/type-annotations-in-the-stdlib)"
 
 
-## Old-style syntax
+The canonical type information for the standard library, as well as some third-party packages,
+is maintained by the [typeshed](https://github.com/python/typeshed) project. It contains
+_stub files_ which only describe the interfaces of classes and functions without providing
+their implementation.
+
+Let's take a look at how generic functions are used to express some things
+from the standard library. It's definitely not an exhaustive list, but it should give an idea
+of how type variables are used in practice.
+
+!!! note
+
+    As of writing this in 2025, the typeshed uses [old-style syntax](#old-style-syntax)
+    for type variables for compatibility. I translated all the examples to avoid confusion.
+
+### `copy.copy`
+
+[`copy.copy`](https://github.com/python/typeshed/blob/11e7d904b9745bf33fe5b9b64bcd274ff788b189/stdlib/copy.pyi#L19)
+uses a type variable in a very straightforward way. Whatever type comes in, the same type comes out.
+
+```py
+def copy[T](x: T) -> T:
+    ...
+```
+
+### `enum`
+
+[`enum.unique`](https://github.com/python/typeshed/blob/11e7d904b9745bf33fe5b9b64bcd274ff788b189/stdlib/enum.pyi#L251)
+is a class decorator: it's a function that accepts a class and returns a class. In this case, it returns the same class,
+but it must be a subclass of `enum.Enum`.
+
+```py
+def unique[E: type[Enum]](enumeration: E) -> E:
+    ...
+```
+
+`type[Enum]` is something we haven't covered yet.
+`type[X]` means the _class_ `X` (as opposed to an _instance_ of the class `X`), or any of its subclasses.
+For example, the _values_ `int` and `bool` would both satisfy `type[int]`, but `42` and `object` would not.
+
+```py
+@enum.unique  # works fine
+class MaybeBool(enum.Enum):
+    yes = 1.0
+    no = 0.0
+    maybe = 0.5
+
+@unique  # type checker will complain: Banana is not a subclass of Enum
+class Banana:
+    def speak(self) -> None:
+        print("*banana noises*")
+
+unique(MaybeBool.yes)  # type checker will complain: MaybeBool.yes is not a class
+```
+
+### `multiprocessing.pool.Pool`
+
+The [`map`](https://github.com/python/typeshed/blob/11e7d904b9745bf33fe5b9b64bcd274ff788b189/stdlib/multiprocessing/pool.pyi#L63)
+method on `Pool` is very similar to the `map` function that was shown in a previous code sample:
+
+```py
+class Pool:
+    def map[S, T](
+        self,
+        func: Callable[[S], T],
+        iterable: Iterable[S],
+        chunksize: int | None = None,
+    ) -> list[T]:
+        ...
+```
+
+### `concurrent.futures.Executor`
+
+The [`submit`](https://github.com/python/typeshed/blob/11c7821a79a8ab7e1982f3ab506db16f1c4a22a9/stdlib/concurrent/futures/_base.pyi#L55)
+method on `Executor` is generic in order to link the type of the provided function with the type
+of the returned `Future`:
+
+```py
+class Executor:
+    def submit[**P, T](self, fn: Callable[P, T], /, *args: P.args, **kwargs: P.kwargs) -> Future[T]:
+        ...
+```
+
+I uses a "parameter specification variable" which we haven't covered yet.
+In short, a type variable prefixed with `**` captures the argument part of a function
+signature, including all the necessary details like variadic arguments, some arguments
+being accepted as positional-only or keyword-only and such.
+<!-- TODO: link ParamSpec chapter -->
+
+### `contextlib.closing`
+
+`contextlib` uses generic classes in the typeshed definition. To avoid time travel within this
+tutorial, we can define `nullcontext` and `closing` using
+[`contextlib.contextmanager`](https://docs.python.org/3/library/contextlib.html#contextlib.contextmanager)
+&mdash; that's probably what you'd use in your own code.
+
+```py
+from contextlib import contextmanager
+from collections.abc import Generator
+from typing import Protocol
+
+
+class SupportsClose(Protocol):
+    def close(self) -> object: ...
+
+
+@contextmanager
+def nullcontext[T](obj: T) -> Generator[T]:
+    yield obj
+
+
+@contextmanager
+def closing[T: SupportsClose](obj: T) -> Generator[T]:
+    try:
+        yield obj
+    finally:
+        obj.close()
+```
+
+
+
+## Old-style syntax { #old-style-syntax }
 
 The modern syntax for writing generic functions using square brackets in the `def` statement
 is new to Python 3.12. If you're using Python 3.11 or earlier, you need to use more verbose
