@@ -1,10 +1,5 @@
 # Generic functions
 
-!!!warning
-
-    This is a draft.
-
-
 The following few chapters introduce _type variables_, _generic functions_
 and _generic classes_.
 These are pretty advanced concepts, and you will probably not define your own generic
@@ -245,7 +240,7 @@ the type variables.
 The type checker needs to figure that out on its own in a process called
 "constraint solving".
 Essentially, it needs to find a suitable value for `T` (in the `filter_none`
-example) such that this would match:
+example) such that this would type-check:
 ```py
 type T = ???
 
@@ -357,6 +352,9 @@ reveal_type(positive_ints_v2([1, 2, 0, 3, -1, 4]))  # Iterator[int]
 reveal_type(positive_ints_v2([True, False, True]))  # Iterator[bool]
 reveal_type(positive_ints_v2([
     OpenMode.none, OpenMode.read | OpenMode.write]))  # Iterator[OpenMode]
+
+positive_ints_v2(["a", "b", "c"])  # type checker complains
+positive_ints_v2([1, 2, 3, None])  # type checker complains
 ```
 
 As you can see, the difference between the two functions is that `positive_ints_v2` preserves
@@ -448,14 +446,25 @@ classes anyway -- it's pretty difficult to write Python code without lists or di
 
 ## Type variables with constraints
 
-TODO: should we even cover this? it's a bit of a janky feature and you probably don't need it
+Sometimes you'll encounter type variables that list several types in parentheses:
 
+```py
+def concat[S: (str, bytes)](x: S, y: S) -> S:
+    return x + y
+```
 
-## ParamSpec
+`S` is called a "type variable with constraints".
+This is not the same as declaring `S: str | bytes`, and instead it means that `S` can be
+solved as just `str` or just `bytes`, not a subtype of `str` or `bytes` like `Literal[b"foo"]`
+or a subclass of `enum.StrEnum`, and not a union type like `str | bytes`.
 
-TODO: maybe it should be discussed in a later chapter? It could be overwhelming to also discuss
-      paramspec here. Could be a separate chapter about decorators
+We will not be discussing this feature in detail, instead refer to:
 
+- [the mypy documentation](https://mypy.readthedocs.io/en/stable/generics.html#type-variables-with-value-restriction)
+- [the type system reference](https://typing.pyth   on.org/en/latest/reference/generics.html#type-variables-with-constraints)
+
+This feature is very rarely the best tool for the job, and you'll probably experience
+some headache when using it.
 
 ## Examples of generic functions in the standard library
 
@@ -490,7 +499,8 @@ of how type variables are used in practice.
 !!! note
 
     As of writing this in 2025, the typeshed uses [old-style syntax](#old-style-syntax)
-    for type variables for compatibility. I translated all the examples to avoid confusion.
+    for type variables for compatibility. I translated all the examples to new-style
+    syntax to avoid confusion.
 
 ### `copy.copy`
 
@@ -556,17 +566,20 @@ of the returned `Future`:
 
 ```py
 class Executor:
-    def submit[**P, T](self, fn: Callable[P, T], /, *args: P.args, **kwargs: P.kwargs) -> Future[T]:
+    def submit[**P, T](
+        self, fn: Callable[P, T], /,
+        *args: P.args, **kwargs: P.kwargs,
+    ) -> Future[T]:
         ...
 ```
 
-I uses a "parameter specification variable" which we haven't covered yet.
+It uses a "parameter specification variable" which we haven't covered yet.
 In short, a type variable prefixed with `**` captures the argument part of a function
 signature, including all the necessary details like variadic arguments, some arguments
 being accepted as positional-only or keyword-only and such.
 <!-- TODO: link ParamSpec chapter -->
 
-### `contextlib.closing`
+### `contextlib.closing` and `contextlib.nullcontext`
 
 `contextlib` uses generic classes in the typeshed definition. To avoid time travel within this
 tutorial, we can define `nullcontext` and `closing` using
@@ -611,7 +624,6 @@ syntax:
 def identity[A](thing: A, /) -> A:
     return thing
 
-
 ## <3.12
 _A = TypeVar("_A")
 
@@ -627,7 +639,6 @@ def positive_ints[B: int](ints: Iterable[B]) -> Iterator[B]:
         if i > 0:
             yield i
 
-
 ## <3.12
 _B = TypeVar("_B", bound=int)
 
@@ -637,12 +648,11 @@ def positive_ints(ints: Iterable[_B]) -> Iterator[_B]:
             yield i
 
 
-# constrained type variable (TODO):
+# constrained type variables:
 
 ## >=3.12
 def add_strings[S: (str, bytes)](foo: S, bar: S) -> S:
     return foo + bar
-
 
 ## <3.12
 _S = TypeVar("_S", int, str)
