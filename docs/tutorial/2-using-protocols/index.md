@@ -94,7 +94,8 @@ class Widget(Protocol):
 
 !!! note
 
-    The `...` here doesn't imply something's missing: leave the method body as `...`, the ellipsis object. I'll use `# <...>` when I really mean to skip something.
+    The `...` here doesn't imply something's missing: leave the method body as `...`, the ellipsis object.
+    We'll use `# <...>` when we really mean to skip something.
 
 This protocol defines the methods an object needs to support to _be_ a `Widget`. We can now add annotations to our `wrapped` parameters:
 

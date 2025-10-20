@@ -17,7 +17,7 @@ Link: https://decorator-factory.github.io/typing-tips/
 
 ### Feedback
 
-I'm happy to get feedback. If you want to:
+We're happy to get feedback. If you want to:
 
 - suggest a correction
 - fix grammar/punctuation

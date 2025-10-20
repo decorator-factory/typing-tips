@@ -85,7 +85,7 @@ def greet(thing: Any) -> str:
     return f"{mysterious} {name}"
 ```
 
-I cover `Any` in more detail on ["Avoid `Any`"](../avoid-any/index.md)
+We cover `Any` in more detail on ["Avoid `Any`"](../avoid-any/index.md)
 
 ## What's the difference?
 

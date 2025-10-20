@@ -168,27 +168,32 @@ machine-checked documentation even from hardened comment haters.
 
     > There should be one-- and preferably only one --obvious way to do it
 
-    Well, that didn't work out. There are now several tools for type checking Python code: `mypy`, `pyanalyze`,
+    Well, that didn't work out.
+    There are now several tools for type checking Python code: `mypy`, `pyanalyze`,
     `pytype`, `pyre`, `pyright`, `pylance`, `basedmypy`, `basedpyright`, `zuban`, Pycharm's analyzer thing,
-    and the "alpha" `ty` and `pyrefly` programs. They all roughly follow the
+    and the "alpha" `ty` and `pyrefly` programs.
+    They all roughly follow the
     [typing specification](<https://typing.python.org/en/latest/>) and the typing-related PEPs, similarly to
     how C and C++ compilers relate to the C and C++ specifications, or how browsers relate to universal web standards.
 
     mypy is the original type checker that existed even before "type hints" were adopted into the language.
-    I personally prefer `pyright` over `mypy` because it has better (IMO) inference rules and provides
-    editor integration. However, your mileage may vary. If your company is using `mypy` on all their projects, stick with
-    `mypy`.
+    I (the author of this note) personally prefer `pyright` over `mypy` because it has better (IMO)
+    inference rules and provides editor integration.
+    However, your mileage may vary.
+    If your company is using `mypy` on all their projects, stick with `mypy`.
 
     More on the differences between pyright and mypy:
     [https://microsoft.github.io/pyright/#/mypy-comparison](https://microsoft.github.io/pyright/#/mypy-comparison)
 
-    `basedpyright` is a fork of `pyright`. It ports some features from Pylance (a closed-source Microsoft product),
-    adds a few extra diagnostics and various quality of life improvements. It also provides an official PyPI package
-    ([based]pyright is written in _TypeScript_, not Python, which presents a little bit of friction if you want to
-    use it as a Python developer).
+    `basedpyright` is a fork of `pyright`.
+    It ports some features from Pylance (a closed-source Microsoft product), adds a few extra diagnostics
+    and various quality of life improvements.
+    It also provides an official PyPI package ([based]pyright is written in _TypeScript_, not Python,
+    which presents a little bit of friction if you want to use it as a Python developer).
 
     There are two up and coming type checkers/language servers, [Ty](https://docs.astral.sh/ty/) and
-    [Pyrefly](https://pyrefly.org/). With luck, one of them is going to take over the zoo of existing tooling just like
+    [Pyrefly](https://pyrefly.org/).
+    With luck, one of them is going to take over the zoo of existing tooling just like
     `ruff` took over linting and formatting.
 
     For the purposes of this tutorial, I recommend `basedpyright` because it is stable and provides a good editor

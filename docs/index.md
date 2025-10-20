@@ -6,7 +6,7 @@ If you're new to type hints, start with [The Tutorial](tutorial/0-start-here/ind
 
 ## Contribute
 
-I'm happy to get feedback. If you want to:
+We're happy to get feedback. If you want to:
 
 - suggest a new article
 - suggest a correction
