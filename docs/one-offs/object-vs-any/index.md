@@ -43,7 +43,7 @@ For type checking purposes, `object` is not treated specially. It behaves like a
         number: int = target  # ERROR
     ```
 
- 2. Variance works as expected. <!-- TODO link tutorial about variance -->
+ 1. Variance works as expected. <!-- TODO link tutorial about variance -->
 
     ```py
     foo: tuple[int, ...] = (1, 2, 3)

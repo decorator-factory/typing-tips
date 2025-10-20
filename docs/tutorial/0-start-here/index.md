@@ -153,7 +153,7 @@ machine-checked documentation even from hardened comment haters.
 
     1. Look for instructions for your editor at:
        [https://docs.basedpyright.com/latest/installation/ides/](https://docs.basedpyright.com/latest/installation/ides/)
-    2. ...or search for "[your editor] basedpyright" in your favorite search engine
+    1. ...or search for "[your editor] basedpyright" in your favorite search engine
 
 === "command line"
 

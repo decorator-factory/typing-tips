@@ -33,13 +33,13 @@ def do_something(mystery_object: Any) -> None
 
 1. If you make a typo, the type checker won't help you
 
-2. You lose editor integration. This is not just a typing aid: features like "Go To Definition"
+1. You lose editor integration. This is not just a typing aid: features like "Go To Definition"
     or "Go To Reference" will no longer work. This will make refactoring harder.
 
-3. If you "leak" an `Any` that you didn't check propely, you might end up with a "typed value that's not the right type at runtime.
+1. If you "leak" an `Any` that you didn't check propely, you might end up with a "typed value that's not the right type at runtime.
     For example, you might accidentally pass a `None` where it's never expected.
 
-4. (perhaps a subtle and controversial point) It encourages devlopers to "trust" dynamic values, skipping validation where
+1. (perhaps a subtle and controversial point) It encourages devlopers to "trust" dynamic values, skipping validation where
     it would be beneficial.
 
     For example, it's common in Python programs to make a request to some remote API, deserialize its
@@ -47,7 +47,7 @@ def do_something(mystery_object: Any) -> None
     documentation, this could cause a bug that's hard to catch. Or worse, a security issue: see
     [CWE-20: Improper Input Validation](https://cwe.mitre.org/data/definitions/20.html).
 
-5. Finally, `Any` is viral: if you do something to it, you get a new `Any`. If you're getting some things from a
+1. Finally, `Any` is viral: if you do something to it, you get a new `Any`. If you're getting some things from a
     `settings: dict[str, Any]`, soon you'll be juggling a dozen of `Any`s.
 
 ## Why would you use `Any`?
@@ -72,14 +72,15 @@ Here are some steps you can take to reduce the number of `Any`s in your code:
 1. If you're using `mypy`, you can [generate a report](https://mypy.readthedocs.io/en/stable/command_line.html#report-generation)
     that measures how much of your code is untyped.
 
-2. Learn about type variables and generics (TODO: link generics tutorial). Whenever you see a function or a class where two values
-    are linked together and are marked as `Any`, see if you can use a `TypeVar`.
+1. Learn about [type variables and generics](../../tutorial/3-generic-functions).
+    Whenever you see a function or a class where two values are linked
+    together and are marked as `Any`, see if you can use a `TypeVar`.
 
-3. Search for external inputs, such as configuration or network requests, and decide if they need stricter validation.
+1. Search for external inputs, such as configuration or network requests, and decide if they need stricter validation.
 
-4. Consider if you can use a [union type](https://docs.python.org/3/library/typing.html#typing.Union).
+1. Consider if you can use a [union type](https://docs.python.org/3/library/typing.html#typing.Union).
 
-5. If you really want "any value", see if using `object` makes sense. See ["Is `object` the same as `Any`?"](../object-vs-any/index.md) for more details.
+1. If you really want "any value", see if using `object` makes sense. See ["Is `object` the same as `Any`?"](../object-vs-any/index.md) for more details.
 
 
 ## More on this topic
