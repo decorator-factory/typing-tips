@@ -24,7 +24,8 @@ fruit = pick_option("apple", "banana")
 reveal_type(fruit)  # str
 ```
 
-It's a fine function, but you might want to make it more flexible. `pick_option` would work just as well with options other than strings, but it's
+It's a fine function, but you might want to make it more flexible.
+`pick_option` would work just as well with options other than strings, but it's
 artificially limited to accept and return `str` by the type signature.
 How can we make it work with other objects?
 We could use `object`:
