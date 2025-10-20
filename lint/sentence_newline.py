@@ -24,7 +24,7 @@ in the diff.
 Note that this docstring violates this rule, because it's intended to
 be read by a human directly without being rendered as HTML.
 
-You can ignore this rule by using this specific HTML comments:
+You can ignore this rule by using these HTML comments:
     <!-- ignore(sentence-newline) -->
     ...
     <!-- unignore(sentence-newline) -->
@@ -100,4 +100,26 @@ for path in Path(sys.argv[1]).glob("**/*.md"):
     process_file(path.read_text())
 
 if is_error:
+    _ = sys.stderr.write("""
+Make sure that each sentence in the Markdown sources starts
+on a new line.
+
+Good:
+
+    I like apples.
+    But I like bananas better.
+
+Bad:
+
+    I like apples. But I like bananas better.
+
+This prevents cascading changes when editing only one sentence
+in a paragraph and reduces merge conflicts, similar to trailing
+commas and one-item-per-line imports.
+
+You can ignore this rule by using these HTML comments:
+    <!-- ignore(sentence-newline) -->
+    ...
+    <!-- unignore(sentence-newline) -->
+""")
     sys.exit(1)
