@@ -69,7 +69,7 @@ def process_file(src: str) -> None:
 
         if (violation := get_rule_violation(line)) is not None:
             violation = violation.replace("\n", "\\n")
-            error(f"place new sentence on a new line: |``{violation}|", lineno)
+            error(f"place new sentence on a new line: |{violation}|", lineno)
 
 
 REGEX = re.compile(r"""
