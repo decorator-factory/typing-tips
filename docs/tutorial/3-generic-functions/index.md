@@ -26,8 +26,9 @@ reveal_type(fruit)  # str
 
 It's a fine function, but you might want to make it more flexible.
 `pick_option` would work just as well with options other than strings, but it's
-artificially limited to accept and return `str` by the type signature. How can we
-make it work with other objects? We could use `object`:
+artificially limited to accept and return `str` by the type signature.
+How can we make it work with other objects?
+We could use `object`:
 ```py
 def pick_option(option1: object, option2: object) -> object:
     if random.random() > 0.5:
@@ -123,7 +124,8 @@ type of a _callable object_.
 User-defined functions are callable, but so are built-in functions, classes,
 `functools.partial` objects and other user-defined classes with the special `__call__` method.
 
-`Callable` accepts two type arguments: a list of argument types and a return type. Here's an example:
+`Callable` accepts two type arguments: a list of argument types and a return type.
+Here's an example:
 ```py
 from collections.abc import Callable
 
@@ -253,7 +255,8 @@ maybe_ints: list[int | None] = [1, 2, None, 3, None, 4, 5, None]
 ints = filter_none*(maybe_ints)
 ```
 If `T` is `int`, the argument type is successfully matched with the parameter type (because `list[int | None]` is-a
-`Iterable[int | None]`). However, there are other valid solutions for T:
+`Iterable[int | None]`).
+However, there are other valid solutions for T:
 
 - T could be `int | None`
 - T could be `object`
@@ -261,8 +264,8 @@ If `T` is `int`, the argument type is successfully matched with the parameter ty
 
 When there are multiple possible solutions, a type checker will pick one of them,
 presumably one that makes the most sense and in a consistent fashion.
-The details of constrain solving are not specified and differ between type checkers. To illustrate,
-type checkers disagree on the inference here:
+The details of constrain solving are not specified and differ between type checkers.
+To illustrate, type checkers disagree on the inference here:
 
 ```py
 import random
@@ -361,8 +364,8 @@ As you can see, the difference between the two functions is that `positive_ints_
 the subclass of `int` that the iterable contains, while `positive_ints_v1` always produces an
 `Iterator[int]`.
 
-Try removing the `: int` bound. You should see that your type checker complains about the
-`i > 0` comparison.
+Try removing the `: int` bound.
+You should see that your type checker complains about the `i > 0` comparison.
 
 
 ## Protocol bound
@@ -398,8 +401,8 @@ For more information on protocols, check out [the previous chapter](../2-using-p
 
 ## Generic methods
 
-A function doesn't need to be "free-standing" to be generic. Generic methods work very much the same
-as generic functions.
+A function doesn't need to be "free-standing" to be generic.
+Generic methods work very much the same as generic functions.
 
 ```py
 from collections.abc import Callable, Iterator
@@ -488,24 +491,26 @@ There are multiple reasons for this:
 
 
 The canonical type information for the standard library, as well as some third-party packages,
-is maintained by the [typeshed](https://github.com/python/typeshed) project. It contains
-_stub files_ which only describe the interfaces of classes and functions without providing
+is maintained by the [typeshed](https://github.com/python/typeshed) project.
+It contains _stub files_ which only describe the interfaces of classes and functions without providing
 their implementation.
 
 Let's take a look at how generic functions are used to express some things
-from the standard library. It's definitely not an exhaustive list, but it should give an idea
+from the standard library.
+It's definitely not an exhaustive list, but it should give an idea
 of how type variables are used in practice.
 
 !!! note
 
     As of writing this in 2025, the typeshed uses [old-style syntax](#old-style-syntax)
-    for type variables for compatibility. I translated all the examples to new-style
-    syntax to avoid confusion.
+    for type variables for compatibility.
+    I translated all the examples to new-style syntax to avoid confusion.
 
 ### `copy.copy`
 
 [`copy.copy`](https://github.com/python/typeshed/blob/11e7d904b9745bf33fe5b9b64bcd274ff788b189/stdlib/copy.pyi#L19)
-uses a type variable in a very straightforward way. Whatever type comes in, the same type comes out.
+uses a type variable in a very straightforward way.
+Whatever type comes in, the same type comes out.
 
 ```py
 def copy[T](x: T) -> T:
@@ -515,8 +520,8 @@ def copy[T](x: T) -> T:
 ### `enum`
 
 [`enum.unique`](https://github.com/python/typeshed/blob/11e7d904b9745bf33fe5b9b64bcd274ff788b189/stdlib/enum.pyi#L251)
-is a class decorator: it's a function that accepts a class and returns a class. In this case, it returns the same class,
-but it must be a subclass of `enum.Enum`.
+is a class decorator: it's a function that accepts a class and returns a class.
+In this case, it returns the same class, but it must be a subclass of `enum.Enum`.
 
 ```py
 def unique[E: type[Enum]](enumeration: E) -> E:
@@ -581,8 +586,8 @@ being accepted as positional-only or keyword-only and such.
 
 ### `contextlib.closing` and `contextlib.nullcontext`
 
-`contextlib` uses generic classes in the typeshed definition. To avoid time travel within this
-tutorial, we can define `nullcontext` and `closing` using
+`contextlib` uses generic classes in the typeshed definition.
+To avoid time travel within this tutorial, we can define `nullcontext` and `closing` using
 [`contextlib.contextmanager`](https://docs.python.org/3/library/contextlib.html#contextlib.contextmanager)
 &mdash; that's probably what you'd use in your own code.
 
@@ -662,7 +667,8 @@ def add_strings(foo: _S, bar: _S) -> _S:
 ```
 
 Note that while the TypeVar object is defined as a global variable, it's logically scoped
-to the function where it is used. So the semantics are the same between the versions.
+to the function where it is used.
+So the semantics are the same between the versions.
 
 Modules typically define all their type variables at the top and reuse them for several
 functions.

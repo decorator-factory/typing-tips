@@ -1,9 +1,11 @@
 # Working with classes
 
 The [previous chapter](../0-start-here/index.md) explained how type hints work in general, and how you can use them
-to describe the contracts of your functions. This chapter is all about classes.
+to describe the contracts of your functions.
+This chapter is all about classes.
 
-The basics of annotating classes are not that hard. Let's start off with an example:
+The basics of annotating classes are not that hard.
+Let's start off with an example:
 
 
 === "Without type hints"
@@ -87,7 +89,8 @@ Let's add some methods to work with the kittens of our cat:
         return self._kittens
 ```
 
-Oh no, we got some red squiggles! And the code fails at runtime.
+Oh no, we got some red squiggles!
+And the code fails at runtime.
 
 ![Circular annotation error](circular-annotation.png)
 
@@ -102,9 +105,9 @@ NameError: name 'Cat' is not defined
 ```
 
 We said in the previous article that annotations have no effect at runtime.
-That's not quite true. Functions (and classes) do store their annotation as metadata,
-just like they store their name, default arguments and even their source code
-for inspection purposes.
+That's not quite true.
+Functions (and classes) do store their annotation as metadata, just like they store
+their name, default arguments and even their source code for inspection purposes.
 
 ```
 >>> def add(x: int, y: int) -> int:
@@ -122,7 +125,8 @@ However, libraries like [`pydantic`](https://docs.pydantic.dev/latest/) and
 use of this metadata for their own purposes.
 
 Our annotation doesn't work because we haven't _created_ the `Cat` class yet, but we're
-trying to reference it. It's like trying to run `x = x + 1` with no `x` variable defined beforehand.
+trying to reference it.
+It's like trying to run `x = x + 1` with no `x` variable defined beforehand.
 
 This can be worked around by putting the annotation in quotes:
 ```py
@@ -152,9 +156,10 @@ Type checkers will still understand the type hints, but they will be stored as a
     ```
 
     This is the [PEP 563](https://peps.python.org/pep-0563/) way of using "deferred annotations".
-    It automatically turns all function and class annotations into quotes. It does look
-    cleaner and requires less work if you're rearranging classes, however, this trick is superseded
-    by [PEP 649](https://peps.python.org/pep-0649/) and will be deprecated/removed in the future.
+    It automatically turns all function and class annotations into quotes.
+    It does look cleaner and requires less work if you're rearranging classes,
+    however, this trick is superseded by [PEP 649](https://peps.python.org/pep-0649/) and
+    will be deprecated/removed in the future.
 
     You can use `from __future__ import annotations` instead, but be aware that you will have to slightly
     adjust your code in future versions of Python.
@@ -167,23 +172,26 @@ our class will be used in practice.
 
 - Adopting several kittens
 
-    The `adopt_kittens()` method says that you need a _list_ of kittens. That's a bit too restrictive.
+    The `adopt_kittens()` method says that you need a _list_ of kittens.
+    That's a bit too restrictive.
     If I have a tuple of kittens or an iterator of kittens, should they be left cold and hungry?
     Or should the caller do `list(kittens)` which takes extra time and memory?
 
-    Moreover, it's legal for the method to modify the list provided in the argument. But that doesn't
-    fit the intention of `adopt_kittens()`.
+    Moreover, it's legal for the method to modify the list provided in the argument.
+    But that doesn't fit the intention of `adopt_kittens()`.
 
 - Getting all the kittens
 
     The `kittens()` method has similar problems, but in a more subtle way.
 
-    First, it reveals our internal implementation of how we store kittens. It will be hard to
-    switch to a [`deque`](https://docs.python.org/3/library/collections.html#collections.deque)
+    First, it reveals our internal implementation of how we store kittens.
+    It will be hard to switch to a
+    [`deque`](https://docs.python.org/3/library/collections.html#collections.deque)
     in the future.
 
     Secondly, if someone obtains our list of kittens, the type hints are telling them they can treat it
-    as any old list. This can be devastating:
+    as any old list.
+    This can be devastating:
     ```py
     def handle_cat(cat: Cat) -> None:
         cat.kittens().clear()  # no complaints from our type checker
@@ -191,16 +199,17 @@ our class will be used in practice.
 
 ### `Iterable`
 
-Let's see how the `extend()` method of `list` objects handles the first problem. After all, it works with
-`list`s, `tuple`s, `range`s and other things.
+Let's see how the `extend()` method of `list` objects handles the first problem.
+After all, it works with `list`s, `tuple`s, `range`s and other things.
 
 ![list.extend signature in VSCode](list-extend-signature.png)
 
-`list.extend` works with any [_iterable_](https://docs.python.org/3/glossary.html#term-iterable) object. An
-_iterable_ is something you can put in a `for` loop to go over ("iterate over") its items. `Iterable` and
-similar items like `Sequence`, `Iterator`, `Mapping` are available in the standard
+`list.extend` works with any [_iterable_](https://docs.python.org/3/glossary.html#term-iterable) object.
+An _iterable_ is something you can put in a `for` loop to go over ("iterate over") its items.
+`Iterable` and similar items like `Sequence`, `Iterator`, `Mapping` are available in the standard
 [`collections.abc`](https://docs.python.org/3/library/collections.abc.html#collections-abstract-base-classes)
-module. Let's see it in action:
+module.
+Let's see it in action:
 
 ```py
 from collections.abc import Iterable
@@ -233,6 +242,8 @@ class Cat:
 
 Here are some other items from `collections.abc` you'll find useful:
 
+<!-- Markdown table syntax is a complete abomination -->
+<!-- ignore(sentence-newline) -->
 | Item | Description |
 | :--------- | ----------- |
 | `Iterator[T]` | Something you can call `next()` on. See [_iterator_](https://docs.python.org/3/glossary.html#term-iterator) |
@@ -241,6 +252,7 @@ Here are some other items from `collections.abc` you'll find useful:
 | `MutableSequence[T]` | Like `Sequence`, but also supports mutation with `obj[index] = value`, `clear()`, `append()` etc. |
 | `Collection[T]` | An object supporting iteration, `len()` and `in`. `set` is a collection but not a sequence |
 | `Callable` | Something you can `call()`. We will discuss it in a later chapter |
+<!-- unignore(sentence-newline) -->
 
 
 To solve the current problems with `kittens()`, let's use `Collection` instead of list:
@@ -291,7 +303,8 @@ class Dog:
         )
 ```
 
-This is rather verbose, repetitive, and error-prone. It could be much easier to read and write.
+This is rather verbose, repetitive, and error-prone.
+It could be much easier to read and write.
 The standard library has a [`dataclasses`](https://docs.python.org/3/library/dataclasses.html) module:
 
 ```py
@@ -308,7 +321,9 @@ class Dog:
         return self.height * self.length
 ```
 
-This does exactly the same as the previous snippet (Except for the typos. Did you spot them?).
+This does exactly the same as the previous snippet
+(Except for the typos.
+Did you spot them?)
 
 ```
 >>> dog = Dog(age=1, name="fido", height=100.0, length=60.0)
@@ -323,7 +338,8 @@ Dog(age=1, name='treat enjoyer', height=100.0, length=60.0)
 6000.0
 ```
 
-`@dataclass` has several flags. We recommend using these in most cases:
+`@dataclass` has several flags.
+We recommend using these in most cases:
 
 - `kw_only` prevents you from calling the class with positional arguments, like
     ```py

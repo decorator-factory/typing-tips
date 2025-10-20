@@ -2,7 +2,8 @@
 
 Protocols allow you to accept objects of different types that match a particular shape.
 
-You may have used a protocol before without realizing it. `Sized`, `Iterable`, `Collection` from `collections.abc` are protocols [^1].
+You may have used a protocol before without realizing it.
+`Sized`, `Iterable`, `Collection` from `collections.abc` are protocols [^1].
 They define what methods an object needs to have, but don't restrict what specific class it is.
 
 ## The prelude
@@ -76,11 +77,14 @@ The program outputs:
 ```
 Note that if not for the `Guard` widget, the `*ld.       *` line would be `*ld.*`, which is not what we want &mdash; we extracted the padding functionality so that we don't have to trim the line in every widget's `render`.
 
-This is a classic example of the [Decorator pattern](https://en.wikipedia.org/wiki/Decorator_pattern): one object wraps another object with a well-known interface (the `render` method here) and presents the same interface in return. That way, you can add functionality to widgets of potentially different classes and retain their widget-ness.
+This is a classic example of the [Decorator pattern](https://en.wikipedia.org/wiki/Decorator_pattern):
+one object wraps another object with a well-known interface (the `render` method here) and presents the same interface in return.
+That way, you can add functionality to widgets of potentially different classes and retain their widget-ness.
 
 ## Defining a protocol
 
-Right now we have an unwritten contract for all the `widgets`: they must have a `render` method, accepting a `width` parameter that is an `int`, and returning an iterable of strings. We can formalize this contract with a _protocol class_:
+Right now we have an unwritten contract for all the `widgets`: they must have a `render` method, accepting a `width` parameter that is an `int`, and returning an iterable of strings.
+We can formalize this contract with a _protocol class_:
 
 ```py
 from collections.abc import Iterable
@@ -97,7 +101,8 @@ class Widget(Protocol):
     The `...` here doesn't imply something's missing: leave the method body as `...`, the ellipsis object.
     We'll use `# <...>` when we really mean to skip something.
 
-This protocol defines the methods an object needs to support to _be_ a `Widget`. We can now add annotations to our `wrapped` parameters:
+This protocol defines the methods an object needs to support to _be_ a `Widget`.
+We can now add annotations to our `wrapped` parameters:
 
 ```py
     class Guard:
@@ -144,7 +149,8 @@ class Labelled(Protocol):
     label: str
 ```
 
-This requires that the attribute is both readable and writable. So the following is allowed:
+This requires that the attribute is both readable and writable.
+So the following is allowed:
 
 ```py
 def just_read(thing: Labelled) -> None:
@@ -154,7 +160,8 @@ def calm_down(thing: Labelled) -> None:
     thing.label = thing.label.replace("!", "")
 ```
 
-More often you'll want a read-only attribute. You can do this by defining a property in the protocol class:
+More often you'll want a read-only attribute.
+You can do this by defining a property in the protocol class:
 ```py
 class Labelled(Protocol):
     @property
@@ -163,7 +170,8 @@ class Labelled(Protocol):
 ```
 
 With this definition of `Labelled`, `calm_down` will not be accepted by a type checker.
-Note that this doesn't require a `Labelled` object to have an actual _property_, it could be a regular attribute as well:
+Note that this doesn't require a `Labelled` object to have an actual _property_, it could
+be a regular attribute as well:
 
 ```py
 @dataclass
@@ -175,7 +183,8 @@ class Node:
 just_read(Node(420, 69, "my secret"))
 ```
 
-Now, back to our `Widget`s. If we want to do more complex layouts, we might need to know how wide a widget wants to be:
+Now, back to our `Widget`s.
+If we want to do more complex layouts, we might need to know how wide a widget wants to be:
 
 ```py
 class Widget(Protocol):
@@ -190,7 +199,8 @@ class Widget(Protocol):
         ...
 ```
 
-Now we're getting red squiggles in the `scene = ...` line because our `Guard` and `Block` aren't widgets anymore. Let's fix that:
+Now we're getting red squiggles in the `scene = ...` line because our `Guard` and `Block` aren't widgets anymore.
+Let's fix that:
 
 ??? note "Code with `desired_width`"
 
@@ -440,20 +450,26 @@ class Vertical implements Widget {
 class Vertical : public Widget {
 ```
 
-That's called _nominal typing_: the implementor must "name" the things it implements. This is opposed to _structural typing_:
-if a value has the required structure, it fits the interface. Both have their pros and cons.
+That's called _nominal typing_: the implementor must "name" the things it implements
+This is opposed to _structural typing_:
+if a value has the required structure, it fits the interface.
+Both have their pros and cons.
 
 - The obvious benefit of structural typing is that you don't need to explicitly refer to the interface you're implementing.
 That's how Python has always worked, with dunder methods and other [duck typing](https://docs.python.org/3/glossary.html#term-duck-typing)
 techniques.
 - Protocols make it easy to type existing contracts without requiring users to inherit from a base class all of a sudden.
-- You can't modify something you don't own. But you can make a protocol that just happens to match someone else's type. For example, a protocol with a `status_code: int` property and a `text: str` method matches `requests.Response` and potentially your own class.
+- You can't modify something you don't own.
+    But you can make a protocol that just happens to match someone else's type.
+    For example, a protocol with a `status_code: int` property and a `text: str`
+    method matches `requests.Response` and potentially your own class.
 
 - On the other hand, structural typing can make it hard to realize that a particular class implements a particular interface.
     You'll need to know about that interface beforehand to understand that intention.
-- The errors for structural types are worse, as they occur at usage time. If one of our widgets had a typoed `desired_widht` property,
-    you'd get a nasty error message when passing the widget somewhere else, saying that `"Foo" is not a "Widget"`. This gets worse with
-    unions, more complex protocols, and generics.
+- The errors for structural types are worse, as they occur at usage time.
+    If one of our widgets had a typoed `desired_widht` property,
+    you'd get a nasty error message when passing the widget somewhere else, saying that `"Foo" is not a "Widget"`.
+    This gets worse with unions, more complex protocols, and generics.
 
 As a more subtle point, you can _accidentally_ match a protocol, when your class doesn't _semantically_ satisfy it.
 ```py
@@ -474,7 +490,8 @@ class Point2D:
 
 assert 4.99 < distance_to_origin(Point2D(3.0, 4.0)) < 5.01
 ```
-This looks fine. But consider a 3-dimensional point:
+This looks fine.
+But consider a 3-dimensional point:
 ```py
 @dataclass
 class Point3D:
@@ -482,7 +499,8 @@ class Point3D:
     y: float
     z: float
 ```
-It does have `x: float` and `y: float` attributes, but `reset` and `distance_to_origin` will give you completely wrong results with a `Point3D`. So if it's vital that a class understands when it implements the contract, don't use a protocol.
+It does have `x: float` and `y: float` attributes, but `reset` and `distance_to_origin` will give you completely wrong results with a `Point3D`.
+So if it's vital that a class understands when it implements the contract, don't use a protocol.
 
 
 ## The nominal counterpart to `Protocol`: `ABC`
@@ -564,7 +582,10 @@ class Widget(Protocol):
         return 1_000_000
 ```
 
-- Mark the required-to-implement methods with `abstractmethod`. Yes, the item from the `abc` module. With this change, a class that doesn't implement all the items is considered _abstract_, and instantiating it will cause an error at runtime:
+- Mark the required-to-implement methods with `abstractmethod`.
+Yes, the item from the `abc` module.
+With this change, a class that doesn't implement all the items is considered _abstract_,
+and instantiating it will cause an error at runtime:
 
     ```py
     class Foo(Protocol):
@@ -580,10 +601,11 @@ class Widget(Protocol):
     ```
 
     A type checker should already prevent you from instantiating `Bar()`, but it's good to catch the error at runtime as well.
-    If you're making a library, you shouldn't assume that its users are using a type checker. There are also many creative ways
-    around type checkers in Python.
+    If you're making a library, you shouldn't assume that its users are using a type checker.
+    There are also many creative way around type checkers in Python.
 
-- Raise a `NotImplementedError` in the method body. In an ABC, you're allowed to "bottom out" to an abstract method when using
+- Raise a `NotImplementedError` in the method body.
+    In an ABC, you're allowed to "bottom out" to an abstract method when using
     `super`:
 
     ```py

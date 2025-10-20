@@ -6,7 +6,8 @@ If you know how to write Python functions, you should be well equipped to read t
 ## What are type hints?
 
 Type hints are optional annotations that you can put on your functions and classes
-to suggest what kinds of values they're intended to deal with. For example:
+to suggest what kinds of values they're intended to deal with.
+For example:
 
 ```py
 # without type hints
@@ -39,7 +40,8 @@ What's the purpose of adding type hints to functions?
 ### Error checking
 
 **Type hints don't do anything at runtime.** They do not insert `isinstance` checks to ensure
-that the arguments are of the expected types. As you'll see later, it's not possible in the general case.
+that the arguments are of the expected types.
+As you'll see later, it's not possible in the general case.
 
 If you call `find_match` with two integers, you will get the same runtime behavior with or without
 type hints.
@@ -90,9 +92,10 @@ def frobnicate(thing):
         thing.bar()
 ```
 
-You might have a guess as to what `thing` is, but your editor doesn't. If you annotate `thing`
-with the class that you're expecting, you can now go to the source code of `Thing.foo` and `Thing.bar`,
-or rename `bar` to `baz` in the entire codebase.
+You might have a guess as to what `thing` is, but your editor doesn't.
+If you annotate `thing` with the class that you're expecting, you can now go
+to the source code of `Thing.foo` and `Thing.bar`, or rename `bar` to `baz`
+in the entire codebase.
 
 
 ### Deriving behavior from annotations
@@ -109,8 +112,8 @@ You can inspect the type annotations of a function or class:
 >>>
 ```
 
-Libraries can use this metadata to derive some interesting behavior. For example,
-[`cattrs`](https://catt.rs/en/stable/) uses class annotations to convert "untyped"
+Libraries can use this metadata to derive some interesting behavior.
+For example, [`cattrs`](https://catt.rs/en/stable/) uses class annotations to convert "untyped"
 data that you get from e.g. parsing JSON or YAML into a tree of typed objects, validating
 that the types are as you expect.
 
@@ -118,10 +121,12 @@ that the types are as you expect.
 ### Documentation
 
 Type hints serve as _formal documentation_: it's a standardized way to explain to other developers
-how to call this function. As always, "other developers" includes you two weeks later.
+how to call this function.
+As always, "other developers" includes you two weeks later.
 
 Developers can be reluctant to add useful inline documentation, especially when everything seems self-evident
-when they're writing the code. If you can convince your team to use type annotations everywhere, you get useful
+when they're writing the code.
+If you can convince your team to use type annotations everywhere, you get useful
 machine-checked documentation even from hardened comment haters.
 
 
@@ -136,8 +141,9 @@ machine-checked documentation even from hardened comment haters.
     If you previously installed the "Python" extension or the "Pylance" extension, you'll need to disable or uninstall
     Pylance (but keep the Python extension!).
 
-    basedpyright starts off with a pretty strict configuration. If you are overwhelmed by the red squiggles,
-    you can go to Setting (`Ctrl+,`) -> `basedpyright` -> change "Type checking mode" to "standard".
+    basedpyright starts off with a pretty strict configuration.
+    If you are overwhelmed by the red squiggles, you can go to
+    Settings (`Ctrl+,`) -> `basedpyright` -> change "Type checking mode" to "standard".
     We will revisit configuration and error messages later (TODO).
 
 === "PyCharm"
@@ -238,15 +244,16 @@ def double(number: int) -> int:
 print(double("42"))
 ```
 
-You should see a similar warning from your type checker. However, if you execute this code,
-Python doesn't complain and simply prints `4242`.
+You should see a similar warning from your type checker.
+However, if you execute this code, Python doesn't complain and simply prints `4242`.
 
 ## Different kinds of types
 
-The term "type" in Python usually means the same as "class". But when talking about type hints,
-"type" is a more general term for describing a set of allowed values. In the initial example at
-the top of the page you've seen `list[X]` which specifies what elements the list holds,
-and `X | None` to denote when a value can be `None`.
+The term "type" in Python usually means the same as "class".
+But when talking about type hints, "type" is a more general term for describing
+a set of allowed values.
+In the initial example at the top of the page you've seen `list[X]` which specifies
+what elements the list holds, and `X | None` to denote when a value can be `None`.
 
 So in this tutorial, "type" always means something you can stick in an annotation, and "class"
 always means "class", the result of calling `type()` on something at runtime.
@@ -255,7 +262,8 @@ Let's discuss the most common types you'll use in type hints.
 
 ### Classes
 
-A class is the simplest type hint you can have. You've already seen it in action in this tutorial.
+A class is the simplest type hint you can have.
+You've already seen it in action in this tutorial.
 
 ```py
 class Dog:
@@ -278,7 +286,8 @@ def print_twice(thing: object) -> None:
 
 ### Union
 
-Sometimes you want to accept or return either one type or a different type. This is expressed with
+Sometimes you want to accept or return either one type or a different type.
+This is expressed with
 the pipe operator (`|`):
 
 ```py
@@ -292,7 +301,8 @@ def indent(string: str, by: int | str) -> str:
 The first argument is a string, and the second argument is either an integer or a string.
 
 If you have a value of a union type, you are only allowed to do operations on it that would be valid
-for all of the options. You have to handle all the possibilities.
+for all of the options.
+You have to handle all the possibilities.
 
 ![Warning in VSCode, complaining that you cannot call len() on a value of type "str | int"](vscode-union-nuh-uh.png)
 
@@ -307,7 +317,8 @@ Inside the "then" block of the `if`, a type checker considers the `by` variable 
 
 ![Hovering over "by" in the positive branch of the "if" shows "by: int"](vscode-union-narrowing1.png)
 
-This is called _type narrowing_. Narrowing isn't standardized and differs between type checkers.
+This is called _type narrowing_.
+Narrowing isn't standardized and differs between type checkers.
 You can find details for narrowing in Pyright on this page:
 [https://microsoft.github.io/pyright/#/type-concepts-advanced?id=type-narrowing](
 https://microsoft.github.io/pyright/#/type-concepts-advanced?id=type-narrowing
@@ -316,7 +327,8 @@ https://microsoft.github.io/pyright/#/type-concepts-advanced?id=type-narrowing
 
 ### None
 
-The `None` object is special. You don't need to specify the class of `None`, instead you just write `None`.
+The `None` object is special.
+You don't need to specify the class of `None`, instead you just write `None`.
 
 ```py
 def maybe_print(item: str | None = None) -> None:
@@ -331,8 +343,8 @@ It's often used in combination with `|`, because accepting "something or `None`"
 
 !!! note "`-> None`"
 
-    Remember, if a function doesn't execute a `return` statement, it returns `None`. In that case
-    you should annotate it with `-> None`.
+    Remember, if a function doesn't execute a `return` statement, it returns `None`.
+    In that case you should annotate it with `-> None`.
     ```py
     def my_print() -> None:
     ```
@@ -382,7 +394,8 @@ def resurrect(being: Any) -> None:
 ```
 For example, `json.loads()` and `pickle.loads()` both return `Any`.
 
-This is handy, but don't overuse `Any`. By design, `Any` will prevent type checkers from finding issues.
+This is handy, but don't overuse `Any`.
+By design, `Any` will prevent type checkers from finding issues.
 
 If you want to use `Any`, read these first:
 
@@ -402,11 +415,12 @@ def print_both(x: object, y: object) -> None:
 
 ## Type inference
 
-Great, now you know how to annotate function parameters. But what about all the stuff that happens
-inside a function?
+Great, now you know how to annotate function parameters.
+But what about all the stuff that happens inside a function?
 
-If a value is not explicitly annotated, a type checker will _infer_ its type. It will look around
-that value and try to deduce what its type is. For example:
+If a value is not explicitly annotated, a type checker will _infer_ its type.
+It will look around that value and try to deduce what its type is.
+For example:
 
 ```py
 def count_f(string: str) -> int:
@@ -416,8 +430,8 @@ def count_f(string: str) -> int:
 ```
 
 Type checkers know that `str` has a `count` method expecting a string
-and returning an integer. Given that, it deduces that `small` and `big` are
-`int`s.
+and returning an integer.
+Given that, it deduces that `small` and `big` are `int`s.
 
 You can see what type your type checker infers for a variable by hovering over it:
 
@@ -447,7 +461,8 @@ already know what type it is.
 
 ## But wait, there's more
 
-What you've learned so far is more than enough to get started. Try using type hints in your next project.
+What you've learned so far is more than enough to get started.
+Try using type hints in your next project.
 However, there's much more to type hints, and you might need more advanced things in the future.
 
 - Read more articles on this website :slight_smile:
