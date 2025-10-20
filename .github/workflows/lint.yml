@@ -2,7 +2,7 @@ name: Build and deploy to GitHub Pages
 
 on:
   pull_request:
-    types: [opened, ready_for_review]
+    types: [opened, reopened, ready_for_review]
     branches: [main, master, trunk]
 
   # Allows you to run this workflow manually from the Actions tab
