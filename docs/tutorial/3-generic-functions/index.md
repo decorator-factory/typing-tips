@@ -660,7 +660,7 @@ def add_strings[S: (str, bytes)](foo: S, bar: S) -> S:
     return foo + bar
 
 ## <3.12
-_S = TypeVar("_S", int, str)
+_S = TypeVar("_S", str, bytes)
 
 def add_strings(foo: _S, bar: _S) -> _S:
     return foo + bar
