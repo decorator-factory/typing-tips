@@ -377,6 +377,8 @@ def count(strings: list[str]) -> dict[str, int]:
 
     This is a "variable annotation" as opposed to a parameter annotation or return type annotation.
 
+Classes that can be parameterized using the square-bracket syntax are called _generic classes_.
+You can define your own generic classes, which will be covered in a later chapter.
 
 ### If you just don't care
 
