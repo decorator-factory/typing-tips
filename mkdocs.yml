@@ -49,3 +49,4 @@ plugins:
   - privacy:
       enabled: true
   - search
+  - typeset
