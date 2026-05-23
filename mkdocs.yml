@@ -9,7 +9,6 @@ nav:
     - "1. Working with classes": tutorial/1-working-with-classes/index.md
     - "2. Using Protocols": tutorial/2-using-protocols/index.md
     - "3. Generic functions": tutorial/3-generic-functions/index.md
-  - "The tutorial (draft)":
     - "4. Assignability and variance": tutorial/4-assignability/index.md
   - "Miscellaneous articles":
     - "`object` is not the same as `Any`": one-offs/object-vs-any/index.md

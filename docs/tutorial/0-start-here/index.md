@@ -1,6 +1,6 @@
 # Introduction
 
-This article explains the basics of type hints.
+This chapter explains the basics of type hints.
 If you know how to write Python functions, you should be well equipped to read this.
 
 ## What are type hints?

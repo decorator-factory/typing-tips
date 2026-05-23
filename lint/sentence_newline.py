@@ -67,20 +67,20 @@ def process_file(src: str) -> None:
         if is_ignoreblock or is_codeblock:
             continue
 
-        if (violation := get_rule_violation(line)) is not None:
+        if (violation := find_rule_violation(line)) is not None:
             violation = violation.replace("\n", "\\n")
             error(f"place new sentence on a new line: |{violation}|", lineno)
 
 
-REGEX = re.compile(r"""
+MID_LINE_SENTENCE_END = re.compile(r"""
     (?<!e\.g|i\.e|etc)  # abbreviations don't end a sentence
     (?<![.!?])  # "...", "!!!" etc. shouldn't count. might cause some false negatives
     (?<![0-9])  # ordered list. might cause some false negatives
     [.?!][ ](?!\s)
 """, re.VERBOSE)
 
-def get_rule_violation(line: str) -> str | None:
-    match = REGEX.search(line)
+def find_rule_violation(line: str) -> str | None:
+    match = MID_LINE_SENTENCE_END.search(line)
     if match is None:
         return None
 

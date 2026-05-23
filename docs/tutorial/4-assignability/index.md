@@ -1,6 +1,10 @@
 # Assignability and variance
 
-!!! warning "This article is a draft"
+This chapter will not give you a lot of things to practice, but it will lay some
+important groundwork for understanding generic types in-depth.
+If some of this goes over your head a bit, you can revisit after Chapter 5.
+
+---
 
 Suppose that you have a function accepting an argument of type `OuterType`
 and a variable referring to a value of type `InnerType`:
@@ -23,7 +27,8 @@ If there's an operation on `OuterType` that would be illegal on
 Here are some straightforward examples:
 
 - `int` is assignable to `int` (they're the same type!)
-- `bool` is assignable to `int` (`bool` is a subclass of `int`)
+- `bool` is assignable to `int` (`bool` is a subclass of `int`
+- `int` is assignable to `object` (`object` is the base class of all other classes)
 - `str` is assignable to `int | str`
 - `str | bytes` is assignable to `int | str | bytes`
 - `int | str` is **not** assignable to `str`
@@ -33,9 +38,10 @@ Here are some straightforward examples:
     then `Foo | Bar` is assignable to `FooProto | BarProto`
 - `tuple[str, str]` is assignable to `tuple[str, ...]`
 - `tuple[str, ...]` is assignable to `tuple[object, ...]`
+- `tuple[object, ...]` is **not** assignable to `tuple[str, ...]`
 
 These should be pretty obvious, but there are more complex cases
-where "A is not assignable to B" errors can stump new type checking users.
+where "A is not assignable to B" errors can stump people new to type checking.
 
 ## Where it's found
 
@@ -52,6 +58,9 @@ A lot of things in Python work sort of like assignment [^nedbat-names-values],
 like bindings from `with` and `for` statements, so they are also
 in the "assignment into a variable" category.
 
+"X _is assignable to_ Y" is a key phrase that's going to appear in many definitions,
+error messages and so on.
+It's a very versatile concept.
 
 ## Union with `None`
 
@@ -83,7 +92,7 @@ before you use a "nullable" value as if it's present:
 def find_first_number(source: str) -> int:
     match = re.search(r"[0-9]+", source)
     if match is None:
-        raise ValueError("No value find")
+        raise ValueError("No number found")
     reveal_type(match)  # shows: re.Match[str]
     return int(match[0])  # ok
 
@@ -198,20 +207,33 @@ async with Thingy.connect(some_addr) as thingy:
 You can also use the _Null Object_ or the more general _Special Case_ pattern[^null-object]
 to replace `None` checks with polymorphism:
 
+> Some object behavior is executed only in the presence of some other object.
+> If this other object is absent, the behavior is either to do nothing or to use some default value.
+> Using explicit conditionals to check an object reference for null and then branching, however,
+> introduces a great deal of repetition and complexity into the code.
+>
+> <...>
+>
 > Provide something for nothing: a class that conforms to the interface required of
 > the object reference, implementing all of its methods to do nothing,
 > or to return suitable default values.
 > Use an instance of this class, a so-called 'null object,' when the object reference
 > would otherwise have been null.
+>
+> (Pattern-Oriented Software Architecture, volume 4, chapter 18)
 
 ```py
 class Route:
-    def __init__(self, matcher: Matcher, handler: Handler | None = None) -> None:
+    def __init__(
+        self,
+        matcher: Matcher | None = None,
+        handler: Handler | None = None,
+    ) -> None:
         self._matcher = matcher
         self._handler = handler
 
     def invoke(self, request: Request) -> Response | None:
-        if not self._matcher.matches(request):
+        if self._matcher is not None and not self._matcher.matches(request):
             return None
         if self._handler is None:
             return Response(status=501)
@@ -220,14 +242,20 @@ class Route:
 # ->
 
 class Route:
-    def __init__(self, matcher: Matcher, handler: Handler | None = None) -> None:
+    def __init__(
+        self,
+        matcher: Matcher = YesMatcher(),
+        handler: Handler = NotImplementedHandler(),
+    ) -> None:
         self._matcher = matcher
-        self._handler: Handler = handler or NotImplementedHandler()
+        self._handler = handler
 
     def invoke(self, request: Request) -> Response | None:
-        if not self._matcher.matches(request):
+        if self._matcher.matches(request):
+            return self._handler.process(request)
+        else:
             return None
-        return self._handler.process(request)
+
 ```
 
 Again, that's a general design choice that should be evaluated regardless of type checking.
@@ -238,9 +266,12 @@ obscure mistakes and make the code harder to read and write, not easier.
 > `Null Object` should not, however, be used indiscriminately as a replacement for null references.
 > If the absence of an object is significant to the code’s logic and results in
 > fundamentally different behavior, using a `Null Object` is inappropriate.
+>
+> (Pattern-Oriented Software Architecture, volume 4, chapter 18)
 
 Returning `None` from the `invoke` method is meaningful: we need to signal whether the
 request was intended for our route or whether the caller should try other routes.
+Returning an `EmptyResponse()` instead of `None` would be a mistake.
 
 If you're using a type checker, it will help you ensure that you will not mistakenly
 access a possibly `None` value as if it was present.
@@ -248,7 +279,7 @@ access a possibly `None` value as if it was present.
 
 ## Callables are backwards!
 
-Suppose that ou're adding type annotations to an existing application that
+Suppose that you're adding type annotations to an existing application that
 powers a bot on a text messaging platform.
 
 ```py
@@ -285,7 +316,11 @@ class ChatBot:
     user_id: str = ""
     def ban(self, user_id: str, reason: str) -> None: ...
 
-    def add_event_handler(self, event_type: type[Event], handler: Callable[[Event], None]) -> None:
+    def add_event_handler(
+        self,
+        event_type: type[Event],
+        handler: Callable[[Event], None],
+    ) -> None:
         ...
 
 class Event: ...
@@ -353,10 +388,14 @@ In other words, the signature of `ChatBot.add_event_handler` is saying: give me 
 and then a function that must be happy to work with arbitrary `Event`s.
 This is clearly not what we want: we only need that the handler knows how to work with events
 of the supplied class.
-We can do this by making the method generic:
+We can express this by making the method generic:
 ```py
 class ChatBot:
-    def add_event_handler[E: Event](self, event_type: type[E], handler: Callable[[E], None]) -> None:
+    def add_event_handler[E: Event](
+        self,
+        event_type: type[E],
+        handler: Callable[[E], None],
+    ) -> None:
         ...
 ```
 Now, when you call `bot.add_event_handler(NewMessage, on_new_message)`, `E` is resolved as
@@ -375,10 +414,10 @@ This is fine: `Callable[[Event], None]` is assignable to `Callable[[UserJoined],
 it supports all the operations required by `Callable[[UserJoined], None]`.
 It knows how to handle any `Event`, and that includes `UserJoined`.
 
-So, as a general rule:
+As a general rule:
 
 1. if `A` is assignable to `B`, then `Callable[[B], X]` is assignable to `Callable[[A], X]`,
-    not (necessarily) the other way around.
+    not the other way around.
     Parameters are "backwards" in this way, because they describe receiving something,
     not providing it.
 2. if `A` is assignable to `B`, then `Callable[[X], A]` is assignable to `Callable[[X], B]`,
@@ -387,17 +426,18 @@ So, as a general rule:
 The technical way to describe this is that `Callable` is **contravariant** in its parameters and
 **covariant** in the return type.
 
-"Covariant" uses the Latin prefix "co" meaning "alongside something" or "close to something",
-and "contravariant" uses the Latin prefix "contra", meaning "against something" or "opposite".
+"Covariant" uses the Latin prefix "co" meaning "alongside something" or "close to something"
+(as in "coworker" and "coexist"), and "contravariant" uses the Latin prefix "contra",
+meaning "against something" or "opposite" (as in "contradict" and "contrarian").
 Both of these adjectives describe the **variance** of a generic type: how the assignability
 of type arguments impacts the assignability of the whole type.
 
-For another example, `tuple[T, ...]` is covariant in `T`, because e.g. `tuple[Dog, ...]` is
+For another example, `tuple[T, ...]` is _covariant_ in `T`, because e.g. `tuple[Dog, ...]` is
 assignable to `tuple[Animal, ...]`, and `tuple[Animal, ...]` is assignable to `tuple[object, ...]`.
 
 ## `list`s don't vary either way
 
-The following is a very common error people run into when adopting type checking:
+Here's a common situation where variance can ruin your day:
 
 ```py
 class Fruit: pass
@@ -432,7 +472,7 @@ def look_at_fruits(fruits: list[Fruit]) -> None:
     for fruit in fruits:
         print(f"What a beautiful fruit this is: {fruit}")
 
-    fruits.append(Banana())  # complimentary gift for such decent fruits
+    fruits.append(Banana())
 
 apples: list[Apple] = [Apple(), Apple(), Apple()]
 look_at_fruits(apples)
@@ -444,13 +484,20 @@ In other words, if we once again consider the allowed operations on types:
 `x: list[Fruit]` allows `x.append(Fruit())` or `x.append(Banana())`, while
 `x: list[Apple]` does not, so `list[Apple]` is not assignable to `list[Fruit]`.
 
-Obviously, `list[Fruit]` is not assignable to `list[Apple]` either.
-So `list` is very inflexible: if you want to assign `list[X]` to `list[Y]`,
-you gotta make sure that `X = Y`[^any-assignability].
-We say that `list` is **invariant** ("in" is a prefix meaning "not", as in "intolerant"),
-because it doesn't have an "assignable to" relation in either direction.
+Clearly, `list[Fruit]` is not assignable to `list[Apple]` either: if you need a list
+of `Apple`s, a list where other `Fruit`s may already be present is not acceptable.
 
-Is there a structured way of knowing which types are _covariant_, _contravariant_ and _invariant_?
+So `list` is very inflexible: if you want to assign `list[X]` to `list[Y]`,
+you need to make sure that `X = Y`[^any-assignability].
+We say that `list` is **invariant** ("in" is a prefix meaning "not", as in "intolerant"),
+because it is neither covariant (which would mean `list[Apple]` is-a `list[Fruit]`) nor
+contravariant (which would mean `list[Fruit]` is-a `list[Apple]`).
+
+
+## Rules for variance
+
+Is there a structured way of knowing which types are _covariant_, _contravariant_ and _invariant_
+besides just thinking really hard?
 Yes, it will be discussed in a later chapter, after we cover making our own generic classes.
 But, for a back of the napkin draft of the full truth, consider this rule:
 
@@ -463,10 +510,11 @@ But, for a back of the napkin draft of the full truth, consider this rule:
         (`def method(self, arg: T) -> None`), then it is **not** _covariant_ in `T`
         (i.e.: `SomeType[Apple]` is not assignable to `SomeType[Fruit]`)
 
-    If none of the bullet points apply, the type is a mystery (both `mypy` and `pyright`
-    consider it _covariant_).
+    If both conditons apply, the type is _invariant_.
 
-    If both of the bullet points apply, the type is _invariant_.
+    If none of the conditions apply, then, in Python, it is considered _covariant_
+    (though in theory it would mean that `SomeType[A]` and `SomeType[B]` are always
+    assignable to each other).
 
     T being "in the output position" and "in the input position" is quite misleading.
     For example, if `SomeType[T]`'s only method is `def method(self) -> Callable[[T], None]`,
@@ -474,6 +522,69 @@ But, for a back of the napkin draft of the full truth, consider this rule:
     then it is covariant; and if the method is `def method(self) -> list[T]` then it is invariant.
     The margins of this napkin are too narrow, so stay tuned for the next chapter.
 
+## The variance of `dict` :thinking: {#dict-variance}
+
+What's the variance of `K` and `V` in `dict[K, V]`?
+
+- For `V`, you can reason the same way you do as for lists: if `x: dict[str, int]` was
+    assignable to `y: dict[str, object]`, then you'd be able to sneak in a non-`int` into the
+    dict through `y` and invalidate `x`'s type.
+    `x: dict[str, object]` is also clearly not assignable to `x: dict[str, int]`.
+    So `dict[K, V]` is invariant in `V`.
+
+    You can also deduce this using the napkin rule.
+    `dict[K, V]` has the following methods:
+    ```py
+    def __getitem__(self, key: K, /) -> V
+    def __setitem__(self, key: K, value: V, /) -> None
+    ```
+
+    `V` appears in input and output positions, so invariance is the only choice for `V`.
+
+- `K` is more difficult.
+    If we use the napkin rule again:
+
+    ```py
+    def __getitem__(self, key: K, /) -> V
+                        # ^^^^^^^ input position
+    def get(self, key: K, /) -> V | None  # (simplified signature of `get`)
+                # ^^^^^^^ input position
+    def popitem(self) -> tuple[K, V]
+                        #     ^^^ output position
+    def keys(self) -> KeysView[K]
+                        #     ^^^ output position (KeysView is covariant)
+    ```
+
+    It seems like, once again, we have `K` in both input and output positions, so `dict[K, V]`
+    must be invariant.
+    For example, `dict[str, object]` s not assignable to `dict[str | int, object]`.
+
+    Does this match your intuition?
+    You might be surprised that `__getitem__` and `get` are restricted to accept `K`,
+    even though at runtime, any object will work.
+    If you're querying a dictionary containing `str` keys with a `None` key, you will simply get a
+    `KeyError`, or `None` if you're using `get`.
+
+    It was decided to restrict the method signature in this way to catch errors where you're
+    querying a dictionary with the wrong type: if you're looking up an `int` key in a `dict[str, object]`,
+    it's probably a mistake in your code.
+    It could be done a different way, and you could reasonably argue for and against this.
+
+    Additionally, as you will learn in a later chapter, you're allowed to make a subclass of `dict`
+    that only works with a specific key type:
+    ```py
+    class CaseInsensitiveCounter(dict[str, int]):
+        def __getitem__(self, key: str) -> int:
+            return super().get(key.casefold(), 0)
+
+        def __setitem__(self, key: str, value: int) -> None:
+            super().__setitem__(key.casefold(), value)
+
+        # *more methods*
+    ```
+    `CaseInsensitiveCounter` is assignable to `dict[str, int]`, so if you could assign that to
+    `dict[str | int, int]`, you'd be able to call this `__getitem__` with an integer, leading to
+    a `TypeError`.
 
 ## Using _covariant_ collection types
 
@@ -492,8 +603,8 @@ def look_at_fruits(fruits: Sequence[Fruit]) -> None:
     for fruit in fruits:
         print(f"What a beautiful fruit this is: {fruit}")
 
-    # cannot add `Banana()` to `fruits`, because `Sequence[Fruit]` doesn't have
-    # any mutating methods
+    # cannot add `Banana()` to `fruits`, because `Sequence[Fruit]`
+    # doesn't have any mutating methods
 
 apples: list[Apple] = [Apple(), Apple(), Apple()]
 
@@ -510,18 +621,34 @@ Here's how the assignability chain works:
 1. `list[Apple]` is assignable to `Sequence[Apple]` because `list` is a subclass of `Sequence`[^list-subclass-sequence]
 1. `Sequence[Apple]` is assignable to `Sequence[Fruit]`
 
+!!! note "Why `collections.abc.Sequence` and not `typing.Sequence`?"
+
+    `typing.Sequence`, `typing.Callable`, `typing.List` and many other items
+    in `typing` are deprecated.
+    Unfortunately, they do not produce any warnings at runtime.
+    You can read [PEP 585](https://peps.python.org/pep-0585/) for the backstory, but in short:
+    since Python 3.9, you can subscript previously existing items from the standard library,
+    such as `list` and `collections.abc.Sequence`, so the ones in `typing` are now redundant.
+
+    If you are unsure about a particular item, you can check out the
+    [official documentation](https://docs.python.org/3.15/library/typing.html#typing.Sequence)
+    for it.
+
+    If you want to enforce this, use the [UP035 (deprecated-import)](https://docs.astral.sh/ruff/rules/deprecated-import/)
+    Ruff rule or [flake8-pep585](https://pypi.org/project/flake8-pep585/) if using `flake8`.
+
 You can find the type definition of `Sequence` in the
 [typeshed source code](https://github.com/python/typeshed/blob/1d548aa88911297f676017f4cc82a120916cae8e/stdlib/typing.pyi#L652-L664).
 
 You can also check out the [`collections.abc` documentation](https://docs.python.org/3/library/collections.abc.html).
-For type parameters and their variance, you will need to see the documentation for
+For type parameters and their variance[^stdlib-variance], you will need to see the documentation for
 [typing.Sequence](https://docs.python.org/3/library/typing.html#typing.Sequence)
 (which is deprecated, don't use it!), and for the meaning of `Sequence`'s methods
 (like `__getitem__` and `__len__`), you will need to see the [data model](https://docs.python.org/3/reference/datamodel.html)
 page.
 
 
-## `Any` goes both ways {any-goes-both-ways}
+## `Any` goes both ways {#any-goes-both-ways}
 
 `Any` is assignable to every type, and every type is assignable to `Any`.
 For example:
@@ -573,7 +700,9 @@ setAttr(point, "z", 420);  // error
 
 <!-- Footnotes -->
 [^nedbat-names-values]: [Facts and myths about Python names and values](https://nedbatchelder.com/text/names.html)
+
 [^any-assignability]: There's an exception for `Any`, which is discussed [later in the chapter!](#any-goes-both-ways)
+
 [^list-subclass-sequence]: At runtime, `list.mro()` is just `[list, object]`, so `list` doesn't have real
     base classes besides `object`.
     However, `ABC`s like `Sequence` support "virtual subclassing" by registering a class
@@ -581,9 +710,12 @@ setAttr(point, "z", 420);  // error
     That way, `isinstance([1, 2, 3], collections.abc.Sequence)` is actually true.
     Registering classes with `ABC`s is not supported by type checkers, so the typeshed
     stubs just pretend that e.g. `list[T]` actually inherits from `Sequence[T]`
+
 [^null-object]: See "Null Object" in "Pattern-Oriented Software Architecture, volume 4";
     also see [Special Case](https://martinfowler.com/eaaCatalog/specialCase.html) from Martin Fowler's
     "Patterns of Enterprise Architecture" and the [Nothing is Something](https://www.youtube.com/watch?v=OMPfEXIlTVE)
     talk by Sandi Metz.
 
-
+[^stdlib-variance]: The `_co` and `_contra` prefixes are used on old-style type variables to
+    indicate their variance.
+    If none are present, it means that it's invariant.

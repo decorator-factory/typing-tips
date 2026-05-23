@@ -43,7 +43,7 @@ This is the current plan for what I want to include:
     Lots and lots of examples because it's the first topic that might not click at first
     intuitively. Old-style syntax is explained as an afterthought because it's less
     and less likely to be relevant with time.
-4. (Draft) Assignability and variance &mdash; a more theory-heavy chapter. Understanding what "A is assignable
+4. Assignability and variance &mdash; a more theory-heavy chapter. Understanding what "A is assignable
     to B" means and all the concepts that lead up to it is crucial to solving type checking problems.
     Variance is introduced, but only explained on existing types like `list` and `Callable`, because
     generic classes are not introduced yet.
