@@ -27,7 +27,7 @@ If there's an operation on `OuterType` that would be illegal on
 Here are some straightforward examples:
 
 - `int` is assignable to `int` (they're the same type!)
-- `bool` is assignable to `int` (`bool` is a subclass of `int`
+- `bool` is assignable to `int` (`bool` is a subclass of `int`)
 - `int` is assignable to `object` (`object` is the base class of all other classes)
 - `str` is assignable to `int | str`
 - `str | bytes` is assignable to `int | str | bytes`
