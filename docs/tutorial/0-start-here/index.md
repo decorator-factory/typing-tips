@@ -451,7 +451,7 @@ def count_f(string: str) -> int:
     reveal_type(big)
     return small + big
 
-$ basedpyright test.py
+$ pyright test.py
 /tmp/test.py
   /tmp/test.py:6:17 - information: Type of "big" is "int"
 0 errors, 0 warnings, 1 note

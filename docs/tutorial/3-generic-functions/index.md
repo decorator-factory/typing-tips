@@ -30,6 +30,9 @@ artificially limited to accept and return `str` by the type signature.
 How can we make it work with other objects?
 We could use `object`:
 ```py
+from typing import reveal_type
+import random
+
 def pick_option(option1: object, option2: object) -> object:
     if random.random() > 0.5:
         return option1
@@ -45,6 +48,55 @@ reveal_type(number)  # object
 numbers = pick_option([1, 2, 3], [4, 5])
 reveal_type(numbers)  # object
 ```
+
+??? note "Reminder on `reveal_type`"
+
+    `typing.reveal_type` is a **type checker directive**, but it does have
+    some runtime behaviour.
+    If you execute this program (e.g. by running `python file.py`), you will see:
+
+    ```py
+    Runtime type is 'str'
+    Runtime type is 'int'
+    Runtime type is 'list'
+    ```
+
+    At runtime, `reveal_type` just calls `type()` on the value it receives and prints that.
+    Make sure that you understand the difference between the runtime _class_
+    of an object and what type a type checker infers for an expression.
+    The former is runtime information, the latter is static analysis, which is what we're
+    interested in in this tutorial.
+
+    The right way to use `reveal_type` is by running your type checker on the file and looking
+    for "note" or "information" level diagnostics:
+
+    ```
+    $ mypy file.py
+    file.py:12: note: Revealed type is "builtins.object"
+    file.py:15: note: Revealed type is "builtins.object"
+    file.py:18: note: Revealed type is "builtins.object"
+
+    $ pyright file.py
+    /home/.../file.py
+    /home/.../file.py:12:13 - information: Type of "fruit" is "object"
+    /home/.../file.py:15:13 - information: Type of "number" is "object"
+    /home/.../file.py:18:13 - information: Type of "numbers" is "object"
+    0 errors, 0 warnings, 3 informations
+    ```
+
+    The history of this feature is that type checkers understood calls to `reveal_type`
+    (available without importing anything) and produced diagnostics for those calls to
+    help you debug type checking issues.
+    Later, `reveal_type` was added to `typing` so that you can keep the program
+    working at runtime while also fighting the type checker.
+
+    This is especially useful for `mypy`, which doesn't offer fancy
+    Language Server Protocol features.
+    If you're using `pyright`, `ty`, or `pyrefly` in your editor, you can hover
+    over a variable to see its inferred type:
+    ![foo](./pyright-show-type-on-hover.png)
+
+
 Unfortunately, `fruit`, `number`, and `numbers` are all inferred to be `object`.
 This is annoying, because doing `fruit + "!"` or `numbers[0]` will produce a
 type checking error, even though you know it's fine at runtime.
@@ -614,13 +666,40 @@ def closing[T: SupportsClose](obj: T) -> Generator[T]:
         obj.close()
 ```
 
+One thing to note about this example: the `contextmanager` decorator changes the signatures of a function.
+If you haven't used it, it accepts a generator function and returns a function that will produce a
+context manager instead.
 
+You can check the actual signatures using `reveal_type`:
+```py
+reveal_type(nullcontext)
+# [T](obj: T) -> _GeneratorContextManager[T]
+
+reveal_type(closing)
+# [T: SupportsClose](obj: T) -> _GeneratorContextManager[T]
+```
+
+It can be a bit confusing that the signature that you write is not the one that the name
+is going to have, but remember that the decorotor syntax in Python is equivalent to a
+call like this:
+```py
+@contextmanager
+def nullcontext[T](obj: T) -> Generator[T]:
+    yield obj
+
+# ->
+
+def _nullcontext[T](obj: T) -> Generator[T]:
+    yield obj
+
+nullcontext = contextmanager(_nullcontext)
+```
 
 ## Old-style syntax { #old-style-syntax }
 
 The modern syntax for writing generic functions using square brackets in the `def` statement
 is new to Python 3.12. If you're using Python 3.11 or earlier, you need to use more verbose
-syntax:
+syntax with `typing.TypeVar`:
 
 ```py
 # plain type variable:
