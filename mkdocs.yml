@@ -10,6 +10,7 @@ nav:
     - "2. Using Protocols": tutorial/2-using-protocols/index.md
     - "3. Generic functions": tutorial/3-generic-functions/index.md
     - "4. Assignability and variance": tutorial/4-assignability/index.md
+    - "5. (Draft) Generic classes": tutorial/5-generic-classes/index.md
   - "Miscellaneous articles":
     - "`object` is not the same as `Any`": one-offs/object-vs-any/index.md
     - "avoid `Any`": one-offs/avoid-any/index.md
@@ -48,6 +49,9 @@ markdown_extensions:
   - md_in_html
   - admonition
   - pymdownx.details
+  - pymdownx.blocks.caption
+  - pymdownx.blocks.details
+
 
   - pymdownx.highlight:
       anchor_linenums: true
