@@ -1,0 +1,62 @@
+/*
+Customized colors for MkDocs Material
+
+For more information see:
+- https://squidfunk.github.io/mkdocs-material/reference/code-blocks/#custom-syntax-theme
+- https://squidfunk.github.io/mkdocs-material/setup/changing-the-colors
+*/
+
+:is(.c, .cm, .c1, .ch, .cs, .sd) {
+    /* Make comments bold */
+    font-weight: bold;
+}
+
+:is(.nb, .bp):not(#_specificity-hack) {
+    /* Make "Name, builtin" and "Name, builtin pseudo" colored normally */
+    color: var(--md-code-hl-name-color);
+}
+
+[data-md-color-scheme] {
+    --md-code-hl-number-color: var(--tytips-code-const);
+    --md-code-hl-special-color: var(--tytips-code-const);
+    --md-code-hl-function-color: var(--md-code-fg-color);
+    --md-code-hl-constant-color: var(--tytips-code-const);
+    --md-code-hl-keyword-color: var(--tytips-code-kw);
+    --md-code-hl-string-color: var(--tytips-code-const);
+    --md-code-hl-name-color: var(--md-code-fg-color);
+    --md-code-hl-operator-color: var(--tytips-code-kw);
+    --md-code-hl-punctuation-color: var(--tytips-code-punct);
+    --md-code-hl-comment-color: var(--tytips-code-comment);
+    --md-code-hl-generic-color: var(--md-code-fg-color);
+    --md-code-hl-variable-color: var(--md-code-fg-color);  /* idk what this one does */
+}
+
+[data-md-color-scheme="slate"] {
+    --md-primary-fg-color: #37a5ff;
+    --md-accent-fg-color: #acffb3;
+
+    --tytips-code-const: #acffb3;
+    --tytips-code-kw: #64b9ff;
+    --tytips-code-punct: #64b9ff;
+    --tytips-code-comment: #fff;
+
+    --md-code-fg-color: #e0e0e0;
+    --md-code-bg-color: #080808;
+    --md-code-hl-color: #64b9ff;
+    --md-code-hl-color--light: #023;
+}
+
+[data-md-color-scheme="default"] {
+    --md-primary-fg-color: #2d6bd6;
+    --md-accent-fg-color: #71cbf1;
+
+    --tytips-code-const: #078111;
+    --tytips-code-kw: #1b35ff;
+    --tytips-code-punct: #3444be;
+    --tytips-code-comment: #000;
+
+    --md-code-fg-color: #080808;
+    --md-code-bg-color: #f7f7f7;
+    --md-code-hl-color: #64b9ff;
+    --md-code-hl-color--light: #f5ffff;
+}

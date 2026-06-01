@@ -20,9 +20,27 @@ theme:
     logo: material/language-python
   font: false
   palette:
-    primary: blue grey
-    accent: cyan
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
   favicon: images/favicon.png
+  features:
+    - content.code.copy
+    - content.code.select
 
 markdown_extensions:
   - attr_list
@@ -33,6 +51,7 @@ markdown_extensions:
 
   - pymdownx.highlight:
       anchor_linenums: true
+      line_spans: __span
   - pymdownx.emoji:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
@@ -49,3 +68,6 @@ plugins:
       enabled: true
   - search
   - typeset
+
+extra_css:
+  - "stylesheets/extra.css"
