@@ -55,7 +55,7 @@ reveal_type(numbers)  # object
     some runtime behaviour.
     If you execute this program (e.g. by running `python file.py`), you will see:
 
-    ```py
+    ```
     Runtime type is 'str'
     Runtime type is 'int'
     Runtime type is 'list'
