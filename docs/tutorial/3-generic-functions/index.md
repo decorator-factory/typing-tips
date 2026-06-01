@@ -680,7 +680,7 @@ reveal_type(closing)
 ```
 
 It can be a bit confusing that the signature that you write is not the one that the name
-is going to have, but remember that the decorotor syntax in Python is equivalent to a
+is going to have, but remember that the decorator syntax in Python is equivalent to a
 call like this:
 ```py
 @contextmanager

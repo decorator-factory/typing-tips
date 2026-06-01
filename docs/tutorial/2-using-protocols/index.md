@@ -626,7 +626,7 @@ and instantiating it will cause an error at runtime:
     catch those mistaken calls &mdash; both in ABCs and (inheritable) protocols.
 
     (Unless, of course, you do want to allow subclasses to execute some default behaviour if they end up `super`ing into an abstract method.
-    Just make sure that the abstractm method makes sense for the type annotation )
+    Just make sure that the abstract method makes sense for the type annotation )
 
 And yes, that's the secret: `Protocol` is mostly the same as `abc.ABC`[^2], except type checkers understand that it's structural, not nominal.
 

@@ -510,7 +510,7 @@ But, for a back of the napkin draft of the full truth, consider this rule:
         (`def method(self, arg: T) -> None`), then it is **not** _covariant_ in `T`
         (i.e.: `SomeType[Apple]` is not assignable to `SomeType[Fruit]`)
 
-    If both conditons apply, the type is _invariant_.
+    If both conditions apply, the type is _invariant_.
 
     If none of the conditions apply, then, in Python, it is considered _covariant_
     (though in theory it would mean that `SomeType[A]` and `SomeType[B]` are always
