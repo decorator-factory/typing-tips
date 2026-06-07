@@ -503,14 +503,14 @@ But, for a back of the napkin draft of the full truth, consider this rule:
 
 !!! note "Napkin Rule"
 
-    1. If a type `SomeType[T]` has any methods where `T` is in the output position
-        (like `def method(self) -> T`), then it is **not** _contravariant_ in `T`
-        (i.e.: `SomeType[Fruit]` is not assignable to `SomeType[Apple]`)
-    2. If a type `SomeType[T]` has any methods where `T` is in the input position
-        (`def method(self, arg: T) -> None`), then it is **not** _covariant_ in `T`
-        (i.e.: `SomeType[Apple]` is not assignable to `SomeType[Fruit]`)
+    1. If a type `SomeType[T]` **only** has methods where `T` is in the output position
+        (like `def method(self) -> T`), then it is _covariant_ in `T`
+        (i.e.: `SomeType[Apple]` is assignable to `SomeType[Fruit]`)
+    2. If a type `SomeType[T]` **only** has any methods where `T` is in the input position
+        (`def method(self, arg: T) -> None`), then it is _contravariant_ in `T`
+        (i.e.: `SomeType[Fruit]` is assignable to `SomeType[Apple]`)
 
-    If both conditions apply, the type is _invariant_.
+    If neither conditions apply, the type is _invariant_.
 
     If none of the conditions apply, then, in Python, it is considered _covariant_
     (though in theory it would mean that `SomeType[A]` and `SomeType[B]` are always
