@@ -24,5 +24,11 @@ jobs:
         with:
           python-version: '3.13'
 
+      - name: Install Python dependencies
+        run: python3 -m pip install -r requirements-lock.txt
+
       - name: Lint
         run: python3 ./lint/sentence_newline.py ./docs
+
+      - name: Validate mkdocs
+        run: python3 -m mkdocs build --strict
