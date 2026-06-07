@@ -531,8 +531,8 @@ What's the variance of `K` and `V` in `dict[K, V]`?
     You can also deduce this using the napkin rule.
     `dict[K, V]` has the following methods:
     ```py
-    def __getitem__(self, key: K, /) -> V
-    def __setitem__(self, key: K, value: V, /) -> None
+    def __getitem__(self, key: K, /) -> V: ...
+    def __setitem__(self, key: K, value: V, /) -> None: ...
     ```
 
     `V` appears in input and output positions, so invariance is the only choice for `V`.
@@ -541,13 +541,13 @@ What's the variance of `K` and `V` in `dict[K, V]`?
     If we use the napkin rule again:
 
     ```py
-    def __getitem__(self, key: K, /) -> V
+    def __getitem__(self, key: K, /) -> V: ...
                         # ^^^^^^^ input position
-    def get(self, key: K, /) -> V | None  # (simplified signature of `get`)
+    def get(self, key: K, /) -> V | None: ...  # (simplified signature of `get`)
                 # ^^^^^^^ input position
-    def popitem(self) -> tuple[K, V]
+    def popitem(self) -> tuple[K, V]: ...
                         #     ^^^ output position
-    def keys(self) -> KeysView[K]
+    def keys(self) -> KeysView[K]: ...
                         #     ^^^ output position (KeysView is covariant)
     ```
 
