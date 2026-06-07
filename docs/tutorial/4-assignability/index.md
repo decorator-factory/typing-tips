@@ -512,10 +512,6 @@ But, for a back of the napkin draft of the full truth, consider this rule:
 
     If neither conditions apply, the type is _invariant_.
 
-    If none of the conditions apply, then, in Python, it is considered _covariant_
-    (though in theory it would mean that `SomeType[A]` and `SomeType[B]` are always
-    assignable to each other).
-
     T being "in the output position" and "in the input position" is quite misleading.
     For example, if `SomeType[T]`'s only method is `def method(self) -> Callable[[T], None]`,
     then `SomeType` is contravariant; if the method is `def method(self, fn: Callable[[T], None])`,
