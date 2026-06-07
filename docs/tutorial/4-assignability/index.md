@@ -498,7 +498,7 @@ contravariant (which would mean `list[Fruit]` is-a `list[Apple]`).
 
 Is there a structured way of knowing which types are _covariant_, _contravariant_ and _invariant_
 besides just thinking really hard?
-Yes, it will be discussed in a later chapter, after we cover making our own generic classes.
+Yes, it will be discussed in [the next chapter](../5-generic-classes/index.md), after we cover making our own generic classes.
 But, for a back of the napkin draft of the full truth, consider this rule:
 
 !!! note "Napkin Rule"
