@@ -556,10 +556,10 @@ What's the variance of `K` and `V` in `dict[K, V]`?
     For example, `dict[str, object]` s not assignable to `dict[str | int, object]`.
 
     Does this match your intuition?
-    You might be surprised that `__getitem__` and `get` are restricted to accept `K`,
-    even though at runtime, any object will work.
-    If you're querying a dictionary containing `str` keys with a `None` key, you will simply get a
-    `KeyError`, or `None` if you're using `get`.
+    You might be surprised that `get` is restricted to accept `K`, even though at runtime,
+    any object will work.
+    If you're querying a dictionary containing `str` keys with a `None` key, you will simply get `None`
+    if you're using `get`.
 
     It was decided to restrict the method signature in this way to catch errors where you're
     querying a dictionary with the wrong type: if you're looking up an `int` key in a `dict[str, object]`,
