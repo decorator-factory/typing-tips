@@ -769,7 +769,7 @@ class Belt[T]:
         (or a property) with the signatures `(self, arg: X) -> None` and
         `(self) -> X`.
 
-    For most cases, this would work the same.
+    For most cases, this would work the same, but `Any` breaks these rules.
     Here's an example of an edge case where this is different:
 
     ```py
