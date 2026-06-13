@@ -535,7 +535,7 @@ out contravariance), then the class is invariant.
 
 First, let's look at methods (step 4).
 
-In [Chapter 4](./4-assignability/index.md#rules-for-variance), we introduced a
+In [Chapter 4](../4-assignability/index.md#rules-for-variance), we introduced a
 shortcut: covariant type variables occur in "output positions" (return types),
 and contravariant type variables occur in "input positions" (argument types).
 
