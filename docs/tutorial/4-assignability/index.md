@@ -498,23 +498,19 @@ contravariant (which would mean `list[Fruit]` is-a `list[Apple]`).
 
 Is there a structured way of knowing which types are _covariant_, _contravariant_ and _invariant_
 besides just thinking really hard?
-Yes, it will be discussed in a later chapter, after we cover making our own generic classes.
+Yes, it will be discussed in [the next chapter](../5-generic-classes/index.md), after we cover making our own generic classes.
 But, for a back of the napkin draft of the full truth, consider this rule:
 
 !!! note "Napkin Rule"
 
-    1. If a type `SomeType[T]` has any methods where `T` is in the output position
-        (like `def method(self) -> T`), then it is **not** _contravariant_ in `T`
-        (i.e.: `SomeType[Fruit]` is not assignable to `SomeType[Apple]`)
-    2. If a type `SomeType[T]` has any methods where `T` is in the input position
-        (`def method(self, arg: T) -> None`), then it is **not** _covariant_ in `T`
-        (i.e.: `SomeType[Apple]` is not assignable to `SomeType[Fruit]`)
+    1. If a type `SomeType[T]` **only** has methods where `T` is in the output position
+        (like `def method(self) -> T`), then it is _covariant_ in `T`
+        (i.e.: `SomeType[Apple]` is assignable to `SomeType[Fruit]`)
+    2. If a type `SomeType[T]` **only** has any methods where `T` is in the input position
+        (`def method(self, arg: T) -> None`), then it is _contravariant_ in `T`
+        (i.e.: `SomeType[Fruit]` is assignable to `SomeType[Apple]`)
 
-    If both conditions apply, the type is _invariant_.
-
-    If none of the conditions apply, then, in Python, it is considered _covariant_
-    (though in theory it would mean that `SomeType[A]` and `SomeType[B]` are always
-    assignable to each other).
+    If neither conditions apply, the type is _invariant_.
 
     T being "in the output position" and "in the input position" is quite misleading.
     For example, if `SomeType[T]`'s only method is `def method(self) -> Callable[[T], None]`,
@@ -535,8 +531,8 @@ What's the variance of `K` and `V` in `dict[K, V]`?
     You can also deduce this using the napkin rule.
     `dict[K, V]` has the following methods:
     ```py
-    def __getitem__(self, key: K, /) -> V
-    def __setitem__(self, key: K, value: V, /) -> None
+    def __getitem__(self, key: K, /) -> V: ...
+    def __setitem__(self, key: K, value: V, /) -> None: ...
     ```
 
     `V` appears in input and output positions, so invariance is the only choice for `V`.
@@ -545,13 +541,13 @@ What's the variance of `K` and `V` in `dict[K, V]`?
     If we use the napkin rule again:
 
     ```py
-    def __getitem__(self, key: K, /) -> V
+    def __getitem__(self, key: K, /) -> V: ...
                         # ^^^^^^^ input position
-    def get(self, key: K, /) -> V | None  # (simplified signature of `get`)
+    def get(self, key: K, /) -> V | None: ...  # (simplified signature of `get`)
                 # ^^^^^^^ input position
-    def popitem(self) -> tuple[K, V]
+    def popitem(self) -> tuple[K, V]: ...
                         #     ^^^ output position
-    def keys(self) -> KeysView[K]
+    def keys(self) -> KeysView[K]: ...
                         #     ^^^ output position (KeysView is covariant)
     ```
 
@@ -560,10 +556,10 @@ What's the variance of `K` and `V` in `dict[K, V]`?
     For example, `dict[str, object]` s not assignable to `dict[str | int, object]`.
 
     Does this match your intuition?
-    You might be surprised that `__getitem__` and `get` are restricted to accept `K`,
-    even though at runtime, any object will work.
-    If you're querying a dictionary containing `str` keys with a `None` key, you will simply get a
-    `KeyError`, or `None` if you're using `get`.
+    You might be surprised that `get` is restricted to accept `K`, even though at runtime,
+    any object will work.
+    If you're querying a dictionary containing `str` keys with a `None` key, you will simply get `None`
+    if you're using `get`.
 
     It was decided to restrict the method signature in this way to catch errors where you're
     querying a dictionary with the wrong type: if you're looking up an `int` key in a `dict[str, object]`,

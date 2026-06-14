@@ -678,6 +678,107 @@ class Belt[T]:
     ```
     ///
 
+??? tip "Rule of thumb"
+
+    If following the algorithm outlined above feels too difficult, you can follow this simple rule of thumb when mentally evaluating
+    a type parameter's variance:
+
+    Start at the generic itself, and step-by-step evaluate the type surrounding it with these rules in mind:
+
+    - By default, assume the generic is covariant
+    - When used in a contravariant position, its variance is "swapped" to the other one
+    - When used in a covariant position, its variance stays the same
+    - When used in an invariant position, stop here.
+      The generic is invariant!
+
+    Let's look at some examples:
+
+    ```py
+    from collections.abc import Callable
+
+    class A[T]:
+        # T is used in a contravariant position - swap from covariant to contravariant
+        # verdict: contravariant
+        def fn(self, value: T): ...
+
+    class B[T]:
+        # 1. T is used in a contravariant position (`Callable[[T], None]`) - swap from covariant to contravariant
+        # 2. `Callable[[T], None]` is used in a covariant position - don't swap
+        # verdict: contravariant
+        def fn(self) -> Callable[[T], None]: ...
+
+
+    class C[T]:
+        # 1. T is used in a contravariant position (`Callable[[T], None]`) - swap to to contravariant
+        # 2. `Callable[[T], None]` is used in a contravariant position again - swap back to covariant
+        # verdict: covariant
+        def fn(self, fn: Callable[[T], None]): ...
+
+    class D[T]:
+        # 1. T is used in a contravariant position (`Callable[[T], None]`) - swap to contravariant
+        # 2. `Callable[[T], None]` used in a contravariant position (`Callable[[Callable[[T], None]], None]`) - swap back to covariant
+        # 3. `Callable[[Callable[[T], None]], None]` used in covariant position - don't swap
+        # verdict: covariant
+        def fn(self) -> Callable[[Callable[[T], None]], None]: ...
+
+    class E[T]:
+        # 1. T is used in a contravariant position (`Callable[[T], None]`) - swap to contravariant
+        # 2. `Callable[[T], None]` used in a contravariant position (`Callable[[Callable[[T], None]], None]`) - swap back to covariant
+        # 3. `Callable[[Callable[[T], None]], None]` used in contravariant position (`Callable[[Callable[[Callable[[T], None]], None]], None]`) - swap again to contravariant
+        # 4. `Callable[[Callable[[Callable[[T], None]], None]], None]` used in covariant position - don't swap
+        # verdict: contravariant
+        def fn(self) -> Callable[[Callable[[Callable[[T], None]], None]], None]: ...
+    ```
+
+    Now let's see some invariant examples:
+
+    ```py
+    class F[T]:
+        # 1. T is used in an invariant position - stop here
+        # verdict: invariant
+        def fn(self, value: list[T]): ...
+
+    class G[T]:
+        # 1. T is used in a contravariant position (`Callable[[T], None]`) - swap to contravariant
+        # 2. `Callable[[T], None]` used in an invariant position (`list[Callable[[T], None]]`) - stop here!
+        # verdict: invariant
+        def fn(self) -> Callable[[Callable[[list[Callable[[T], None]]], None]], None]: ...
+    ```
+
+    Note that once we encounter an invariant position, we don't need to mentally parse the rest of the type, no matter how nested it gets.
+
+    When multiple methods are involved, or if the generic is used in multiple places within the same signature, the result will be invariant
+    unless the verdict is the same for each usage.
+    Some more examples:
+
+    ```py
+    class H[T]:
+        # usage 1: contravariant
+        def fn(self) -> Callable[[T], None]: ...
+
+        # usage 2: covariant
+        def fn2(self) -> T: ...
+
+        # both covariant and contravariant usages - final verdict: invariant
+
+    class I[T]:
+        # usage 1: contravariant
+        def fn(self) -> Callable[[T], None]: ...
+
+        # usage 2: contravariant
+        def fn2(self, value: T) -> None: ...
+
+        # only contravariant usages - final verdict: contravariant
+
+
+    class J[T]:
+        # usage 1: covariant
+        # usage 2: contravariant
+        def fn(self, value: Callable[[T], None]) -> Callable[[T], None]: ...
+
+        # both covariant and contravariant usages - final verdict: invariant
+    ```
+
 ---
 
 **TODO: expand on how attributes impact variance, and the role of private attributes**
@@ -769,7 +870,7 @@ class Belt[T]:
         (or a property) with the signatures `(self, arg: X) -> None` and
         `(self) -> X`.
 
-    For most cases, this would work the same.
+    For most cases, this would work the same, but `Any` breaks these rules.
     Here's an example of an edge case where this is different:
 
     ```py
