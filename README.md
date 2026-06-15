@@ -1,4 +1,22 @@
-# Typing Tips
+# 🍌🔥 This project moved to Codeberg 🔥🍌
+
+New URL: https://decorator-factory.codeberg.page/typing-tips/
+
+New repository URL: https://codeberg.org/decorator-factory/typing-tips
+
+The Github Pages site still works, but redirects to the new Codeberg site.
+
+> https://docs.codeberg.org/getting-started/what-is-codeberg/
+>
+> Codeberg is a democratic community-driven, non-profit software development platform operated by Codeberg e.V. and centered around Codeberg.org, a Forgejo-based software forge.
+>
+> On Codeberg you can develop your own Free Software projects, contribute to other projects, browse through inspiring and useful free software, share your knowledge or build your projects a home on the web using Codeberg Pages, just to name a few.
+
+---
+
+This is the old README:
+
+---
 
 URL: https://decorator-factory.github.io/typing-tips/
 

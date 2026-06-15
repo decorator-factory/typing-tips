@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+
+{% block site_meta %}
+    {{ super() }}
+    <meta http-equiv="refresh" content="0; url=https://decorator-factory.codeberg.page/typing-tips/{{page.url}}">
+    <link rel="canonical" href="https://decorator-factory.codeberg.page/typing-tips/{{page.url}}">
+{% endblock %}
